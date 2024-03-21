@@ -1,16 +1,23 @@
+"use client";
 import Link from "next/link";
 import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
 
 const ProjectCard = ({ imgUrl, title, description, previewUrl, gitUrl }) => {
   return (
-    <div className="group transform translate duration-300 hover:scale-105 hover:shadow-xl">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+      className="group border-2 border-[#33415579] hover:rounded-none text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
+    >
       <div
-        className="h-48 md:h-64 rounded-t-xl"
+        className=" h-32"
         style={{ background: `url(${imgUrl})`, backgroundSize: "cover" }}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-[#212529fb] 
-        opacity-0 group-hover:opacity-80 transition-opacity duration-500 flex justify-center items-center"
+          className="absolute top-0 left-0 w-full h-full bg-[#212529fb] group-hover:shadow-xl
+        opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-center items-center"
         >
           <Link
             href={gitUrl}
@@ -26,13 +33,13 @@ const ProjectCard = ({ imgUrl, title, description, previewUrl, gitUrl }) => {
           </Link>
         </div>
       </div>
-      <div className="rounded-b-xl bg-[#181c206b] px-3 pb-3 pt-2">
+      <div className=" bg-[#11161d81] px-3 pb-3 pt-2 group-hover:rounded-none">
         <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
           {title}
         </h1>
         <p className="text-sm text-slate-400">{description}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

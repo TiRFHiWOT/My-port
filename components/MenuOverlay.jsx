@@ -2,15 +2,22 @@ import React from "react";
 import NavLink from "./NavLink";
 
 const MenuOverlay = ({ links }) => {
-  // Destructure links from the props object
   return (
-    <ul className="flex flex-col items-center py-4">
-      {links.map((link, index) => (
-        <li key={index}>
-          <NavLink href={link.path} title={link.title} />
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul className="flex flex-col items-center p-5 md:hidden">
+        {links.map((link, index) => (
+          <li key={index} className="py-2 hover:scale-105 text-xl">
+            <NavLink href={link.path} title={link.title} />
+          </li>
+        ))}
+        <button
+          href={"#contact"}
+          className="py-2 font-bold text-white text-xl "
+        >
+          {`Let's Talk`}
+        </button>
+      </ul>
+    </div>
   );
 };
 

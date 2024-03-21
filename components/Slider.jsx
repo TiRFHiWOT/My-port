@@ -1,3 +1,6 @@
+"use client";
+import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
 
 const projectData = [
@@ -51,26 +54,40 @@ const projectData = [
   },
 ];
 
-const Projects = () => {
+const Slider = () => {
+  const [width, setWidth] = useState(0);
+  const slider = useRef();
+  useEffect(() => {
+    setWidth(slider.current.scrollWidth - slider.current.offsetWidth);
+  }, []);
   return (
-    <div className="md:mx-10 my-8 md:my-12">
-      <h1 className="text-3xl mb-6 md:text-4xl font-semibold text-center">
-        My Projects
-      </h1>
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {projectData.map((project) => (
-          <ProjectCard
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            imgUrl={project.image}
-            gitUrl={project.gitUrl}
-            previewUrl={project.previewUrl}
-          />
-        ))}
-      </div>
+    <div className="mx-[20%]">
+      <motion.div
+        ref={slider}
+        whileTap={{ cursor: "grabbing" }}
+        className="slider overflow-hidden bg-slate-400 cursor-grab"
+      >
+        <motion.div
+          drag="x"
+          dragConstraints={{ right: 0, left: -width }}
+          className="inner-slider flex flex-row bg-slate-700"
+        >
+          {projectData.map((project) => {
+            return (
+              <motion.ProjectCard
+                key={project.id}
+                title={project.title}
+                description={project.description}
+                imgUrl={project.image}
+                gitUrl={project.gitUrl}
+                previewUrl={project.previewUrl}
+              />
+            );
+          })}
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
 
-export default Projects;
+export default Slider;

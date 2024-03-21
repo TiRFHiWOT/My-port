@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/ProjectCard.jsx", "components/NavLink.jsx", "components/MenuOverlay.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/ProjectCard.jsx", "components/NavLink.jsx", "components/MenuOverlay.jsx", "components/TabButton.jsx", "components/About.jsx", "components/Navbar.jsx", "components/Projects.jsx"],
   "exclude": ["node_modules"]
 }
