@@ -60,11 +60,11 @@ const Projects = () => {
 
   return (
     <section id="Projects">
-      <div className="md:px-24 my-8 md:my-24 bg-gradient-to-b from-[#1e2842] via-[#12192b] to-[#1e2842] relative">
+      <div className="md:px-24 px-8 my-8 md:my-24 bg-gradient-to-b from-[#1e2842] via-[#12192b] to-[#1e2842] relative">
         <h1 className="text-3xl text-white md:text-4xl p-6 font-semibold tracking-wide">
           <span className=" border-orange-500 border-b-4">MY</span> PROJECTS
         </h1>
-        <div className="grid gap-8 grid-cols-2 lg:grid-cols-3 py-6">
+        <div className="grid md:gap-8 gap-4 grid-cols-2 lg:grid-cols-3 py-6">
           {projectData.map((project) => (
             <ProjectCard
               key={project.id}
