@@ -14,8 +14,8 @@ const navlinks = [
     path: "#About",
   },
   {
-    title: "Skill",
-    path: "#Skill",
+    title: "Work",
+    path: "#Work",
   },
   {
     title: "Projects",
@@ -27,35 +27,36 @@ const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   return (
-    <>
-      <div className="backdrop-blur border-b border-[#334155] fixed top-0 left-0 right-0 w-full z-30 bg-slate-800 bg-opacity-80 ">
-        <div className="flex container flex-wrap items-center justify-between  px-10 py-2">
+    <section id="Navbar">
+      <div className="backdrop-blur border-b border-[#334155] fixed top-0 left-0 right-0 w-full z-50 bg-slate-800 bg-opacity-80 mx-auto transform transition-all duration-[1s]">
+        <div className="flex container flex-wrap items-center justify-between px-6 py-2 mx-auto">
           <Link
-            href={"#Home"}
-            className="text-3xl font-semibold rounded-full border-8 border-cyan-400 group px-6 shadow-lg shadow-cyan-300 bg-slate-900  "
+            href={"#Navbar"}
+            className="text-3xl font-semibold rounded-full border-8 border-cyan-400 
+            px-6 shadow-lg shadow-cyan-300 bg-slate-900 -rotate-3 transform transition-all duration-[0.5s]"
           >
             LOGO
           </Link>
 
-          <div className="md:hidden">
+          <div className="md:hidden ">
             {!navbarOpen ? (
               <button
                 onClick={() => setNavbarOpen(true)}
-                className="flex items-center px-3 py-2 border rounded border-gray-400 text-gray-400 hover:text-white"
+                className="flex items-center px-3 py-2 border-2 rounded border-[#334155] text-gray-400 hover:text-white hover:border-gray-400 "
               >
                 <Bars3Icon className="h-5 w-5" />
               </button>
             ) : (
               <button
                 onClick={() => setNavbarOpen(false)}
-                className="flex items-center px-3 py-2 border rounded border-gray-400 text-gray-400 hover:text-white"
+                className="flex items-center px-3 py-2 border-2 rounded border-[#334155] text-gray-400 hover:text-white hover:border-gray-400"
               >
                 <XMarkIcon className="h-5 w-5" />
               </button>
             )}
           </div>
 
-          <div className="hidden md:flex md:flex-row " id="Navbar">
+          <div className="hidden md:flex md:flex-row">
             <ul
               className="flex flex-row justify-between items-center
            space-x-4 p-1 mx-6"
@@ -69,8 +70,8 @@ const Navbar = () => {
 
             <button
               href={"#contact"}
-              className="border-2 border-white py-1 px-8 font-bold text-white
-           rounded-full hover:bg-gradient-to-br from-blue-700 via-purple-700 to-pink-700 hover:border-none hover:px-[34px] hover:py-[6px]"
+              className="border-2 border-cyan-400 py-1 px-8 font-bold text-white
+           rounded-lg hover:text-white hover:bg-gradient-to-br from-cyan-500  to-blue-500 hover:border-none hover:px-[34px] hover:py-[6px] "
             >
               {`Let's Talk`}
             </button>
@@ -78,7 +79,7 @@ const Navbar = () => {
         </div>
         {navbarOpen && <MenuOverlay links={navlinks} />}
       </div>
-    </>
+    </section>
   );
 };
 

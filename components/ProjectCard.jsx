@@ -8,7 +8,8 @@ const ProjectCard = ({ imgUrl, title, description, previewUrl, gitUrl }) => {
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
       className="group border-2 border-[#33415579] hover:rounded-none text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
     >
       <div
@@ -24,12 +25,19 @@ const ProjectCard = ({ imgUrl, title, description, previewUrl, gitUrl }) => {
             className="w-14 h-14 mr-6 rounded-full border-2 relative border-slate-400 hover:border-white hover:text-white flex justify-center items-center group/link"
           >
             <CodeBracketIcon className="w-10 h-10 text-slate-400 group-hover/link:text-white cursor-pointer" />
+            <span className="hidden group-hover/link:flex text-gray-400 bg-black py-2 px-4 absolute -top-12 rounded-xl">
+              Github
+            </span>
           </Link>
+
           <Link
             href={previewUrl}
             className="w-14 h-14 rounded-full border-2 relative border-slate-400 hover:border-white hover:text-white flex justify-center items-center group/link"
           >
             <EyeIcon className="w-10 h-10 text-slate-400 group-hover/link:text-white cursor-pointer" />
+            <span className="hidden group-hover/link:flex text-gray-400 bg-black py-2 px-4 absolute -top-12 rounded-xl transform transition-all duration-[1s]">
+              Vercel
+            </span>
           </Link>
         </div>
       </div>

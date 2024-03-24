@@ -5,15 +5,20 @@ import Projects from "@/components/Projects";
 import Email from "@/components/Email";
 import Footer from "@/components/Footer";
 import Achievement from "@/components/Achievement";
+import Work from "@/components/Work";
+import Testimonial from "@/components/Testimonial";
+import MultipleItems from "@/components/BigTab";
 
 const page = () => {
   return (
-    <main className="flex flex-col min-h-screen transform transition-all duration-300 overflow-hidden">
+    <main>
       <Navbar />
       <Hero />
       <Achievement />
       <About />
+      <Work />
       <Projects />
+      <Testimonial />
       <Email />
       <Footer />
     </main>

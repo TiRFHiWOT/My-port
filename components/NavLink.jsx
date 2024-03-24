@@ -5,7 +5,7 @@ const NavLink = ({ href, title }) => {
     <Link
       href={href}
       className="py-5 px-4  text-slate-400 
-               md:text-sm hover:text-white hover:scale-125 transform transition-all duration-300 "
+               md:text-sm hover:text-white hover:scale-125 transform transition-all duration-[0.5s] "
     >
       {title}
     </Link>

@@ -9,7 +9,7 @@ import transparent from "../public/circuit_board.png";
 const Hero = () => {
   return (
     <section>
-      <div className="grid lg:grid-cols-12 mt-20 mb-3 p-4 lg:p-8 justify-center relative w-full min-h-[70vh] ">
+      <div className=" grid lg:grid-cols-2 mt-20 mb-3 py-4 lg:p-10 justify-center relative min-h-[70vh] items-center">
         <Image
           src={transparent}
           alt="hero image"
@@ -18,7 +18,7 @@ const Hero = () => {
           className=" absolute -top-10 left-0 opacity-10 -z-10"
         />
 
-        <div className="col-span-6 lg:text-start text-center px-6 ml-12">
+        <div className="lg:text-start mx-auto text-center px-6 lg:ml-12">
           <motion.h1
             initial={{ y: "400px", opacity: 0 }}
             animate={{ y: "0", opacity: 1 }}
@@ -75,7 +75,7 @@ const Hero = () => {
             </motion.button>
           </div>
         </div>
-        <div className="hero-image col-span-6 place-self-center my-5 lg:my-0">
+        <div className="mx-auto my-5 lg:my-0">
           <motion.div
             initial={{ x: "50px", y: "50px", opacity: 0 }}
             animate={{ x: "0", y: "0", opacity: 1 }}
