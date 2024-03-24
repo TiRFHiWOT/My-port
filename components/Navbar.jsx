@@ -3,10 +3,7 @@ import Link from "next/link";
 import NavLink from "./NavLink";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
-import Menu from "./MenuOverlay";
 import MenuOverlay from "./MenuOverlay";
-import Image from "next/image";
-import { motion } from "framer-motion";
 
 const navlinks = [
   {
@@ -66,7 +63,7 @@ const Navbar = () => {
               ))}
             </ul>
             <button
-              href={"#contact"}
+              href={"#Contact"}
               className="border-2 border-cyan-400 py-1 px-8 font-bold text-white
            rounded-lg hover:text-white hover:bg-gradient-to-br from-cyan-500  to-blue-500 hover:border-none hover:px-[34px] hover:py-[6px] "
             >

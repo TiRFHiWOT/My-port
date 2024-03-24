@@ -1,17 +1,19 @@
+"use client";
 import React from "react";
 import GithubIcon from "../public/github-icon.svg";
 import LinkedinIcon from "../public/linkedin-icon.svg";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Email = () => {
   return (
     <section
       id="Contact"
-      className="grid md:grid-cols-2 mx-6 mb-12 py-12 lg:px-24 gap-4 relative"
+      className="grid md:grid-cols-2 mx-6 mb-12 py-12 lg:px-24 gap-4 relative overflow-hidden"
     >
       <div className="p-4">
-        <h1 className="text-xl font-bold my-2 z-10">{`Let's Connect`}</h1>
+        <h1 className="text-xl font-bold my-2 z-10 py-3 -rotate-3">{`Let's Connect`}</h1>
         <p className="mb-4 max-w-md text-slate-400">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim nisi
           numquam incidunt perferendis iste cum explicabo illo eveniet rem
@@ -27,7 +29,12 @@ const Email = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4 p-4">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0 }}
+          viewport={{ once: true }}
+        >
           <label htmlFor="email" className="block mb-2 text-sm font-medium">
             Your Email
           </label>
@@ -35,11 +42,16 @@ const Email = () => {
             type="email"
             id="email"
             required
-            className=" bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
+            className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
             placeholder="abebebesobela@gmail.com"
           />
-        </div>
-        <div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           <label htmlFor="subject" className="block mb-2 text-sm font-medium">
             Subject
           </label>
@@ -47,11 +59,16 @@ const Email = () => {
             type="text"
             id="subject"
             required
-            className=" bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
+            className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
             placeholder="What's in your mind."
           />
-        </div>
-        <div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          viewport={{ once: true }}
+        >
           <label htmlFor="message" className="block mb-2 text-sm font-medium">
             Message
           </label>
@@ -59,16 +76,25 @@ const Email = () => {
             name="message"
             id="message"
             required
-            className=" bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
+            className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
             placeholder={`Let's talk...`}
           />
-        </div>
-        <button
+        </motion.div>
+        <motion.button
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          transition={{
+            delay: 0.6,
+            duration: 0.2,
+            type: "spring",
+            stiffness: 700,
+          }}
+          viewport={{ once: true }}
           type="submit"
-          className=" bg-blue-500 hover:bg-blue-600 font-medium rounded-lg block w-full p-2.5"
+          className="bg-blue-500 hover:bg-blue-600 font-medium rounded-lg block w-full p-2.5"
         >
           Send Message
-        </button>
+        </motion.button>
       </div>
     </section>
   );

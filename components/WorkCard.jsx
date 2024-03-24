@@ -4,7 +4,7 @@ const WorkCard = ({ title, place, description }) => {
   return (
     <section>
       <div
-        className=" text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg px-4 pt-3 pb-4 border-b-4 border-[#334155] bg-opacity-80 lg:h-[20rem] 
+        className="text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg px-4 pt-3 pb-4 border-b-4 border-[#334155] bg-opacity-80 lg:h-[20rem] 
       hover:scale-105 hover:border-b-orange-700 w-[15rem] lg:w-[25rem] mr-10 transform transition-all duration-[0.5s] "
       >
         <div className="pb-5">

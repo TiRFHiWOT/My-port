@@ -30,15 +30,15 @@ const TAB_DATA = [
         </div>
         <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2">
           <Image src={nodejs} alt="" width={40} height={40} />
-          <h1>NODEjs</h1>
+          <h1>NODE.js</h1>
         </div>
-        <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2 ">
+        <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2">
           <Image src={reactjs} alt="" width={40} height={40} />
-          <h1>REACTjs</h1>
+          <h1>REACT.js</h1>
         </div>
         <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2">
           <Image src={nextjs} alt="" width={40} height={40} />
-          <h1>NEXTjs</h1>
+          <h1>NEXT.js</h1>
         </div>
       </div>
     ),
@@ -78,12 +78,12 @@ const About = () => {
       <MotionConfig transition={{ duration: 0.5, delay: 0, ease: "easeInOut" }}>
         <div className="glass py-12 px-10 lg:px-16 my-16 rounded-e-2xl md:px-8 relative container border-y border-r border-[#334155] overflow-hidden">
           <div className="flex flex-col md:mx-12 lg:mx-0 lg:flex-row items-center">
-            <div className=" flex flex-row my-10 lg:mx-10">
+            <div className="flex flex-row my-10 lg:mx-10">
               <motion.div
                 initial={{ opacity: 0, y: 200 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="flex flex-col justify-between items-center border-r-4  border-orange-600 px-2"
+                className="flex flex-col justify-between items-center border-r-4 border-orange-600 px-2"
               >
                 <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row">
                   A
@@ -113,7 +113,7 @@ const About = () => {
                 viewport={{ once: true }}
                 className="mx-4"
               >
-                <p className=" text-xs md:text-sm text-white mb-5 lg:w-[80%] leading-5 lg:leading-6">
+                <p className="text-xs md:text-sm text-white mb-5 lg:w-[80%] leading-5 lg:leading-6">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa
                   tempora id inventore impedit illum dicta quis nisi incidunt
                   dolore quam, labore similique praesentium quidem libero
@@ -121,7 +121,7 @@ const About = () => {
                   iure quisquam illum corporis esse temporibus nihil sequi neque
                   aut tenetur at. Necessitatibus quas quaerat atque.
                 </p>
-                <p className=" text-xs md:text-sm text-white mb-5 lg:w-[80%] leading-5 lg:leading-6">
+                <p className="text-xs md:text-sm text-white mb-5 lg:w-[80%] leading-5 lg:leading-6">
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa
                   tempora id inventore impedit illum dicta quis nisi incidunt
                   dolore quam, labore similique praesentium quidem libero
@@ -165,8 +165,8 @@ const About = () => {
               </div>
             </motion.div>
           </div>
-          <div className=" h-[100px] w-[100px] rounded-full bg-slate-700 absolute shadow-lg top-[-3rem] right-[-2rem] -z-10 opacity-50"></div>
-          <div className=" h-[50px] w-[50px] rounded-full bg-slate-700 absolute shadow-lg top-[4rem] right-[30rem] -z-10 opacity-50"></div>
+          <div className="h-[100px] w-[100px] rounded-full bg-slate-700 absolute shadow-lg top-[-3rem] right-[-2rem] -z-10 opacity-50"></div>
+          <div className="h-[50px] w-[50px] rounded-full bg-slate-700 absolute shadow-lg top-[4rem] right-[30rem] -z-10 opacity-50"></div>
         </div>
       </MotionConfig>
     </section>

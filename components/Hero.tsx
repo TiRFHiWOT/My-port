@@ -9,13 +9,13 @@ import transparent from "../public/circuit_board.png";
 const Hero = () => {
   return (
     <section>
-      <div className=" grid lg:grid-cols-2 mt-20 mb-3 py-4 lg:p-10 justify-center relative min-h-[70vh] items-center">
+      <div className="grid lg:grid-cols-2 mt-20 mb-3 py-4 lg:p-10 justify-center relative min-h-[70vh] items-center">
         <Image
           src={transparent}
           alt="hero image"
           width={1200}
           height={1200}
-          className=" absolute -top-10 left-0 opacity-10 -z-10"
+          className="absolute -top-10 left-0 opacity-10 -z-10"
         />
 
         <div className="lg:text-start mx-auto text-center px-6 lg:ml-12">
@@ -59,7 +59,7 @@ const Hero = () => {
               initial={{ y: "400px", opacity: 0 }}
               animate={{ y: "0", opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className=" text-white hover:shadow-xl py-3 px-6 rounded-full w-full sm:w-fit bg-gradient-to-br from-blue-700 via-purple-700 to-pink-700 mb-2 sm:mx-1 md:mx-2 lg:mx-0"
+              className="text-white hover:shadow-xl py-3 px-6 rounded-full w-full sm:w-fit bg-gradient-to-br from-blue-700 via-purple-700 to-pink-700 mb-2 sm:mx-1 md:mx-2 lg:mx-0"
             >
               Get In Touch
             </motion.button>

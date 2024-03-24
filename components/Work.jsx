@@ -30,7 +30,7 @@ const workData = [
   },
   {
     id: "5",
-    title: "Next.js",
+    title: "React.js",
     place: "Place of Occupation",
     description: "",
   },
@@ -65,7 +65,6 @@ const Work = () => {
         >
           Work Experience
         </motion.h1>
-
         <div className="big-slide pt-10 pb-5 overflow-hidden relative">
           <div className="grid grid-flow-col work-slide">
             {workData.map((project) => (

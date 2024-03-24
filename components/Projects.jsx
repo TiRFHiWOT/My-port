@@ -1,6 +1,5 @@
 "use client";
 import ProjectCard from "./ProjectCard";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const projectData = [
@@ -69,9 +68,9 @@ const Projects = () => {
           }}
           className="text-3xl text-white md:text-4xl p-6 font-semibold tracking-wide"
         >
-          <span className=" border-orange-500 border-b-4">MY</span> PROJECTS
+          <span className="border-orange-500 border-b-4">MY</span> PROJECTS
         </motion.h1>
-        <p className=" text-xs md:text-sm text-white mb-5 lg:w-[60%] p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50">
+        <p className="text-xs md:text-sm text-white mb-5 lg:w-[60%] p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi atque
           sit nobis a rerum minus tempora reiciendis consequuntur molestias
           mollitia delectus inventore quo sapiente nesciunt, quod, praesentium
