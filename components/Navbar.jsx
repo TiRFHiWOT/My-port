@@ -37,7 +37,6 @@ const Navbar = () => {
           >
             LOGO
           </Link>
-
           <div className="md:hidden ">
             {!navbarOpen ? (
               <button
@@ -55,7 +54,6 @@ const Navbar = () => {
               </button>
             )}
           </div>
-
           <div className="hidden md:flex md:flex-row">
             <ul
               className="flex flex-row justify-between items-center
@@ -67,7 +65,6 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-
             <button
               href={"#contact"}
               className="border-2 border-cyan-400 py-1 px-8 font-bold text-white

@@ -21,7 +21,7 @@ const TestimonialCard = ({ comment, userName, postion, imgUrl }) => {
           </div>
           <Image
             src={imgUrl}
-            alt=""
+            alt="face"
             width={40}
             height={40}
             className="border rounded-full border-[#334155]"
