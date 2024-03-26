@@ -13,7 +13,7 @@ const TestimonialCard = ({ comment, userName, postion, imgUrl }) => {
     >
       <div className="flex flex-col p-5 lg:p-10 bg-slate-850 border hover:shadow-xl border-[#334155] rounded-lg hover:scale-105 transform transition duration-[0.5s]">
         <h1 className="text-7xl">{`"`}</h1>
-        <p className="text-sm mb-10 text-gray-400">{comment}</p>
+        <div className="text-sm mb-10 text-gray-400">{comment}</div>
         <div className="flex flex-row justify-between ">
           <div className="flex flex-col">
             <h1>{userName}</h1>

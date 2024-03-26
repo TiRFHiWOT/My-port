@@ -10,7 +10,7 @@ const Email = () => {
   return (
     <section
       id="Contact"
-      className="grid md:grid-cols-2 mx-6 mb-12 py-12 lg:px-24 gap-4 relative overflow-hidden"
+      className="grid md:grid-cols-2 mx-6 mb-12 py-16 lg:px-24 gap-4 relative overflow-hidden"
     >
       <div className="p-4">
         <h1 className="text-xl font-bold my-2 z-10 py-3 -rotate-3">{`Let's Connect`}</h1>
@@ -42,7 +42,7 @@ const Email = () => {
             type="email"
             id="email"
             required
-            className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5 "
+            className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5"
             placeholder="abebebesobela@gmail.com"
           />
         </motion.div>

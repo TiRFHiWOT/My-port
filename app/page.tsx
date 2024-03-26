@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import Achievement from "@/components/Achievement";
 import Work from "@/components/Work";
 import Testimonial from "@/components/Testimonial";
-import MultipleItems from "@/components/BigTab";
+import InfiniteTranslation from "@/components/Translate";
 
 const page = () => {
   return (

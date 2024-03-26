@@ -2,6 +2,7 @@
 import TabButton from "./TabButton";
 import React, { useTransition, useState } from "react";
 import Image from "next/image";
+import SkillsCard from "@/components/SkillsCard";
 import html from "../public/html.png";
 import css from "../public/css.png";
 import js from "../public/js.png";
@@ -10,12 +11,38 @@ import reactjs from "../public/react_js.png";
 import nextjs from "../public/next_js.png";
 import { motion, MotionConfig } from "framer-motion";
 
+const SkillData = [
+  {
+    id: "1",
+    skillName: "HTML",
+    image: "/html.png",
+  },
+  {
+    id: "2",
+    skillName: "CSS",
+    image: "/html.png",
+  },
+  {
+    id: "3",
+    skillName: "JS",
+    image: "/html.png",
+  },
+];
+
 const TAB_DATA = [
   {
     title: "Skills",
     id: "skills",
     content: (
       <div className="grid grid-cols-2 gap-5">
+        {SkillData.map((skill) => (
+          <SkillsCard
+            key={skill.id}
+            userName={skill.skillName}
+            image={skill.image}
+          />
+        ))}
+
         <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2">
           <Image src={html} alt="" width={40} height={40} />
           <h1>HTML</h1>
@@ -35,10 +62,6 @@ const TAB_DATA = [
         <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2">
           <Image src={reactjs} alt="" width={40} height={40} />
           <h1>REACT.js</h1>
-        </div>
-        <div className="flex flex-row shadow-lg hover:scale-105 hover:shadow-xl items-center justify-around p-2">
-          <Image src={nextjs} alt="" width={40} height={40} />
-          <h1>NEXT.js</h1>
         </div>
       </div>
     ),
@@ -137,7 +160,7 @@ const About = () => {
               viewport={{ once: true }}
               className="flex flex-col p-2 bg-slate-700 shadow-xl rounded-lg relative min-h-[290px]"
             >
-              <div className="flex flex-row justify-center bg-slate-800 pt-3">
+              <div className="flex flex-row justify-center bg-slate-800 pt-3 rounded-md">
                 <TabButton
                   selectTab={() => handleTabChange("skills")}
                   active={tab === "skills"}
@@ -160,7 +183,7 @@ const About = () => {
                   CERTIFICATION{" "}
                 </TabButton>
               </div>
-              <div className="mt-3 bg-slate-800">
+              <div className="skills-bar mt-3 rounded-md bg-slate-800 h-[18rem] overflow-y-auto overflow-x-hidden">
                 {TAB_DATA.find((t) => t.id === tab).content}
               </div>
             </motion.div>

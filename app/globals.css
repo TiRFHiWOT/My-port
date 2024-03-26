@@ -19,6 +19,7 @@ html {
   scroll-behavior: smooth;
   padding: 0;
   margin: 0;
+  outline: none;
 }
 
 body {
@@ -34,11 +35,8 @@ body {
 }
 
 @keyframes slide {
-  from {
-    transform: translateX(0);
-  }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
@@ -63,7 +61,7 @@ body {
 }
 
 .work-slide {
-  animation: 15s slide infinite linear;
+  animation: slide 15s infinite linear;
 }
 
 .big-slide:hover .work-slide {
@@ -79,4 +77,22 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.37);
+}
+
+.skills-bar::-webkit-scrollbar {
+  width: 0.5vw;
+}
+
+.skills-bar::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.493);
+  border-radius: 5px;
+}
+
+.skills-bar::-webkit-scrollbar-thumb:hover {
+  background-color: gray;
+}
+
+.skills-bar::-webkit-scrollbar-track {
+  background-color: rgb(51 65 85 0.5);
+  border-radius: 5px;
 }

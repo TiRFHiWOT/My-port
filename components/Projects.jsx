@@ -1,6 +1,26 @@
 "use client";
+import React, { useState, useTransition } from "react";
 import ProjectCard from "./ProjectCard";
+import PrivateCard from "./PrivateCard";
+import ProjectTag from "./ProjectTag";
 import { motion } from "framer-motion";
+
+const publicData = [
+  {
+    id: "1",
+    title: "My Project",
+    description: "Project-1",
+    image: "one.png",
+    tag: ["ALL", "PRIVATE"],
+  },
+  {
+    id: "2",
+    title: "My Project",
+    description: "Project-2",
+    image: "two.png",
+    tag: ["ALL", "PRIVATE"],
+  },
+];
 
 const projectData = [
   {
@@ -10,6 +30,7 @@ const projectData = [
     image: "one.png",
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
+    tag: ["ALL", "PUBLIC"],
   },
   {
     id: "2",
@@ -18,6 +39,7 @@ const projectData = [
     image: "two.png",
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
+    tag: ["ALL", "PUBLIC"],
   },
   {
     id: "3",
@@ -26,6 +48,7 @@ const projectData = [
     image: "three.png",
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
+    tag: ["ALL", "PUBLIC"],
   },
   {
     id: "4",
@@ -34,26 +57,28 @@ const projectData = [
     image: "four.png",
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
-  },
-  {
-    id: "5",
-    title: "My Project",
-    description: "Project-5",
-    image: "five.png",
-    gitUrl: "https://github.com/",
-    previewUrl: "https://vercel.com/",
-  },
-  {
-    id: "6",
-    title: "My Project",
-    description: "Project-6",
-    image: "six.png",
-    gitUrl: "https://github.com/",
-    previewUrl: "https://vercel.com/",
+    tag: ["ALL", "PUBLIC"],
   },
 ];
 
 const Projects = () => {
+  const [tag, setTag] = useState("ALL");
+  const [isPending, startTransition] = useTransition();
+
+  const handleTagChange = (newTag) => {
+    startTransition(() => {
+      setTag(newTag);
+    });
+  };
+
+  const filteredProjects = projectData.filter((project) =>
+    project.tag.includes(tag)
+  );
+
+  const filteredPrivate = publicData.filter((project) =>
+    project.tag.includes(tag)
+  );
+
   return (
     <section id="Projects">
       <div className="md:px-24 px-8 py-6 lg:py-16 my-8 md:my-24 bg-gradient-to-b from-[#1e2842] via-[#12192b] to-[#1e2842] relative">
@@ -70,22 +95,49 @@ const Projects = () => {
         >
           <span className="border-orange-500 border-b-4">MY</span> PROJECTS
         </motion.h1>
-        <p className="text-xs md:text-sm text-white mb-5 lg:w-[60%] p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi atque
-          sit nobis a rerum minus tempora reiciendis consequuntur molestias
-          mollitia delectus inventore quo sapiente nesciunt, quod, praesentium
-          odit iusto aliquid soluta ab. Culpa tenetur esse, adipisci possimus
-          cupiditate expedita magni quis cum? Quos eaque ducimus earum fuga nisi
-          illum tempora.
-        </p>
+        <div className="flex justify-between">
+          <p className="text-xs md:text-sm text-white mb-5 lg:w-[60%] p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50 border border-[#334155]">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi atque
+            sit nobis a rerum minus tempora reiciendis consequuntur molestias
+            mollitia delectus inventore quo sapiente nesciunt, quod, praesentium
+            odit iusto aliquid soluta ab. Culpa tenetur esse, adipisci possimus
+            cupiditate expedita magni quis cum? Quos eaque ducimus earum fuga
+            nisi illum tempora.
+          </p>
+          <div className="text-white flex flex-row justify-end self-end mb-5">
+            <ProjectTag
+              onClick={handleTagChange}
+              name="ALL"
+              isSelected={tag === "ALL"}
+            />
+            <ProjectTag
+              onClick={handleTagChange}
+              name="PUBLIC"
+              isSelected={tag === "PUBLIC"}
+            />
+            <ProjectTag
+              onClick={handleTagChange}
+              name="PRIVATE"
+              isSelected={tag === "PRIVATE"}
+            />
+          </div>
+        </div>
         <div className="grid md:gap-8 gap-4 grid-cols-2 lg:grid-cols-3 py-6">
-          {projectData.map((project) => (
+          {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               title={project.title}
               description={project.description}
               imgUrl={project.image}
               gitUrl={project.gitUrl}
+              previewUrl={project.previewUrl}
+            />
+          ))}
+          {filteredPrivate.map((project, index) => (
+            <PrivateCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
               previewUrl={project.previewUrl}
             />
           ))}

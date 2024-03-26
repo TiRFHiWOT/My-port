@@ -9,7 +9,7 @@ import transparent from "../public/circuit_board.png";
 const Hero = () => {
   return (
     <section>
-      <div className="grid lg:grid-cols-2 mt-20 mb-3 py-4 lg:p-10 justify-center relative min-h-[70vh] items-center">
+      <div className="grid lg:grid-cols-2 mt-20 mb-3 py-4 lg:p-10 justify-center relative min-h-[80vh] items-center">
         <Image
           src={transparent}
           alt="hero image"

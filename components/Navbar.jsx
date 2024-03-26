@@ -62,13 +62,13 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <button
+            <Link
               href={"#Contact"}
               className="border-2 border-cyan-400 py-1 px-8 font-bold text-white
            rounded-lg hover:text-white hover:bg-gradient-to-br from-cyan-500  to-blue-500 hover:border-none hover:px-[34px] hover:py-[6px] "
             >
               {`Let's Talk`}
-            </button>
+            </Link>
           </div>
         </div>
         {navbarOpen && <MenuOverlay links={navlinks} />}
