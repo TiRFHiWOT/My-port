@@ -19,13 +19,15 @@ const TestimonialCard = ({ comment, userName, postion, imgUrl }) => {
             <h1>{userName}</h1>
             <p className="text-xs text-gray-400 mt-2">{postion}</p>
           </div>
-          <Image
-            src={imgUrl}
-            alt="face"
-            width={40}
-            height={40}
-            className="border rounded-full border-[#334155]"
-          />
+          <div className=" border rounded-full overflow-hidden border-[#334155] w-[52px] h-[52px] flex items-center justify-center">
+            <Image
+              src={imgUrl}
+              alt="face"
+              width={50}
+              height={40}
+              className="border border-[#334155] -z-10"
+            />
+          </div>
         </div>
       </div>
     </motion.section>

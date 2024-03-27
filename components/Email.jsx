@@ -13,7 +13,7 @@ const Email = () => {
       className="grid md:grid-cols-2 mx-6 mb-12 py-16 lg:px-24 gap-4 relative overflow-hidden"
     >
       <div className="p-4">
-        <h1 className="text-xl font-bold my-2 z-10 py-3 -rotate-3">{`Let's Connect`}</h1>
+        <h1 className="text-2xl font-bold my-2 z-10 py-3 -rotate-3">{`Let's Connect.`}</h1>
         <p className="mb-4 max-w-md text-slate-400">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim nisi
           numquam incidunt perferendis iste cum explicabo illo eveniet rem

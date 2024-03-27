@@ -30,7 +30,7 @@ const Navbar = () => {
           <Link
             href={"#Navbar"}
             className="text-3xl font-semibold rounded-full border-8 border-cyan-400 
-            px-6 shadow-lg shadow-cyan-300 bg-slate-900 -rotate-3 transform transition-all duration-[0.5s]"
+            px-6 shadow-lg shadow-cyan-300 bg-slate-900 -rotate-3"
           >
             LOGO
           </Link>

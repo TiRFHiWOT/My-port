@@ -16,7 +16,7 @@ const ProjectCard = ({ imgUrl, title, description, previewUrl, gitUrl }) => {
         className="h-72"
         style={{ background: `url(${imgUrl})`, backgroundSize: "cover" }}
       >
-        <div className=" absolute bottom-0 left-0 w-full h-[75px] bg-[#21252967] group-hover:shadow-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-end items-center">
+        <div className="absolute bottom-[50%] left-[50%] translate-x-[-50%] rounded-full w-[180px] h-[75px] bg-[#212529] group-hover:shadow-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-center items-center">
           <Link
             href={gitUrl}
             className="w-14 h-14 mr-12 rounded-full border-2 relative border-slate-400 hover:border-white hover:text-white flex justify-center items-center group/link"

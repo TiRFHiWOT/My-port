@@ -95,8 +95,8 @@ const Projects = () => {
         >
           <span className="border-orange-500 border-b-4">MY</span> PROJECTS
         </motion.h1>
-        <div className="flex justify-between">
-          <p className="text-xs md:text-sm text-white mb-5 lg:w-[60%] p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50 border border-[#334155]">
+        <div className="grid grid-flow-row lg:gap-8 lg:grid-flow-col">
+          <p className="text-xs md:text-sm text-white mb-5 p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50 border border-[#334155]">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi atque
             sit nobis a rerum minus tempora reiciendis consequuntur molestias
             mollitia delectus inventore quo sapiente nesciunt, quod, praesentium
@@ -104,7 +104,7 @@ const Projects = () => {
             cupiditate expedita magni quis cum? Quos eaque ducimus earum fuga
             nisi illum tempora.
           </p>
-          <div className="text-white flex flex-row justify-end self-end mb-5">
+          <div className="text-white flex flex-row justify-center lg:justify-end  self-end mb-5">
             <ProjectTag
               onClick={handleTagChange}
               name="ALL"
@@ -138,7 +138,7 @@ const Projects = () => {
               key={project.id}
               title={project.title}
               description={project.description}
-              previewUrl={project.previewUrl}
+              imgUrl={project.image}
             />
           ))}
         </div>

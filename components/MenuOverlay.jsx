@@ -18,7 +18,7 @@ const MenuOverlay = ({ links }) => {
           </li>
         ))}
         <button
-          href={"#contact"}
+          href={"#Contact"}
           className="py-2 font-bold text-white text-xl "
         >
           {`Let's Talk`}
