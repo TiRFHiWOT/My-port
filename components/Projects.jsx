@@ -5,19 +5,31 @@ import PrivateCard from "./PrivateCard";
 import ProjectTag from "./ProjectTag";
 import { motion } from "framer-motion";
 
-const publicData = [
+const privateData = [
   {
     id: "1",
     title: "My Project",
     description: "Project-1",
-    image: "one.png",
+    image: {
+      imgOne: "one.png",
+      imgTwo: "two.png",
+      imgThree: "three.png",
+      imgFour: "four.png",
+      imgFive: "five.png",
+    },
     tag: ["ALL", "PRIVATE"],
   },
   {
     id: "2",
     title: "My Project",
     description: "Project-2",
-    image: "two.png",
+    image: {
+      imgOne: "one.png",
+      imgTwo: "two.png",
+      imgThree: "three.png",
+      imgFour: "four.png",
+      imgFive: "five.png",
+    },
     tag: ["ALL", "PRIVATE"],
   },
 ];
@@ -27,7 +39,13 @@ const projectData = [
     id: "1",
     title: "My Project",
     description: "Project-1",
-    image: "one.png",
+    image: {
+      imgOne: "one.png",
+      imgTwo: "two.png",
+      imgThree: "three.png",
+      imgFour: "four.png",
+      imgFive: "five.png",
+    },
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
     tag: ["ALL", "PUBLIC"],
@@ -36,7 +54,13 @@ const projectData = [
     id: "2",
     title: "My Project",
     description: "Project-2",
-    image: "two.png",
+    image: {
+      imgOne: "two.png",
+      imgTwo: "three.png",
+      imgThree: "four.png",
+      imgFour: "five.png",
+      imgFive: "one.png",
+    },
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
     tag: ["ALL", "PUBLIC"],
@@ -45,7 +69,13 @@ const projectData = [
     id: "3",
     title: "My Project",
     description: "Project-3",
-    image: "three.png",
+    image: {
+      imgOne: "one.png",
+      imgTwo: "two.png",
+      imgThree: "three.png",
+      imgFour: "four.png",
+      imgFive: "five.png",
+    },
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
     tag: ["ALL", "PUBLIC"],
@@ -54,7 +84,13 @@ const projectData = [
     id: "4",
     title: "My Project",
     description: "Project-4",
-    image: "four.png",
+    image: {
+      imgOne: "one.png",
+      imgTwo: "two.png",
+      imgThree: "three.png",
+      imgFour: "four.png",
+      imgFive: "five.png",
+    },
     gitUrl: "https://github.com/",
     previewUrl: "https://vercel.com/",
     tag: ["ALL", "PUBLIC"],
@@ -75,7 +111,7 @@ const Projects = () => {
     project.tag.includes(tag)
   );
 
-  const filteredPrivate = publicData.filter((project) =>
+  const filteredPrivate = privateData.filter((project) =>
     project.tag.includes(tag)
   );
 
@@ -128,7 +164,11 @@ const Projects = () => {
               key={project.id}
               title={project.title}
               description={project.description}
-              imgUrl={project.image}
+              imgOne={project.image.imgOne}
+              imgTwo={project.image.imgTwo}
+              imgThree={project.image.imgThree}
+              imgFour={project.image.imgFour}
+              imgFive={project.image.imgFive}
               gitUrl={project.gitUrl}
               previewUrl={project.previewUrl}
             />
@@ -138,7 +178,11 @@ const Projects = () => {
               key={project.id}
               title={project.title}
               description={project.description}
-              imgUrl={project.image}
+              imgOne={project.image.imgOne}
+              imgTwo={project.image.imgTwo}
+              imgThree={project.image.imgThree}
+              imgFour={project.image.imgFour}
+              imgFive={project.image.imgFive}
             />
           ))}
         </div>

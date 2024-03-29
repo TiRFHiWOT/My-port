@@ -7,20 +7,12 @@ import Footer from "@/components/Footer";
 import Achievement from "@/components/Achievement";
 import Work from "@/components/Work";
 import Testimonial from "@/components/Testimonial";
-import InfiniteTranslation from "@/components/Translate";
 
 const page = () => {
   return (
     <main>
       <Navbar />
-      <Hero />
-      <Achievement />
-      <About />
-      <Work />
       <Projects />
-      <Testimonial />
-      <Email />
-      <Footer />
     </main>
   );
 };
