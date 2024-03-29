@@ -48,7 +48,7 @@ const PrivateCard = ({
           style={{ background: `url(${imgFive})`, backgroundSize: "cover" }}
         ></div>
       </div>
-      <div className="bg-[#11161d] px-3 pb-3 pt-2">
+      <div className="bg-[#11161d] px-3 pb-3 pt-2 flex flex-col justify-between">
         <div>
           <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
             {title}
