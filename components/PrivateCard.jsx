@@ -26,7 +26,7 @@ const PrivateCard = ({
       viewport={{ once: true }}
       className="group border-2 border-[#33415579] text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
     >
-      <div className="relative h-72 group">
+      <div className="relative h-56 lg:h-72 group">
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] z-40"
           style={{ background: `url(${imgOne})`, backgroundSize: "cover" }}
@@ -49,10 +49,15 @@ const PrivateCard = ({
         ></div>
       </div>
       <div className="bg-[#11161d] px-3 pb-3 pt-2">
-        <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
-          {title}
-        </h1>
-        <p className="text-sm text-slate-400">{description}</p>
+        <div>
+          <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
+            {title}
+          </h1>
+          <p className="text-sm text-slate-400">{description}</p>
+        </div>
+        <div className="hidden group-hover:flex text-cyan-400">
+          <h1>PRIVATE</h1>
+        </div>
       </div>
     </motion.div>
   );
