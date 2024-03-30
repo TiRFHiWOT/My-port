@@ -23,7 +23,7 @@ const ProjectCard = ({
       viewport={{ once: true }}
       className="group border-2 border-[#33415579] hover:rounded-none text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
     >
-      <div className="h-72">
+      <div className="h-72 relative group">
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] z-40"
           style={{ background: `url(${imgOne})`, backgroundSize: "cover" }}
@@ -44,7 +44,7 @@ const ProjectCard = ({
           className="absolute top-0 left-0 w-full h-full z-0"
           style={{ background: `url(${imgFive})`, backgroundSize: "cover" }}
         ></div>
-        <div className="absolute bottom-[50%] left-[50%] translate-x-[-50%] rounded-full w-[180px] h-[75px] bg-[#212529] group-hover:shadow-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-center items-center">
+        <div className="z-50 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full w-[180px] h-[75px] bg-[#212529] group-hover:shadow-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-center items-center">
           <Link
             href={gitUrl}
             className="w-14 h-14 mr-12 rounded-full border-2 relative border-slate-400 hover:border-white hover:text-white flex justify-center items-center group/link"

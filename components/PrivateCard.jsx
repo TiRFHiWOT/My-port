@@ -48,11 +48,16 @@ const PrivateCard = ({
           style={{ background: `url(${imgFive})`, backgroundSize: "cover" }}
         ></div>
       </div>
-      <div className="bg-[#11161d] px-3 pb-3 pt-2">
-        <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
-          {title}
-        </h1>
-        <p className="text-sm text-slate-400">{description}</p>
+      <div className="bg-[#11161d] px-3 pb-3 pt-2 flex flex-row justify-between">
+        <div>
+          <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
+            {title}
+          </h1>
+          <p className="text-sm text-slate-400">{description}</p>
+        </div>
+        <div className="hidden group-hover:flex text-cyan-400">
+          <h1>PRIVATE</h1>
+        </div>
       </div>
     </motion.div>
   );

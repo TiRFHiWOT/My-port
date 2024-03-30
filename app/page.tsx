@@ -12,7 +12,14 @@ const page = () => {
   return (
     <main>
       <Navbar />
+      <Hero />
+      <Achievement />
+      <About />
+      <Work />
       <Projects />
+      <Testimonial />
+      <Email />
+      <Footer />
     </main>
   );
 };
