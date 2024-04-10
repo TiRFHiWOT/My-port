@@ -75,17 +75,27 @@ const Hero = () => {
             </motion.button>
           </div>
         </div>
-        <div className="mx-auto my-5 lg:my-0">
+        <motion.div
+          initial={{ y: "400px", opacity: 0 }}
+          animate={{ y: "0", opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mx-auto my-5 lg:my-0"
+        >
           <motion.div
-            initial={{ x: "50px", y: "50px", opacity: 0 }}
-            animate={{ x: "0", y: "0", opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={{ x: 0 }}
+            animate={{ x: [-5, 5, -5] }}
+            transition={{
+              duration: 4,
+              delay: 1,
+              repeat: Infinity,
+              ease: "linear",
+            }}
             className="rounded-full  p-7 mb-2 bg-[#121212] bg-opacity-50"
             style={{ boxShadow: "0 0 10px 5px #121212" }}
           >
             <Image src={code} alt="hero image" width={250} height={250} />
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

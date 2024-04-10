@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Slides from "@/components/slides";
+import Slides from "@/components/Slides";
 import one from "../public/one.png";
 import two from "../public/two.png";
 import three from "../public/three.png";

@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProjectTag = ({ name, onClick, isSelected }) => {
   const buttonStyles = isSelected
     ? "text-white bg-orange-800 border-2 border-[#334155]"

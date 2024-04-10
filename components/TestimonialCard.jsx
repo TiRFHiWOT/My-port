@@ -1,9 +1,24 @@
 "use client";
-import React from "react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { storage } from "@/app/firebase";
 import { motion } from "framer-motion";
+import { listAll, getDownloadURL, ref } from "firebase/storage";
 
-const TestimonialCard = ({ comment, userName, postion, imgUrl }) => {
+const TestimonialCard = ({ comment, userName, position, imgUrl }) => {
+  const [imageList, setImageList] = useState([]);
+
+  const imageListRef = ref(storage, "testimonialFile/");
+
+  useEffect(() => {
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList((prev) => [...prev, url]);
+        });
+      });
+    });
+  });
   return (
     <motion.section
       initial={{ opacity: 0, y: 100 }}
@@ -11,23 +26,22 @@ const TestimonialCard = ({ comment, userName, postion, imgUrl }) => {
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <div className="flex flex-col p-5 lg:p-10 bg-slate-850 border hover:shadow-xl border-[#334155] rounded-lg hover:scale-105 transform transition duration-[0.5s]">
+      <div className="flex flex-col p-5 lg:p-10 bg-slate-850 border hover:shadow-xl border-[#334155] rounded-lg hover:scale-105 transform transition-all duration-[0.5s] group">
         <h1 className="text-7xl">{`"`}</h1>
-        <div className="text-sm mb-10 text-gray-400">{comment}</div>
+        <div className="text-sm mb-10 text-gray-400 tracking-wider font-semibold">
+          {comment}
+        </div>
         <div className="flex flex-row justify-between ">
           <div className="flex flex-col">
-            <h1>{userName}</h1>
-            <p className="text-xs text-gray-400 mt-2">{postion}</p>
+            <h1 className=" font-bold">@{userName}</h1>
+            <p className="text-xs text-gray-400 mt-2 font-semibold">
+              {position}
+            </p>
           </div>
-          <div className=" border rounded-full overflow-hidden border-[#334155] w-[52px] h-[52px] flex items-center justify-center">
-            <Image
-              src={imgUrl}
-              alt="face"
-              width={50}
-              height={40}
-              className="border border-[#334155] -z-10"
-            />
-          </div>
+          <div
+            className="rounded-full group-hover:border-b-2 border-gray-700 w-[50px] h-[50px] transform transition-all duration-[0.5s]"
+            style={{ background: `url(${imgUrl})`, backgroundSize: "cover" }}
+          ></div>
         </div>
       </div>
     </motion.section>

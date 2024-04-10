@@ -1,101 +1,106 @@
 "use client";
 import TabButton from "./TabButton";
-import React, { useTransition, useState } from "react";
+import { useTransition, useState, useEffect } from "react";
 import SkillsCard from "@/components/SkillsCard";
 import { motion, MotionConfig } from "framer-motion";
-
-const SkillData = [
-  {
-    id: "1",
-    skillName: "HTML",
-    image: "/html.png",
-  },
-  {
-    id: "2",
-    skillName: "CSS",
-    image: "/css.png",
-  },
-  {
-    id: "3",
-    skillName: "JS",
-    image: "/js.png",
-  },
-  {
-    id: "4",
-    skillName: "NODE.js",
-    image: "/node_js.png",
-  },
-  {
-    id: "5",
-    skillName: "REACT.js",
-    image: "/react_js.png",
-  },
-  {
-    id: "6",
-    skillName: "NEXT.js",
-    image: "/next_js.png",
-  },
-  {
-    id: "7",
-    skillName: "HTML",
-    image: "/html.png",
-  },
-  {
-    id: "8",
-    skillName: "CSS",
-    image: "/css.png",
-  },
-  {
-    id: "9",
-    skillName: "JS",
-    image: "/js.png",
-  },
-  {
-    id: "10",
-    skillName: "NODE.js",
-    image: "/node_js.png",
-  },
-];
-
-const TAB_DATA = [
-  {
-    title: "Skills",
-    id: "skills",
-    content: (
-      <div className="grid grid-cols-2 gap-5 text-gray-300">
-        {SkillData.map((skill) => (
-          <SkillsCard
-            key={skill.id}
-            skillName={skill.skillName}
-            imgUrl={skill.image}
-          />
-        ))}
-      </div>
-    ),
-  },
-  {
-    title: "Education",
-    id: "education",
-    content: (
-      <ul className="grid grid-cols-1 gap-2 text-gray-300">
-        <li className="shadow-lg py-2 px-4">Fullstack Academy of Code 1</li>
-        <li className="shadow-lg py-2 px-4">Fullstack Academy of Code 2</li>
-        <li className="shadow-lg py-2 px-4">Fullstack Academy of Code 3</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Certifications",
-    id: "certifications",
-    content: (
-      <ul className="grid grid-cols-1 text-gray-300">
-        <li className="shadow-lg py-2 px-4">ALL OF THEM!</li>
-      </ul>
-    ),
-  },
-];
+import { db } from "@/app/firebase";
+import { getDocs, collection } from "firebase/firestore";
 
 const About = () => {
+  const skillCollectionRef = collection(db, "skill");
+  const educationCollectionRef = collection(db, "education");
+  const certificationCollectionRef = collection(db, "certification");
+
+  const [skill, setSkill] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [certification, setCertification] = useState([]);
+
+  useEffect(() => {
+    const getSkill = async () => {
+      const data = await getDocs(skillCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setSkill(filteredData);
+    };
+    getSkill();
+  }, []);
+
+  useEffect(() => {
+    const getEducation = async () => {
+      const data = await getDocs(educationCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setEducation(filteredData);
+    };
+    getEducation();
+  }, []);
+
+  useEffect(() => {
+    const getCertification = async () => {
+      const data = await getDocs(certificationCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setCertification(filteredData);
+    };
+    getCertification();
+  }, []);
+
+  const TAB_DATA = [
+    {
+      title: "Skills",
+      id: "skills",
+      content: (
+        <div className="grid grid-cols-2 gap-5 text-gray-300">
+          {skill.map((item) => (
+            <SkillsCard
+              key={item.id}
+              skillName={item.skill}
+              imgUrl={item.image}
+            />
+          ))}
+        </div>
+      ),
+    },
+    {
+      title: "Education",
+      id: "education",
+      content: (
+        <ul className="grid grid-cols-1 gap-2 text-gray-300">
+          {education.map((item) => (
+            <li
+              key={item.id}
+              className="shadow-lg hover:shadow-xl py-2 mr-1 px-3 border border-[#334155] rounded-full"
+            >
+              {item.education}
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      title: "Certifications",
+      id: "certifications",
+      content: (
+        <ul className="grid grid-cols-1 gap-2 text-gray-300">
+          {certification.map((item) => (
+            <li
+              key={item.id}
+              className="shadow-lg hover:shadow-xl py-2 mr-1 px-3 border border-[#334155] rounded-full"
+            >
+              {item.certification}
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+  ];
+
   const [tab, setTab] = useState("skills");
   const [isPending, startTransition] = useTransition();
 
@@ -198,7 +203,7 @@ const About = () => {
             </motion.div>
           </div>
           <div className="h-[100px] w-[100px] rounded-full bg-slate-700 absolute shadow-lg top-[-3rem] right-[-2rem] -z-10 opacity-50"></div>
-          <div className="h-[50px] w-[50px] rounded-full bg-slate-700 absolute shadow-lg top-[4rem] right-[30rem] -z-10 opacity-50"></div>
+          <div className="h-[50px] w-[50px] rounded-full bg-slate-700 absolute shadow-lg top-[2rem] right-[33rem] -z-10 opacity-50"></div>
         </div>
       </MotionConfig>
     </section>

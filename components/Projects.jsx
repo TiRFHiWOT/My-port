@@ -1,101 +1,11 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { db } from "@/app/firebase";
+import { getDocs, collection } from "firebase/firestore";
 import ProjectCard from "./ProjectCard";
 import PrivateCard from "./PrivateCard";
 import ProjectTag from "./ProjectTag";
 import { motion } from "framer-motion";
-
-const privateData = [
-  {
-    id: "1",
-    title: "My Project",
-    description: "Project-1",
-    image: {
-      imgOne: "five.png",
-      imgTwo: "one.png",
-      imgThree: "two.png",
-      imgFour: "three.png",
-      imgFive: "four.png",
-    },
-    tag: ["ALL", "PRIVATE"],
-  },
-  {
-    id: "2",
-    title: "My Project",
-    description: "Project-2",
-    image: {
-      imgOne: "five.png",
-      imgTwo: "one.png",
-      imgThree: "two.png",
-      imgFour: "three.png",
-      imgFive: "four.png",
-    },
-    tag: ["ALL", "PRIVATE"],
-  },
-];
-
-const projectData = [
-  {
-    id: "1",
-    title: "My Project",
-    description: "Project-1",
-    image: {
-      imgOne: "one.png",
-      imgTwo: "two.png",
-      imgThree: "three.png",
-      imgFour: "four.png",
-      imgFive: "five.png",
-    },
-    gitUrl: "https://github.com/",
-    previewUrl: "https://vercel.com/",
-    tag: ["ALL", "PUBLIC"],
-  },
-  {
-    id: "2",
-    title: "My Project",
-    description: "Project-2",
-    image: {
-      imgOne: "two.png",
-      imgTwo: "three.png",
-      imgThree: "four.png",
-      imgFour: "five.png",
-      imgFive: "one.png",
-    },
-    gitUrl: "https://github.com/",
-    previewUrl: "https://vercel.com/",
-    tag: ["ALL", "PUBLIC"],
-  },
-  {
-    id: "3",
-    title: "My Project",
-    description: "Project-3",
-    image: {
-      imgOne: "three.png",
-      imgTwo: "four.png",
-      imgThree: "five.png",
-      imgFour: "one.png",
-      imgFive: "two.png",
-    },
-    gitUrl: "https://github.com/",
-    previewUrl: "https://vercel.com/",
-    tag: ["ALL", "PUBLIC"],
-  },
-  {
-    id: "4",
-    title: "My Project",
-    description: "Project-4",
-    image: {
-      imgOne: "four.png",
-      imgTwo: "five.png",
-      imgThree: "one.png",
-      imgFour: "two.png",
-      imgFive: "three.png",
-    },
-    gitUrl: "https://github.com/",
-    previewUrl: "https://vercel.com/",
-    tag: ["ALL", "PUBLIC"],
-  },
-];
 
 const Projects = () => {
   const [tag, setTag] = useState("ALL");
@@ -107,17 +17,39 @@ const Projects = () => {
     });
   };
 
-  const filteredProjects = projectData.filter((project) =>
-    project.tag.includes(tag)
-  );
+  const projectsCollectionRef = collection(db, "publicProjects");
+  const privateCollectionRef = collection(db, "privateProjects");
+  const [privateProjects, setPrivateProjects] = useState([]);
 
-  const filteredPrivate = privateData.filter((project) =>
-    project.tag.includes(tag)
-  );
+  const [publicProjects, setPublicProjects] = useState([]);
+
+  useEffect(() => {
+    const getPublic = async () => {
+      const data = await getDocs(projectsCollectionRef);
+      const publicData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setPublicProjects(publicData);
+    };
+    getPublic();
+  }, []);
+
+  useEffect(() => {
+    const getPrivate = async () => {
+      const data = await getDocs(privateCollectionRef);
+      const privateData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setPrivateProjects(privateData);
+    };
+    getPrivate();
+  }, []);
 
   return (
     <section id="Projects">
-      <div className="md:px-24 px-8 py-6 lg:py-16 my-8 md:my-24 bg-gradient-to-b from-[#1e2842] via-[#12192b] to-[#1e2842] relative">
+      <div className="md:px-24 px-8 py-6 lg:py-16 my-8 md:my-24 relative">
         <motion.h1
           initial={{ x: "-200px", opacity: 0 }}
           whileInView={{ x: "0", opacity: 1 }}
@@ -159,30 +91,30 @@ const Projects = () => {
           </div>
         </div>
         <div className="grid md:gap-8 gap-4 grid-cols-2 lg:grid-cols-3 py-6">
-          {filteredProjects.map((project, index) => (
+          {publicProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               title={project.title}
               description={project.description}
-              imgOne={project.image.imgOne}
-              imgTwo={project.image.imgTwo}
-              imgThree={project.image.imgThree}
-              imgFour={project.image.imgFour}
-              imgFive={project.image.imgFive}
               gitUrl={project.gitUrl}
               previewUrl={project.previewUrl}
+              imgOne={project.images[0]}
+              imgTwo={project.images[1]}
+              imgThree={project.images[2]}
+              imgFour={project.images[3]}
+              imgFive={project.images[4]}
             />
           ))}
-          {filteredPrivate.map((project, index) => (
+          {privateProjects.map((project, index) => (
             <PrivateCard
               key={project.id}
               title={project.title}
               description={project.description}
-              imgOne={project.image.imgOne}
-              imgTwo={project.image.imgTwo}
-              imgThree={project.image.imgThree}
-              imgFour={project.image.imgFour}
-              imgFive={project.image.imgFive}
+              imgOne={project.images[0]}
+              imgTwo={project.images[1]}
+              imgThree={project.images[2]}
+              imgFour={project.images[3]}
+              imgFive={project.images[4]}
             />
           ))}
         </div>

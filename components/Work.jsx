@@ -1,43 +1,90 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import { db } from "@/app/firebase";
+import { useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
 import WorkCard from "@/components/WorkCard";
 import { motion } from "framer-motion";
 
 const workData = [
   {
     id: "1",
-    title: "red",
+    name: "red",
     place: "Place of Occupation",
-    description: "",
+    pointOne:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointTwo:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointThree:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    year: "2018-2019",
   },
   {
     id: "2",
-    title: "green",
+    name: "green",
     place: "Place of Occupation",
-    description: "",
+    pointOne:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointTwo:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointThree:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    year: "2019-2020",
   },
   {
     id: "3",
-    title: "blue",
+    name: "blue",
     place: "Place of Occupation",
-    description: "",
+    pointOne:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointTwo:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointThree:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    year: "2020-2021",
   },
   {
     id: "4",
-    title: "yellow",
+    name: "yellow",
     place: "Place of Occupation",
-    description: "",
+    pointOne:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointTwo:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointThree:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    year: "2021-2022",
   },
   {
     id: "5",
-    title: "gray",
+    name: "gray",
     place: "Place of Occupation",
-    description: "",
+    pointOne:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointTwo:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    pointThree:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
+    year: "2022-2023",
   },
 ];
 
 const Work = () => {
+  const experienceCollectionRef = collection(db, "experience");
+
+  const [experience, setExperience] = useState([]);
+
+  useEffect(() => {
+    const getExperience = async () => {
+      const data = await getDocs(experienceCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setExperience(filteredData);
+    };
+    getExperience();
+  }, []);
+
   return (
     <section id="Work">
       <div className="my-10 py-5 lg:py-12 relative">
@@ -57,24 +104,30 @@ const Work = () => {
           viewport={{ once: true }}
           className="text-4xl text-white md:text-5xl text-center pb-6 font-bold tracking-wide"
         >
-          Work Experience
+          Work <span className="text-orange-500">Ex</span>perience
         </motion.h1>
         <div className="big-slide pt-10 pb-5 overflow-hidden relative w-full">
           <div className="work-slide flex w-fit">
-            {workData.map((project) => (
+            {experience.map((item) => (
               <WorkCard
-                key={project.id}
-                title={project.title}
-                description={project.description}
-                place={project.place}
+                key={item.id}
+                name={item.name}
+                pointOne={item.pointOne}
+                pointTwo={item.pointTwo}
+                pointThree={item.pointThree}
+                place={item.place}
+                year={item.year}
               />
             ))}
-            {workData.map((project) => (
+            {experience.map((item) => (
               <WorkCard
-                key={project.id}
-                title={project.title}
-                description={project.description}
-                place={project.place}
+                key={item.id}
+                name={item.name}
+                pointOne={item.pointOne}
+                pointTwo={item.pointTwo}
+                pointThree={item.pointThree}
+                place={item.place}
+                year={item.year}
               />
             ))}
           </div>

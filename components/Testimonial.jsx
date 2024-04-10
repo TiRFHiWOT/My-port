@@ -1,44 +1,25 @@
+"use client";
+import { db } from "@/app/firebase";
+import { useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
 import TestimonialCard from "@/components/TestimonialCard";
 
 const Testimonial = () => {
-  const TestData = [
-    {
-      id: "1",
-      userName: "@ Sara Lee",
-      postion: "COO at ARX",
-      comment: (
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, a
-          corrupti ullam beatae ab saepe!
-        </p>
-      ),
-      image: "/dd_dd.jpg",
-    },
-    {
-      id: "2",
-      userName: "@ Sara Lee",
-      postion: "COO at ARX",
-      comment: (
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, a
-          corrupti ullam beatae ab saepe!
-        </p>
-      ),
-      image: "/dd_dd.jpg",
-    },
-    {
-      id: "3",
-      userName: "@ Sara Lee",
-      postion: "COO at ARX",
-      comment: (
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, a
-          corrupti ullam beatae ab saepe!
-        </p>
-      ),
-      image: "/dd_dd.jpg",
-    },
-  ];
+  const testmonialCollectionRef = collection(db, "testimonial");
+
+  const [testimonial, setTestimonial] = useState([]);
+
+  useEffect(() => {
+    const getTestimonial = async () => {
+      const data = await getDocs(testmonialCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setTestimonial(filteredData);
+    };
+    getTestimonial();
+  }, []);
 
   return (
     <section>
@@ -48,13 +29,13 @@ const Testimonial = () => {
           Testimonials
         </h1>
         <div className="grid lg:grid-cols-3 gap-10 p-5 lg:p-10">
-          {TestData.map((project) => (
+          {testimonial.map((item) => (
             <TestimonialCard
-              key={project.id}
-              userName={project.userName}
-              postion={project.postion}
-              comment={project.comment}
-              imgUrl={project.image}
+              key={item.id}
+              userName={item.userName}
+              position={item.position}
+              comment={item.comment}
+              imgUrl={item.image}
             />
           ))}
         </div>
