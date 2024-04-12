@@ -65,7 +65,7 @@ const ProjectCard = ({
           </Link>
         </div>
       </div>
-      <div className="bg-[#11161d] px-3 pb-3 pt-2 group-hover:rounded-none">
+      <div className="bg-[#11161d] px-3 pb-3 pt-2">
         <h1 className="text-lg font-semibold mb-2 border-l-4 border-yellow-300 pl-2">
           {title}
         </h1>

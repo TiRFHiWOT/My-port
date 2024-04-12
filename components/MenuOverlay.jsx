@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import NavLink from "./NavLink";
 
 const MenuOverlay = ({ links }) => {
@@ -17,12 +18,12 @@ const MenuOverlay = ({ links }) => {
             <NavLink href={link.path} title={link.title} />
           </li>
         ))}
-        <button
+        <Link
           href={"#Contact"}
           className="py-2 font-bold text-white text-xl "
         >
           {`Let's Talk`}
-        </button>
+        </Link>
       </ul>
     </div>
   );
