@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import FormCard from "@/components/admin/FormCard";
-import Private from "@/components/admin/Private";
 import {
   getDocs,
   addDoc,
