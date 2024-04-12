@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import Image from "next/image";
 import code from "../public/code_occupation.png";
 import { TypeAnimation } from "react-type-animation";

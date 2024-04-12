@@ -11,40 +11,27 @@ const Projects = () => {
   const [tag, setTag] = useState("ALL");
   const [isPending, startTransition] = useTransition();
 
-  const handleTagChange = (newTag) => {
+  const handleTagChange = (newTag) => () => {
     startTransition(() => {
       setTag(newTag);
     });
   };
 
-  const projectsCollectionRef = collection(db, "publicProjects");
-  const privateCollectionRef = collection(db, "privateProjects");
-  const [privateProjects, setPrivateProjects] = useState([]);
+  const projectsCollectionRef = collection(db, "projects");
+  const [allProjects, setAllProjects] = useState([]);
 
-  const [publicProjects, setPublicProjects] = useState([]);
+  const ProjectsData = allProjects.tag === true ? PrivateCard : ProjectCard;
 
   useEffect(() => {
-    const getPublic = async () => {
+    const getProjects = async () => {
       const data = await getDocs(projectsCollectionRef);
       const publicData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setPublicProjects(publicData);
+      setAllProjects(publicData);
     };
-    getPublic();
-  }, []);
-
-  useEffect(() => {
-    const getPrivate = async () => {
-      const data = await getDocs(privateCollectionRef);
-      const privateData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setPrivateProjects(privateData);
-    };
-    getPrivate();
+    getProjects();
   }, []);
 
   return (
@@ -74,49 +61,59 @@ const Projects = () => {
           </p>
           <div className="text-white flex flex-row justify-center lg:justify-end  self-end mb-5">
             <ProjectTag
-              onClick={handleTagChange}
+              onClick={handleTagChange("ALL")}
               name="ALL"
               isSelected={tag === "ALL"}
             />
             <ProjectTag
-              onClick={handleTagChange}
+              onClick={handleTagChange("PUBLIC")}
               name="PUBLIC"
               isSelected={tag === "PUBLIC"}
             />
             <ProjectTag
-              onClick={handleTagChange}
+              onClick={handleTagChange("PRIVATE")}
               name="PRIVATE"
               isSelected={tag === "PRIVATE"}
             />
           </div>
         </div>
         <div className="grid md:gap-8 gap-4 grid-cols-2 lg:grid-cols-3 py-6">
-          {publicProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              title={project.title}
-              description={project.description}
-              gitUrl={project.gitUrl}
-              previewUrl={project.previewUrl}
-              imgOne={project.images[0]}
-              imgTwo={project.images[1]}
-              imgThree={project.images[2]}
-              imgFour={project.images[3]}
-              imgFive={project.images[4]}
-            />
-          ))}
-          {privateProjects.map((project, index) => (
-            <PrivateCard
-              key={project.id}
-              title={project.title}
-              description={project.description}
-              imgOne={project.images[0]}
-              imgTwo={project.images[1]}
-              imgThree={project.images[2]}
-              imgFour={project.images[3]}
-              imgFive={project.images[4]}
-            />
-          ))}
+          {allProjects
+            .slice(
+              0,
+              process.env.NODE_ENV === "production" ? 3 : allProjects.length
+            )
+            .map((project, index) =>
+              tag === "ALL" ||
+              (tag === "PUBLIC" && !project.tag) ||
+              (tag === "PRIVATE" && project.tag) ? (
+                project.tag ? (
+                  <PrivateCard
+                    key={project.id}
+                    title={project.title}
+                    description={project.description}
+                    imgOne={project.images[0]}
+                    imgTwo={project.images[1]}
+                    imgThree={project.images[2]}
+                    imgFour={project.images[3]}
+                    imgFive={project.images[4]}
+                  />
+                ) : (
+                  <ProjectCard
+                    key={project.id}
+                    title={project.title}
+                    description={project.description}
+                    gitUrl={project.gitUrl}
+                    previewUrl={project.previewUrl}
+                    imgOne={project.images[0]}
+                    imgTwo={project.images[1]}
+                    imgThree={project.images[2]}
+                    imgFour={project.images[3]}
+                    imgFive={project.images[4]}
+                  />
+                )
+              ) : null
+            )}
         </div>
       </div>
     </section>

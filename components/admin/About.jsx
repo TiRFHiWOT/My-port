@@ -24,7 +24,7 @@ const About = () => {
       name: "imgUrl",
       placeholder: "Enter Image",
       type: "file",
-      label: "USER IMAGE",
+      label: "IMAGE",
       onChange: (e) => setFile(e.target.files[0]),
     },
   ];
@@ -51,8 +51,9 @@ const About = () => {
   const [newSkill, setNewSkill] = useState("");
   const [newEducation, setNewEducation] = useState("");
   const [newCertification, setNewCertification] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [per, setper] = useState(null);
+  const [showVerification, setShowVerification] = useState(false);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -91,7 +92,7 @@ const About = () => {
   const educationCollectionRef = collection(db, "education");
   const certificationCollectionRef = collection(db, "certification");
 
-  const onSubmitSki = async () => {
+  const addSkillToFirestore = async () => {
     let imageUrl = "";
     if (file) {
       const storageRef = ref(storage, "skills/" + file.name);
@@ -106,27 +107,61 @@ const About = () => {
       image: imageUrl,
     });
 
-    const deleteSkill = async (id) => {
-      const skillDoc = doc(db, "skill", id);
-      await deleteDoc(skillDoc);
-    };
-
     setNewSkill("");
     setFile("");
   };
 
-  const onSubmitEdu = async () => {
+  const addEducationToFirestore = async () => {
     await addDoc(educationCollectionRef, {
       education: newEducation,
     });
     setNewEducation("");
   };
 
-  const onSubmitCer = async () => {
+  const addCertificationToFirestore = async () => {
     await addDoc(certificationCollectionRef, {
       certification: newCertification,
     });
     setNewCertification("");
+  };
+
+  const resetInputFields = () => {
+    setNewSkill("");
+    setNewEducation("");
+    setNewCertification("");
+    setFile([]);
+  };
+
+  const onSubmitSkill = () => {
+    if (!(newSkill.trim() && file)) {
+      window.alert("Please fill all required fields");
+      return;
+    }
+    setShowVerification(true);
+  };
+
+  const onSubmitEducatiion = () => {
+    if (!newEducation.trim()) {
+      window.alert("Please fill all required fields");
+      return;
+    }
+    setShowVerification(true);
+  };
+
+  const onSubmitCertification = () => {
+    if (!newEducation.trim()) {
+      window.alert("Please fill all required fields");
+      return;
+    }
+    setShowVerification(true);
+  };
+
+  const handleVerificationConfirm = () => {
+    addSkillToFirestore();
+    addEducationToFirestore();
+    addCertificationToFirestore();
+    setShowVerification(false);
+    resetInputFields();
   };
 
   return (
@@ -144,7 +179,7 @@ const About = () => {
             />
           ))}
           <button
-            onClick={onSubmitSki}
+            onClick={onSubmitSkill}
             className="bg-orange-600 hover:bg-orange-700 border-2 border-slate-600 font-medium rounded-md block px-4 py-2 mt-4 disabled:bg-blue-200 disabled:cursor-not-allowed"
             disabled={per !== null && per < 100}
           >
@@ -164,7 +199,7 @@ const About = () => {
               />
             ))}
             <button
-              onClick={onSubmitEdu}
+              onClick={onSubmitEducatiion}
               className="bg-orange-600 hover:bg-orange-700 border-2 border-slate-600 font-medium rounded-md block px-4 py-2 mt-4"
             >
               Add Info
@@ -182,13 +217,34 @@ const About = () => {
               />
             ))}
             <button
-              onClick={onSubmitCer}
+              onClick={onSubmitCertification}
               className="bg-orange-600 hover:bg-orange-700 border-2 border-slate-600 font-medium rounded-md block px-4 py-2 mt-4"
             >
               Add Info
             </button>
           </div>
         </div>
+        {showVerification && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-[#112035] p-8 rounded-lg">
+              <p className="">Are you sure you want to add this item?</p>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={() => setShowVerification(false)}
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-4"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleVerificationConfirm}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

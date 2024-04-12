@@ -12,7 +12,7 @@ import { db, storage } from "@/app/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Projects = () => {
-  const controls = [
+  let controls = [
     {
       name: "title",
       placeholder: "Enter Title",
@@ -43,12 +43,12 @@ const Projects = () => {
     },
     {
       name: "imgUrl",
-      placeholder: "Enter Image",
+      placeholder: "Enter Images",
       type: "file",
-      label: "USER IMAGE",
+      label: "IMAGES",
       onChange: (e) => {
-        const selectedPublicFiles = Array.from(e.target.files);
-        setPublicFiles(selectedPublicFiles);
+        const selectedFiles = Array.from(e.target.files);
+        setFiles(selectedFiles);
       },
     },
   ];
@@ -57,18 +57,21 @@ const Projects = () => {
   const [newDescription, setNewDescription] = useState("");
   const [newPreviewUrl, setNewPreviewUrl] = useState("");
   const [newGitUrl, setNewGitUrl] = useState("");
-  const [publicFiles, setPublicFiles] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
   const [per, setPer] = useState(null);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
 
   useEffect(() => {
-    const uploadPublic = async () => {
-      if (publicFiles.length === 0) return;
+    const uploadProjects = async () => {
+      if (files.length === 0) return;
 
-      const publicImageUrls = [];
+      const urls = [];
 
-      for (const file of publicFiles) {
+      for (const file of files) {
         const name = new Date().getTime() + file.name;
-        const storageRef = ref(storage, "publicProjects/" + name);
+        const storageRef = ref(storage, "projects/" + name);
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(
@@ -81,10 +84,12 @@ const Projects = () => {
           () => {},
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              publicImageUrls.push(downloadURL);
+              console.log("Download URL:", downloadURL);
+              urls.push(downloadURL);
 
-              if (publicImageUrls.length === publicFiles.length) {
-                setPublicFiles(publicImageUrls);
+              if (urls.length === files.length) {
+                console.log("All URLs generated:", urls);
+                setImageUrls(urls);
               }
             });
           }
@@ -92,11 +97,11 @@ const Projects = () => {
       }
     };
 
-    uploadPublic();
+    uploadProjects();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [publicFiles]);
+  }, [files]);
 
-  const publicCollectionRef = collection(db, "publicProjects");
+  const collectionRef = collection(db, "projects");
 
   const addProjectsToFirestore = async () => {
     if (newTitle.trim() === "" || newDescription.trim() === "") {
@@ -104,33 +109,55 @@ const Projects = () => {
       return;
     }
     try {
-      await addDoc(publicCollectionRef, {
+      await addDoc(collectionRef, {
         title: newTitle,
         description: newDescription,
         previewUrl: newPreviewUrl,
         gitUrl: newGitUrl,
-        images: publicFiles,
+        images: imageUrls,
+        tag: isPrivate,
       });
-
-      setNewTitle("");
-      setNewDescription("");
-      setNewPreviewUrl("");
-      setNewGitUrl("");
-      setPublicFiles([]);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
+  };
+
+  const resetInputFields = () => {
+    setNewTitle("");
+    setNewDescription("");
+    setNewPreviewUrl("");
+    setNewGitUrl("");
+    setFiles([]);
+  };
+
+  if (isPrivate) {
+    controls = controls.filter(
+      (control) => control.name !== "previewUrl" && control.name !== "gitUrl"
+    );
+  }
+
+  const handlePrivacyChange = (e) => {
+    setIsPrivate(e.target.checked);
+  };
+
+  const onSubmit = () => {
+    if (!(newTitle.trim() && newDescription.trim() && files.length > 0)) {
+      window.alert("Please fill all required fields");
+      return;
+    }
+    setShowVerification(true);
+  };
+
+  const handleVerificationConfirm = () => {
+    addProjectsToFirestore();
+    setShowVerification(false);
+    resetInputFields();
   };
 
   return (
     <section>
       <div className="w-full h-full rounded-lg flex flex-row space-x-2">
         <div className=" bg-[#222a35] p-6 w-full h-full rounded-lg">
-          <div className="flex justify-end mb-2">
-            <h1 className="text-xl font-bold tracking-wider bg-slate-700 rounded-full px-6 py-1 border-2 border-[#334155]">
-              PUBLIC
-            </h1>
-          </div>
           {controls.map((item) => (
             <FormCard
               key={item.id}
@@ -141,22 +168,48 @@ const Projects = () => {
               onChange={item.onChange}
             />
           ))}
-          <button
-            onClick={addProjectsToFirestore}
-            className="bg-orange-600 hover:bg-orange-700 border-2 border-slate-600 font-medium rounded-md block px-4 py-2 mt-4 disabled:bg-blue-200 disabled:cursor-not-allowed"
-            disabled={per !== null && per < 100}
-          >
-            Add Info
-          </button>
-        </div>
-        <div className=" bg-[#222a35] p-6 w-full rounded-lg">
-          <div className="flex justify-end mb-2">
-            <h1 className="text-xl font-bold tracking-wider bg-slate-700 rounded-full px-6 py-1">
-              PRIVATE
-            </h1>
+          <div className="flex flex-col">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={handlePrivacyChange}
+                className="form-checkbox"
+              />
+              <span className="ml-2">Private</span>
+            </label>
+            <div>
+              <button
+                onClick={onSubmit}
+                className="bg-orange-600 hover:bg-orange-700 border-2 border-slate-600 font-medium rounded-md block px-4 py-2 mt-4 disabled:bg-blue-200 disabled:cursor-not-allowed"
+                disabled={per !== null && per < 100}
+              >
+                Add Info
+              </button>
+            </div>
           </div>
-          <Private />
         </div>
+        {showVerification && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-[#112035] p-8 rounded-lg">
+              <p className="">Are you sure you want to add this item?</p>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={() => setShowVerification(false)}
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-4"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleVerificationConfirm}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

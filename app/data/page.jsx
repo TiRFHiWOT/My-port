@@ -6,7 +6,7 @@ import TestimonialData from "@/components/Data/TestimonialData";
 import ExperienceData from "@/components/Data/ExperienceData";
 
 const CollectionData = () => {
-  const [currentSelectedTab, setCurrentSelectedTab] = useState("aboutData");
+  const [currentSelectedTab, setCurrentSelectedTab] = useState("skillData");
 
   const menuItems = [
     {
@@ -56,13 +56,13 @@ const CollectionData = () => {
                 onClick={() => {
                   setCurrentSelectedTab(item.id);
                 }}
-                className="p-4 font-bold text-xl text-white"
+                className="p-4 font-bold text-xl text-white w-full border-2 rounded-sm shadow-2xl hover:bg-[#46576e]"
               >
                 {item.label}
               </button>
             ))}
           </div>
-          <div className="flex h-[80vh] overflow-y-auto skills-bar">
+          <div className="flex w-full h-[80vh] overflow-y-auto skills-bar">
             <div className="w-full">
               {menuItems.map(
                 (item) => item.id === currentSelectedTab && item.component

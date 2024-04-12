@@ -12,6 +12,9 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-poppins)']
+      },
+      backgroundImage: {
+        'back': "url('/back.png')",
       }
   },
   plugins: [],

@@ -25,11 +25,11 @@ const ProjectCard = ({
       <div className="h-52 md:h-72 relative group">
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] z-40"
-          style={{ background: `url(${imgOne})`, backgroundSize: "cover" }}
+          style={{ background: `url(${imgFive})`, backgroundSize: "cover" }}
         ></div>
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] delay-[2s] z-30"
-          style={{ background: `url(${imgTwo})`, backgroundSize: "cover" }}
+          style={{ background: `url(${imgFour})`, backgroundSize: "cover" }}
         ></div>
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] delay-[4s] z-20"
@@ -37,11 +37,11 @@ const ProjectCard = ({
         ></div>
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] delay-[6s] z-10"
-          style={{ background: `url(${imgFour})`, backgroundSize: "cover" }}
+          style={{ background: `url(${imgTwo})`, backgroundSize: "cover" }}
         ></div>
         <div
           className="absolute top-0 left-0 w-full h-full z-0"
-          style={{ background: `url(${imgFive})`, backgroundSize: "cover" }}
+          style={{ background: `url(${imgOne})`, backgroundSize: "cover" }}
         ></div>
         <div className="z-50 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full w-[140px] md:w-[180px] h-[65px] md:h-[75px] bg-[#212529] group-hover:shadow-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-center items-center">
           <Link

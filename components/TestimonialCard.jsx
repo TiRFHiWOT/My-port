@@ -6,19 +6,6 @@ import { motion } from "framer-motion";
 import { listAll, getDownloadURL, ref } from "firebase/storage";
 
 const TestimonialCard = ({ comment, userName, position, imgUrl }) => {
-  const [imageList, setImageList] = useState([]);
-
-  const imageListRef = ref(storage, "testimonialFile/");
-
-  useEffect(() => {
-    listAll(imageListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageList((prev) => [...prev, url]);
-        });
-      });
-    });
-  });
   return (
     <motion.section
       initial={{ opacity: 0, y: 100 }}

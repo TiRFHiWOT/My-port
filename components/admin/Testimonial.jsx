@@ -46,8 +46,9 @@ const Testimonial = () => {
   const [newUserName, setNewUserName] = useState("");
   const [newPosition, setNewPosition] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [per, setper] = useState(null);
+  const [showVerification, setShowVerification] = useState(false);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -84,7 +85,7 @@ const Testimonial = () => {
 
   const testmonialCollectionRef = collection(db, "testimonial");
 
-  const onSubmit = async () => {
+  const addTestimonialToFirestore = async () => {
     let imageUrl = "";
     if (file) {
       const storageRef = ref(storage, "testimonial/" + file.name);
@@ -100,16 +101,29 @@ const Testimonial = () => {
       comment: newComment,
       image: imageUrl,
     });
+  };
 
-    const deleteTestimonial = async (id) => {
-      const testimonialDoc = doc(db, "testimonial", id);
-      await deleteDoc(testimonialDoc);
-    };
-
+  const resetInputFields = () => {
     setNewUserName("");
     setNewPosition("");
     setNewComment("");
     setFile("");
+  };
+
+  const onSubmit = () => {
+    if (
+      !(newUserName.trim() && newPosition.trim() && newComment.trim() && file)
+    ) {
+      window.alert("Please fill all required fields");
+      return;
+    }
+    setShowVerification(true);
+  };
+
+  const handleVerificationConfirm = () => {
+    addTestimonialToFirestore();
+    setShowVerification(false);
+    resetInputFields();
   };
 
   return (
@@ -134,6 +148,27 @@ const Testimonial = () => {
             Add Info
           </button>
         </div>
+        {showVerification && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-[#112035] p-8 rounded-lg">
+              <p className="">Are you sure you want to add this item?</p>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={() => setShowVerification(false)}
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-4"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleVerificationConfirm}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

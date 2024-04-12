@@ -29,15 +29,20 @@ const Testimonial = () => {
           Testimonials
         </h1>
         <div className="grid lg:grid-cols-3 gap-10 p-5 lg:p-10">
-          {testimonial.map((item) => (
-            <TestimonialCard
-              key={item.id}
-              userName={item.userName}
-              position={item.position}
-              comment={item.comment}
-              imgUrl={item.image}
-            />
-          ))}
+          {testimonial
+            .slice(
+              0,
+              process.env.NODE_ENV === "production" ? 3 : testimonial.length
+            )
+            .map((item) => (
+              <TestimonialCard
+                key={item.id}
+                userName={item.userName}
+                position={item.position}
+                comment={item.comment}
+                imgUrl={item.image}
+              />
+            ))}
         </div>
       </div>
     </section>

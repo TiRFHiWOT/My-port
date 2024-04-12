@@ -1,3 +1,4 @@
+"use client";
 import Dasboard from "@/components/admin/Dashboard";
 
 const page = () => {

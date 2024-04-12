@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React from "react";
 
-const FormCard = ({ label, type, name, placeholder, onChange, multiple }) => {
+const FormCard = ({ label, type, name, placeholder, onChange }) => {
   return (
     <div className="mb-4">
       <label className="block mb-2 text-sm font-bold text-slate-300 tracking-wide">
