@@ -18,41 +18,8 @@ const ExperienceData = () => {
   const [updatedPointTwo, setUpdatedPointTwo] = useState("");
   const [updatedPointThree, setUpdatedPointThree] = useState("");
   const [updatedYear, setUpdatedYear] = useState("");
-
-  const deleteExperience = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await deleteDoc(experienceDoc);
-  };
-
-  const updateName = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await updateDoc(experienceDoc, { name: updatedName });
-  };
-
-  const updatePlace = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await updateDoc(experienceDoc, { place: updatedPlace });
-  };
-
-  const updateYear = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await updateDoc(experienceDoc, { year: updatedYear });
-  };
-
-  const updatePointOne = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await updateDoc(experienceDoc, { pointOne: updatedPointOne });
-  };
-
-  const updatePointTwo = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await updateDoc(experienceDoc, { pointTwo: updatedPointTwo });
-  };
-
-  const updatePointThree = async (id) => {
-    const experienceDoc = doc(db, "experience", id);
-    await updateDoc(experienceDoc, { pointThree: updatedPointThree });
-  };
+  const [deleteId, setDeleteId] = useState(null);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const getExperience = async () => {
     const data = await getDocs(experienceCollectionRef);
@@ -67,7 +34,61 @@ const ExperienceData = () => {
     getExperience();
   }, []);
 
-  getExperience();
+  const deleteExperience = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await deleteDoc(experienceDoc);
+    setIsDeleted(true);
+    setDeleteId(null);
+    setTimeout(() => setIsDeleted(false), 3000);
+    getExperience();
+  };
+
+  const updateName = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await updateDoc(experienceDoc, { name: updatedName });
+    getExperience();
+  };
+
+  const updatePlace = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await updateDoc(experienceDoc, { place: updatedPlace });
+    getExperience();
+  };
+
+  const updateYear = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await updateDoc(experienceDoc, { year: updatedYear });
+    getExperience();
+  };
+
+  const updatePointOne = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await updateDoc(experienceDoc, { pointOne: updatedPointOne });
+    getExperience();
+  };
+
+  const updatePointTwo = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await updateDoc(experienceDoc, { pointTwo: updatedPointTwo });
+    getExperience();
+  };
+
+  const updatePointThree = async (id) => {
+    const experienceDoc = doc(db, "experience", id);
+    await updateDoc(experienceDoc, { pointThree: updatedPointThree });
+    getExperience();
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteId) {
+      deleteExperience(deleteId);
+    }
+  };
+
+  const handleCancel = () => {
+    setDeleteId(null);
+  };
+
   return (
     <section>
       <div>
@@ -75,146 +96,173 @@ const ExperienceData = () => {
           {experience.map((experience) => (
             <div
               key={experience.id}
-              className="mb-2 p-3 flex flex-row justify-between bg-[#33415580] text-xs"
+              className="mb-2 p-3 rounded-lg flex flex-row justify-between border 
+              backdrop-blur-lg border-[#334155] text-xs"
             >
-              <div>
-                <div className="flex flex-row justify-between space-x-2 my-1">
-                  <h1 className="my-1 pb-1 text-sky-300 border-b border-[#334155]">
+              <div className="grid gap-y-1.5 w-full">
+                <div
+                  className="flex flex-row justify-between px-4 items-center 
+                rounded-sm bg-[#334155]"
+                >
+                  <h1 className="my-1 pb-1 text-lg text-sky-300 ">
                     ID: {experience.id}
                   </h1>
                   <button
-                    onClick={() => deleteExperience(experience.id)}
-                    className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-red-700"
+                    onClick={() => setDeleteId(experience.id)}
+                    className="rounded-full border-2 border-[#5b6b83] text-white
+                     bg-red-500 hover:bg-red-600 py-2 px-4 my-1"
                   >
                     Delete
                   </button>
                 </div>
 
-                <div className="my-2">
-                  <div className="my-1 flex flex-row justify-between space-x-2">
-                    <h1>
-                      <span className="text-sky-300">name:</span>{" "}
-                      {experience.name}
-                    </h1>
-                    <div className="flex flex-row space-x-2">
-                      <input
-                        type="text"
-                        placeholder="New Name"
-                        onChange={(e) => setUpdatedName(e.target.value)}
-                        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-xs rounded-sm block"
-                      />
-                      <button
-                        onClick={() => updateName(experience.id)}
-                        className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-sky-600"
-                      >
-                        Update
-                      </button>
-                    </div>
+                <div
+                  className="flex flex-row justify-between items-center px-4
+                 rounded-sm bg-[#334155]"
+                >
+                  <h1>
+                    <span className="text-sky-300">name:</span>{" "}
+                    {experience.name}
+                  </h1>
+                  <div className="flex flex-row my-1 gap-2">
+                    <input
+                      type="text"
+                      placeholder={experience.name}
+                      onChange={(e) => setUpdatedName(e.target.value)}
+                      className="bg-slate-700 border border-slate-600 placeholder-slate-500
+                       text-slate-400 text-xs rounded-full px-2 outline-none focus:border-sky-500"
+                    />
+                    <button
+                      onClick={() => updateName(experience.id)}
+                      className="rounded-full text-white bg-sky-500 hover:bg-sky-600 py-2 px-4"
+                    >
+                      Update
+                    </button>
                   </div>
+                </div>
 
-                  <div className="my-1 flex flex-row justify-between space-x-2">
-                    <h1>
-                      <span className="text-sky-300">place:</span>{" "}
-                      {experience.place}
-                    </h1>
-                    <div className="flex flex-row space-x-2">
-                      <input
-                        type="text"
-                        placeholder="New Position"
-                        onChange={(e) => setUpdatedPlace(e.target.value)}
-                        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-xs rounded-sm block"
-                      />
-                      <button
-                        onClick={() => updatePlace(experience.id)}
-                        className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-sky-600"
-                      >
-                        Update
-                      </button>
-                    </div>
+                <div
+                  className="flex flex-row justify-between items-center px-4
+                 rounded-sm bg-[#334155]"
+                >
+                  <h1>
+                    <span className="text-sky-300">place:</span>{" "}
+                    {experience.place}
+                  </h1>
+                  <div className="flex flex-row my-1 gap-2">
+                    <input
+                      type="text"
+                      placeholder={experience.place}
+                      onChange={(e) => setUpdatedPlace(e.target.value)}
+                      className="bg-slate-700 border border-slate-600 placeholder-slate-500
+                       text-slate-400 text-xs rounded-full px-2 outline-none focus:border-sky-500"
+                    />
+                    <button
+                      onClick={() => updatePlace(experience.id)}
+                      className="rounded-full text-white bg-sky-500 hover:bg-sky-600 py-2 px-4"
+                    >
+                      Update
+                    </button>
                   </div>
+                </div>
 
-                  <div className="my-1 flex flex-row justify-between space-x-2">
-                    <h1>
-                      <span className="text-sky-300">year:</span>{" "}
-                      {experience.year}
-                    </h1>
-                    <div className="flex flex-row space-x-2">
-                      <input
-                        type="text"
-                        placeholder="New Comment"
-                        onChange={(e) => setUpdatedYear(e.target.value)}
-                        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-xs rounded-sm block"
-                      />
-                      <button
-                        onClick={() => updateYear(experience.id)}
-                        className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-sky-600"
-                      >
-                        Update
-                      </button>
-                    </div>
+                <div
+                  className="flex flex-row justify-between items-center px-4
+                 rounded-sm bg-[#334155]"
+                >
+                  <h1>
+                    <span className="text-sky-300">year:</span>{" "}
+                    {experience.year}
+                  </h1>
+                  <div className="flex flex-row my-1 gap-2">
+                    <input
+                      type="text"
+                      placeholder={experience.year}
+                      onChange={(e) => setUpdatedYear(e.target.value)}
+                      className="bg-slate-700 border border-slate-600 placeholder-slate-500
+                       text-slate-400 text-xs rounded-full px-2 outline-none focus:border-sky-500"
+                    />
+                    <button
+                      onClick={() => updateYear(experience.id)}
+                      className="rounded-full text-white bg-sky-500 hover:bg-sky-600 py-2 px-4"
+                    >
+                      Update
+                    </button>
                   </div>
+                </div>
 
-                  <div className="my-1 flex flex-row justify-between space-x-2">
-                    <h1>
-                      <span className="text-sky-300">pointOne:</span>{" "}
-                      {experience.pointOne}
-                    </h1>
-                    <div className="flex flex-row space-x-2">
-                      <input
-                        type="text"
-                        placeholder="New Comment"
-                        onChange={(e) => setUpdatedPointOne(e.target.value)}
-                        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-xs rounded-sm block"
-                      />
-                      <button
-                        onClick={() => updatePointOne(experience.id)}
-                        className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-sky-600"
-                      >
-                        Update
-                      </button>
-                    </div>
+                <div
+                  className="flex flex-row justify-between items-center px-4
+                 rounded-sm bg-[#334155]"
+                >
+                  <h1>
+                    <span className="text-sky-300">pointOne:</span>{" "}
+                    {experience.pointOne}
+                  </h1>
+                  <div className="flex flex-row my-1 gap-2">
+                    <input
+                      type="text"
+                      placeholder={experience.pointOne}
+                      onChange={(e) => setUpdatedPointOne(e.target.value)}
+                      className="bg-slate-700 border border-slate-600 placeholder-slate-500
+                       text-slate-400 text-xs rounded-full px-2 outline-none focus:border-sky-500"
+                    />
+                    <button
+                      onClick={() => updatePointOne(experience.id)}
+                      className="rounded-full text-white bg-sky-500 hover:bg-sky-600 py-2 px-4"
+                    >
+                      Update
+                    </button>
                   </div>
+                </div>
 
-                  <div className="my-1 flex flex-row justify-between space-x-2">
-                    <h1>
-                      <span className="text-sky-300">pointTwo:</span>{" "}
-                      {experience.pointTwo}
-                    </h1>
-                    <div className="flex flex-row space-x-2">
-                      <input
-                        type="text"
-                        placeholder="New Comment"
-                        onChange={(e) => setUpdatedPointTwo(e.target.value)}
-                        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-xs rounded-sm block"
-                      />
-                      <button
-                        onClick={() => updatePointTwo(experience.id)}
-                        className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-sky-600"
-                      >
-                        Update
-                      </button>
-                    </div>
+                <div
+                  className="flex flex-row justify-between items-center px-4
+                 rounded-sm bg-[#334155]"
+                >
+                  <h1>
+                    <span className="text-sky-300">pointTwo:</span>{" "}
+                    {experience.pointTwo}
+                  </h1>
+                  <div className="flex flex-row my-1 gap-2">
+                    <input
+                      type="text"
+                      placeholder={experience.pointTwo}
+                      onChange={(e) => setUpdatedPointTwo(e.target.value)}
+                      className="bg-slate-700 border border-slate-600 placeholder-slate-500
+                       text-slate-400 text-xs rounded-full px-2 outline-none focus:border-sky-500"
+                    />
+                    <button
+                      onClick={() => updatePointTwo(experience.id)}
+                      className="rounded-full text-white bg-sky-500 hover:bg-sky-600 py-2 px-4"
+                    >
+                      Update
+                    </button>
                   </div>
+                </div>
 
-                  <div className="my-1 flex flex-row justify-between space-x-2">
-                    <h1>
-                      <span className="text-sky-300">pointThree:</span>{" "}
-                      {experience.pointThree}
-                    </h1>
-                    <div className="flex flex-row space-x-2">
-                      <input
-                        type="text"
-                        placeholder="New Comment"
-                        onChange={(e) => setUpdatedPointThree(e.target.value)}
-                        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-xs rounded-sm block"
-                      />
-                      <button
-                        onClick={() => updatePointThree(experience.id)}
-                        className="rounded-md px-3 py-1 bg-sky-400 text-black hover:bg-sky-600"
-                      >
-                        Update
-                      </button>
-                    </div>
+                <div
+                  className="flex flex-row justify-between items-center px-4
+                 rounded-sm bg-[#334155]"
+                >
+                  <h1>
+                    <span className="text-sky-300">pointThree:</span>{" "}
+                    {experience.pointThree}
+                  </h1>
+                  <div className="flex flex-row my-1 gap-2">
+                    <input
+                      type="text"
+                      placeholder={experience.pointThree}
+                      onChange={(e) => setUpdatedPointThree(e.target.value)}
+                      className="bg-slate-700 border border-slate-600 placeholder-slate-500
+                       text-slate-400 text-xs rounded-full px-2 outline-none focus:border-sky-500"
+                    />
+                    <button
+                      onClick={() => updatePointThree(experience.id)}
+                      className="rounded-full text-white bg-sky-500 hover:bg-sky-600 py-2 px-4"
+                    >
+                      Update
+                    </button>
                   </div>
                 </div>
               </div>
@@ -222,6 +270,37 @@ const ExperienceData = () => {
           ))}
         </div>
       </div>
+      {deleteId && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-[#334155] border border-gray-600 p-6 rounded shadow-lg max-w-sm mx-auto">
+            <h2 className="text-lg font-bold text-white">
+              Are you sure you want to delete?
+            </h2>
+            <p className="text-gray-400 flex justify-end">
+              This action cannot be undone.
+            </p>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={handleConfirmDelete}
+                className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors mr-4"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={handleCancel}
+                className="px-3 py-2 bg-gray-500 rounded hover:bg-gray-600 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isDeleted && (
+        <div className="bg-green-500 text-white p-2 absolute top-0 right-0 m-2 rounded-md">
+          Experience deleted successfully!
+        </div>
+      )}
     </section>
   );
 };

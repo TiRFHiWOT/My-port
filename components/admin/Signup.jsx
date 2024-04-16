@@ -7,18 +7,19 @@ import { useRouter } from "next/navigation";
 import useAuthMiddleware from "@/lib/middleWare";
 
 const signup = () => {
-  const router = useRouter();
-  useAuthMiddleware();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
   const handlesignin = (e) => {
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
         const user = userCredential.user;
+        localStorage.setItem("user", JSON.stringify(user));
         router.push("/admin");
-      }
-    );
+      })
+      .catch((error) => {
+        console.error("Signup error:", error);
+      });
   };
   return (
     <section>

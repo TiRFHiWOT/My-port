@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-import React from "react";
-
 const FormCard = ({ label, type, name, placeholder, onChange }) => {
   return (
     <div className="mb-4">

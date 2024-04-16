@@ -53,7 +53,11 @@ const About = () => {
   const [newCertification, setNewCertification] = useState("");
   const [file, setFile] = useState(null);
   const [per, setper] = useState(null);
-  const [showVerification, setShowVerification] = useState(false);
+  const [showVerificationSkill, setShowVerificationSkill] = useState(false);
+  const [showVerificationEducation, setShowVerificationEducation] =
+    useState(false);
+  const [showVerificationCertification, setShowVerificationCertification] =
+    useState(false);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -137,7 +141,7 @@ const About = () => {
       window.alert("Please fill all required fields");
       return;
     }
-    setShowVerification(true);
+    setShowVerificationSkill(true);
   };
 
   const onSubmitEducatiion = () => {
@@ -145,22 +149,30 @@ const About = () => {
       window.alert("Please fill all required fields");
       return;
     }
-    setShowVerification(true);
+    setShowVerificationEducation(true);
   };
 
   const onSubmitCertification = () => {
-    if (!newEducation.trim()) {
+    if (!newCertification.trim()) {
       window.alert("Please fill all required fields");
       return;
     }
-    setShowVerification(true);
+    setShowVerificationCertification(true);
   };
 
-  const handleVerificationConfirm = () => {
+  const handleVerificationConfirmSkill = () => {
     addSkillToFirestore();
+    setShowVerificationSkill(false);
+    resetInputFields();
+  };
+  const handleVerificationConfirmEducation = () => {
     addEducationToFirestore();
+    setShowVerificationEducation(false);
+    resetInputFields();
+  };
+  const handleVerificationConfirmCertification = () => {
     addCertificationToFirestore();
-    setShowVerification(false);
+    setShowVerificationCertification(false);
     resetInputFields();
   };
 
@@ -224,19 +236,61 @@ const About = () => {
             </button>
           </div>
         </div>
-        {showVerification && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+        {showVerificationSkill && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
             <div className="bg-[#112035] p-8 rounded-lg">
               <p className="">Are you sure you want to add this item?</p>
               <div className="flex justify-end mt-4">
                 <button
-                  onClick={() => setShowVerification(false)}
+                  onClick={() => setShowVerificationSkill(false)}
                   className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-4"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleVerificationConfirm}
+                  onClick={handleVerificationConfirmSkill}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {showVerificationEducation && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
+            <div className="bg-[#112035] p-8 rounded-lg">
+              <p className="">Are you sure you want to add this item?</p>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={() => setShowVerificationEducation(false)}
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-4"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleVerificationConfirmEducation}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {showVerificationCertification && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
+            <div className="bg-[#112035] p-8 rounded-lg">
+              <p className="">Are you sure you want to add this item?</p>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={() => setShowVerificationCertification(false)}
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mr-4"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleVerificationConfirmCertification}
                   className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                 >
                   Confirm

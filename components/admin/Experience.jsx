@@ -116,7 +116,7 @@ const Testimonial = () => {
 
   return (
     <section>
-      <div className=" rounded-sm">
+      <div className=" rounded-sm ">
         <div className=" bg-[#222a35] p-6 rounded-lg">
           {controls.map((item) => (
             <FormCard

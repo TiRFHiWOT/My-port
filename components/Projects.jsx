@@ -51,7 +51,7 @@ const Projects = () => {
           <span className="border-orange-500 border-b-4">MY</span> PROJECTS
         </motion.h1>
         <div className="grid grid-flow-row lg:gap-8 lg:grid-flow-col">
-          <p className="text-xs md:text-sm text-white mb-5 p-6 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50 border border-[#334155]">
+          <p className="text-xs md:text-sm text-white mb-5 p-5 bg-slate-900 rounded-lg leading-5 lg:leading-6 bg-opacity-50">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi atque
             sit nobis a rerum minus tempora reiciendis consequuntur molestias
             mollitia delectus inventore quo sapiente nesciunt, quod, praesentium

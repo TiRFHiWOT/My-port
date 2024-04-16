@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "@/app/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -25,12 +25,13 @@ const Login = () => {
         setError(true);
       });
   };
+
   const signUp = () => {
     router.push("/signup");
   };
   return (
     <section>
-      <div className="flex-1 text-xs sm:text-sm flex flex-col justify-center items-center gap-4 w-[100vw] h-[85vh]">
+      <div className="flex-1 text-xs sm:text-sm flex flex-col justify-center items-center gap-4 w-[100vw] h-[85.5vh]">
         <h1 className="font-extrabold text-4xl ">
           LOG<span className="text-orange-600">IN</span>
         </h1>
