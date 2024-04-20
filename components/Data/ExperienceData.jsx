@@ -20,14 +20,21 @@ const ExperienceData = () => {
   const [updatedYear, setUpdatedYear] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getExperience = async () => {
-    const data = await getDocs(experienceCollectionRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setExperience(filteredData);
+    try {
+      const data = await getDocs(experienceCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setExperience(filteredData);
+    } catch (error) {
+      console.error("Error fetching experience:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -92,6 +99,12 @@ const ExperienceData = () => {
   return (
     <section>
       <div>
+        {isLoading && <div></div>}
+        {!isLoading && experience.length === 0 && (
+          <div className="text-center text-gray-500 mt-4">
+            No experiences available.
+          </div>
+        )}
         <div>
           {experience.map((experience) => (
             <div

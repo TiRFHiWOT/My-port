@@ -20,14 +20,21 @@ const EducationData = () => {
   const [deleteIdCer, setDeleteIdCer] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDeletedCer, setIsDeletedCer] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getEducation = async () => {
-    const data = await getDocs(educationCollectionRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setEducation(filteredData);
+    try {
+      const data = await getDocs(educationCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setEducation(filteredData);
+    } catch (error) {
+      console.error("Error fetching education:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -88,12 +95,19 @@ const EducationData = () => {
 
   const handleCancel = () => {
     setDeleteId(null);
+    setDeleteIdCer(null);
   };
 
   return (
     <section>
       <div className="grid grid-cols-2 gap-2">
         <div>
+          {isLoading && <div></div>}
+          {!isLoading && education.length === 0 && (
+            <div className="text-center text-gray-500 mt-4">
+              No educations available.
+            </div>
+          )}
           {education.map((item) => (
             <div
               key={item.id}
@@ -146,6 +160,12 @@ const EducationData = () => {
           ))}
         </div>
         <div>
+          {isLoading && <div></div>}
+          {!isLoading && certification.length === 0 && (
+            <div className="text-center text-gray-500 mt-4">
+              No certifications available.
+            </div>
+          )}
           {certification.map((item) => (
             <div
               key={item.id}

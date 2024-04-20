@@ -20,7 +20,7 @@ const ProjectCard = ({
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="group border-2 border-[#33415579] hover:rounded-none text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
+      className="group border-2 border-[#33415579] text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
     >
       <div className="h-52 md:h-72 relative group">
         <div

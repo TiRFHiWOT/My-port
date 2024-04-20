@@ -17,7 +17,7 @@ const PrivateCard = ({
       viewport={{ once: true }}
       className="group border-2 border-[#33415579] text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
     >
-      <div className="relative h-72 group">
+      <div className="relative h-52 md:h-72 group">
         <div
           className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] z-40"
           style={{ background: `url(${imgOne})`, backgroundSize: "cover" }}

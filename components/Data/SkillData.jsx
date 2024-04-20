@@ -14,14 +14,21 @@ const SkillData = () => {
   const [updatedSkill, setUpdatedSkill] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getSkill = async () => {
-    const data = await getDocs(skillCollectionRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setSkill(filteredData);
+    try {
+      const data = await getDocs(skillCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setSkill(filteredData);
+    } catch (error) {
+      console.error("Error fetching skills:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -55,8 +62,14 @@ const SkillData = () => {
 
   return (
     <section>
-      <div className="">
-        <div className="">
+      <div>
+        {isLoading && <div></div>}
+        {!isLoading && skill.length === 0 && (
+          <div className="text-center text-gray-500 mt-4">
+            No skills available.
+          </div>
+        )}
+        <div>
           {skill.map((item) => (
             <div
               key={item.id}

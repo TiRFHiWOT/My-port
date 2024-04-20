@@ -1,8 +1,9 @@
 "use client";
 import { db } from "@/app/firebase";
 import { useEffect, useState } from "react";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, limit } from "firebase/firestore";
 import TestimonialCard from "@/components/TestimonialCard";
+import { motion } from "framer-motion";
 
 const Testimonial = () => {
   const testmonialCollectionRef = collection(db, "testimonial");
@@ -11,7 +12,7 @@ const Testimonial = () => {
 
   useEffect(() => {
     const getTestimonial = async () => {
-      const data = await getDocs(testmonialCollectionRef);
+      const data = await getDocs(query(testmonialCollectionRef, limit(3)));
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -29,12 +30,14 @@ const Testimonial = () => {
           Testimonials
         </h1>
         <div className="grid lg:grid-cols-3 gap-10 p-5 lg:p-10">
-          {testimonial
-            .slice(
-              0,
-              process.env.NODE_ENV === "production" ? 3 : testimonial.length
-            )
-            .map((item) => (
+          {testimonial.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ y: 100, opacity: 1 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
               <TestimonialCard
                 key={item.id}
                 userName={item.userName}
@@ -42,7 +45,8 @@ const Testimonial = () => {
                 comment={item.comment}
                 imgUrl={item.image}
               />
-            ))}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

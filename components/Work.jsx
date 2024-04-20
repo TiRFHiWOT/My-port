@@ -88,6 +88,9 @@ const Work = () => {
   return (
     <section id="Work">
       <div className="my-10 py-5 lg:py-12 relative">
+        <h1 className="text-[30rem] absolute left-10 -bottom-44 text-cyan-600 text-opacity-10 font-extrabold tracking-wider">
+          exp
+        </h1>
         <motion.p
           initial={{ opacity: 0, x: -200 }}
           whileInView={{ opacity: 1, x: 0 }}

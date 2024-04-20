@@ -1,22 +1,21 @@
-"use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { storage } from "@/app/firebase";
-import { motion } from "framer-motion";
-import { listAll, getDownloadURL, ref } from "firebase/storage";
-
 const TestimonialCard = ({ comment, userName, position, imgUrl }) => {
+  const wordLimit = (comment) => {
+    const words = comment.split(" ");
+    if (words.length > 11) {
+      return words.slice(0, 11).join(" ") + "...";
+    }
+    return comment;
+  };
+
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 100 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-    >
-      <div className="flex flex-col p-5 lg:p-10 bg-slate-850 border hover:shadow-xl border-[#334155] rounded-lg hover:scale-105 transform transition-all duration-[0.5s] group">
+    <section>
+      <div
+        className="flex flex-col p-5 lg:p-10 bg-slate-850 border hover:shadow-xl border-[#334155] rounded-lg hover:scale-105 
+      transform transition-all duration-[0.5s] group bg-slate-800"
+      >
         <h1 className="text-7xl">{`"`}</h1>
-        <div className="text-sm mb-10 text-gray-400 tracking-wider font-semibold">
-          {comment}
+        <div className="text-sm mb-10 text-gray-400 tracking-wider font-semibold h-[85px]">
+          {wordLimit(comment)}
         </div>
         <div className="flex flex-row justify-between ">
           <div className="flex flex-col">
@@ -26,12 +25,12 @@ const TestimonialCard = ({ comment, userName, position, imgUrl }) => {
             </p>
           </div>
           <div
-            className="rounded-full group-hover:border-b-2 border-gray-700 w-[50px] h-[50px] transform transition-all duration-[0.5s]"
+            className="rounded-full w-[50px] h-[50px] transform transition-all duration-[0.5s]"
             style={{ background: `url(${imgUrl})`, backgroundSize: "cover" }}
           ></div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

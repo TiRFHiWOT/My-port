@@ -17,14 +17,21 @@ const TestimonialData = () => {
   const [updatedComment, setUpdatedComment] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getTestimonial = async () => {
-    const data = await getDocs(testmonialCollectionRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setTestimonial(filteredData);
+    try {
+      const data = await getDocs(testmonialCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setTestimonial(filteredData);
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -70,6 +77,13 @@ const TestimonialData = () => {
 
   return (
     <section>
+      {isLoading && <div></div>}
+
+      {!isLoading && Testimonial.length === 0 && (
+        <div className="text-center text-gray-500 mt-4">
+          No testimonials available.
+        </div>
+      )}
       <div>
         {Testimonial.map((testimonial) => (
           <div

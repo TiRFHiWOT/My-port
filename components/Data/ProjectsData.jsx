@@ -19,14 +19,21 @@ const ProjectsData = () => {
   const [updatedTags, setUpdatedTags] = useState({});
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getProjects = async () => {
-    const data = await getDocs(projectsCollectionRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setProjects(filteredData);
+    try {
+      const data = await getDocs(projectsCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setProjects(filteredData);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -82,6 +89,12 @@ const ProjectsData = () => {
   };
   return (
     <section>
+      {isLoading && <div></div>}
+      {!isLoading && Projects.length === 0 && (
+        <div className="text-center text-gray-500 mt-4">
+          No projects available.
+        </div>
+      )}
       <div>
         {Projects.map((project) => (
           <div
