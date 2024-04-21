@@ -11,11 +11,14 @@ const PrivateCard = ({
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="group border-2 border-[#33415579] text-white transform translate duration-300 hover:scale-105 hover:shadow-xl"
+      initial={{ opacity: 0, scale: 0.9, y: -20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0px 20px 40px rgba(0, 0, 0, 0.2)",
+      }}
+      transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
+      className="group border-2 lg:rounded-3xl md:rounded-2xl rounded-xl overflow-hidden border-[#33415579] text-white transform translate duration-300"
     >
       <div className="relative h-52 md:h-72 group">
         <div

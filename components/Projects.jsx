@@ -56,8 +56,7 @@ const Projects = () => {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="bg-cyan-600 rounded-full shadow- shadow-cyan-600 cursor-pointer"
-              style={{ display: "inline-block" }}
+              className="bg-cyan-600 rounded-full cursor-pointer inline-block"
             >
               O
             </motion.span>
@@ -74,7 +73,7 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="grid md:gap-8 gap-4 grid-cols-2 lg:grid-cols-3 py-6">
+        <div className="grid md:gap-6 gap-4 grid-cols-2 lg:grid-cols-3 py-6 relative">
           {allProjects.map((project, index) =>
             tag === "ALL" ||
             (tag === "PUBLIC" && !project.tag) ||

@@ -1,6 +1,11 @@
-import React from "react";
-
 const WorkCard = ({ name, place, year, pointOne, pointTwo, pointThree }) => {
+  const wordLimit = (comment) => {
+    const words = comment.split(" ");
+    if (words.length > 10) {
+      return words.slice(0, 10).join(" ") + "...";
+    }
+    return comment;
+  };
   return (
     <section>
       <div
@@ -22,13 +27,13 @@ const WorkCard = ({ name, place, year, pointOne, pointTwo, pointThree }) => {
           {" "}
           <ul className="list-disc pl-5">
             <li className="text-xs text-slate-300 leading-6 lg:leading-7">
-              {pointOne}
+              {wordLimit(pointOne)}
             </li>
             <li className="text-xs text-slate-300 leading-6 lg:leading-7">
-              {pointTwo}
+              {wordLimit(pointTwo)}
             </li>
             <li className="text-xs text-slate-300 leading-6 lg:leading-7">
-              {pointThree}
+              {wordLimit(pointThree)}
             </li>
           </ul>
         </div>

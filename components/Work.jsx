@@ -5,69 +5,6 @@ import { getDocs, collection } from "firebase/firestore";
 import WorkCard from "@/components/WorkCard";
 import { motion } from "framer-motion";
 
-const workData = [
-  {
-    id: "1",
-    name: "red",
-    place: "Place of Occupation",
-    pointOne:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointTwo:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointThree:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    year: "2018-2019",
-  },
-  {
-    id: "2",
-    name: "green",
-    place: "Place of Occupation",
-    pointOne:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointTwo:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointThree:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    year: "2019-2020",
-  },
-  {
-    id: "3",
-    name: "blue",
-    place: "Place of Occupation",
-    pointOne:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointTwo:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointThree:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    year: "2020-2021",
-  },
-  {
-    id: "4",
-    name: "yellow",
-    place: "Place of Occupation",
-    pointOne:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointTwo:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointThree:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    year: "2021-2022",
-  },
-  {
-    id: "5",
-    name: "gray",
-    place: "Place of Occupation",
-    pointOne:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointTwo:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    pointThree:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, soluta sit!",
-    year: "2022-2023",
-  },
-];
-
 const Work = () => {
   const experienceCollectionRef = collection(db, "experience");
 
@@ -88,7 +25,7 @@ const Work = () => {
   return (
     <section id="Work">
       <div className="my-10 py-5 lg:py-12 relative">
-        <h1 className="text-[30rem] absolute left-10 -bottom-44 text-cyan-600 text-opacity-10 font-extrabold tracking-wider">
+        <h1 className="lg:text-[30rem] md:text-[22rem] text-[12rem] absolute left-10 lg:-bottom-44 md:-bottom-14 bottom-0 text-cyan-600 text-opacity-10 font-extrabold tracking-wider">
           exp
         </h1>
         <motion.p
