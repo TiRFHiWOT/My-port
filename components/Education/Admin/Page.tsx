@@ -11,6 +11,8 @@ import EducationItem from "./Output";
 import Spinner from "@/components/Spinner/Spinner";
 import { RootState } from "@/store/store";
 import { AppDispatch } from "@/store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Education = {
   id?: string;
@@ -31,7 +33,6 @@ const EducationAdmin: React.FC = () => {
     null
   );
   const [searchTerm, setSearchTerm] = useState("");
-  const [warning, setWarning] = useState("");
   const [showEducationList, setShowEducationList] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -54,17 +55,16 @@ const EducationAdmin: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!education.name || !education.institution || !education.year) {
-      setWarning("Please fill in all fields before submitting.");
+      toast.error("Please fill in all fields before submitting.");
       return;
     }
-    setWarning("");
     try {
       if (isUpdating) {
         dispatch(updateEducation({ id: currentEducationId!, education }));
-        alert("Education updated successfully!");
+        toast.success("Education updated successfully!");
       } else {
         dispatch(addEducationItem(education));
-        alert("Education submitted successfully!");
+        toast.success("Education submitted successfully!");
       }
       setEducation({ name: "", institution: "", year: "" });
       setShowInputs(false);
@@ -72,7 +72,7 @@ const EducationAdmin: React.FC = () => {
       setCurrentEducationId(null);
     } catch (error) {
       console.error("Error submitting education: ", error);
-      alert("Failed to submit education");
+      toast.error("Failed to submit education");
     }
   };
 
@@ -90,10 +90,10 @@ const EducationAdmin: React.FC = () => {
   const handleRemove = async (id: string) => {
     try {
       dispatch(removeEducation(id));
-      alert("Education removed successfully!");
+      toast.success("Education removed successfully!");
     } catch (error) {
       console.error("Error removing education: ", error);
-      alert("Failed to remove education");
+      toast.error("Failed to remove education");
     }
   };
 
@@ -124,7 +124,6 @@ const EducationAdmin: React.FC = () => {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             isUpdating={isUpdating}
-            warning={warning}
           />
         )}
         <div className="flex justify-between items-center mb-1">
@@ -173,6 +172,7 @@ const EducationAdmin: React.FC = () => {
           )}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

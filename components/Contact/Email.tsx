@@ -22,8 +22,9 @@ const EmailField = () => {
       <input
         type="email"
         id="email"
+        name="email"
         required
-        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5"
+        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-100 text-sm rounded-lg block w-full p-2.5"
         placeholder="abebebesobela@gmail.com"
       />
     </motion.div>

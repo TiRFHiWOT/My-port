@@ -10,6 +10,7 @@ const SubjectField = () => {
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, x: 200 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.2 }}
@@ -21,8 +22,9 @@ const SubjectField = () => {
       <input
         type="text"
         id="subject"
+        name="subject"
         required
-        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5"
+        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-100 text-sm rounded-lg block w-full p-2.5"
         placeholder="What's in your mind."
       />
     </motion.div>

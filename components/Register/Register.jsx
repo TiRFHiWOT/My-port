@@ -3,6 +3,8 @@ import { auth } from "@/app/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -17,10 +19,17 @@ const Register = () => {
         const token = user.stsTokenManager.accessToken;
         localStorage.setItem("user", JSON.stringify(user));
         document.cookie = `token=${token}; path=/`;
-        router.push("/admin");
+
+        toast.success("Successfully signed up!");
+
+        setTimeout(() => {
+          router.push("/admin");
+        }, 1500);
       })
       .catch((error) => {
         console.error("Signup error:", error);
+
+        toast.error("Sign-up failed. Please try again.");
       });
   };
 
@@ -58,6 +67,18 @@ const Register = () => {
           </button>
         </form>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </section>
   );
 };

@@ -43,11 +43,6 @@ const SkillsForm: React.FC<SkillsFormProps> = ({
   };
 
   const handleFormSubmit = async () => {
-    if (!skill.name || !imageFile) {
-      alert("Please fill in all fields before submitting.");
-      return;
-    }
-
     setUploading(true);
     await handleSubmit(imageFile);
     setUploading(false);

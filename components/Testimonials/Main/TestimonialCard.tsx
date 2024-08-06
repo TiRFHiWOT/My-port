@@ -1,38 +1,79 @@
-const TestimonialCard = ({ comment, userName, position, imgUrl }: any) => {
-  const wordLimit = (comment: any) => {
-    const words = comment.split(" ");
-    if (words.length > 11) {
-      return words.slice(0, 11).join(" ") + "...";
-    }
-    return comment;
+import React from "react";
+import { motion } from "framer-motion";
+
+interface TestimonialCardProps {
+  testimonial: {
+    id: string;
+    comment: string;
+    userName: string;
+    position: string;
+    profilePicture: string[];
   };
+  index: number;
+}
+
+const TestimonialCard: React.FC<TestimonialCardProps> = ({
+  testimonial,
+  index,
+}) => {
+  const profilePictureUrl = testimonial.profilePicture;
 
   return (
-    <section>
-      <div
-        className="flex flex-col p-5 lg:p-10 bg-slate-850 border hover:shadow-xl border-gray-700 rounded-lg hover:-translate-y-4 
-      transform transition-all duration-[0.5s] group bg-slate-900"
+    <motion.div
+      key={testimonial.id}
+      initial={{ width: "15rem", height: "15rem", x: 0, y: 0 }}
+      whileInView={{
+        width: "27rem",
+        height: "16.5rem",
+        transition: { duration: 2, delay: 3 },
+      }}
+      whileHover={{
+        x: index % 2 === 0 ? "-20px" : "20px",
+        y: index < 2 ? "-20px" : "20px",
+        transition: { duration: 2 },
+      }}
+      viewport={{ once: true }}
+      className="rounded-lg bg-[#151b24] shadow-2xl bg-opacity-50 relative backdrop-blur border-2 border-black
+                   hover:border-white hover:border-2 hover:rotate-6 inline-block cursor-pointer group"
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{
+          opacity: 1,
+        }}
+        transition={{
+          delay: 4,
+        }}
+        viewport={{ once: true }}
+        className="p-3 flex flex-col"
       >
-        <h1 className="text-7xl">{`"`}</h1>
-        <div className="text-sm mb-10 text-gray-400 tracking-wider font-semibold h-[85px]">
-          {wordLimit(comment)}
+        <div className=" absolute top-5 left-5 text-9xl group-hover:rotate-12 transition duration-700">
+          ``
         </div>
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-col">
-            <h1 className=" font-bold">@{userName}</h1>
-            <p className="text-xs text-gray-400 mt-2 font-semibold">
-              {position}
-            </p>
+        <div className=" absolute top-5 right-9 w-8 h-8 rounded-full bg-black group-hover:bg-green-600 group-hover:shadow-xl transition duration-700"></div>
+        <p className="mt-14 mb-3 text-sm text-gray-400 font-semibold tracking-widest px-6 pt-5 pb-2">
+          {testimonial.comment}
+        </p>
+        <div className="flex justify-between items-center px-6 py-2 border border-gray-700 rounded-lg">
+          <div className="flex-col justify-between items-center">
+            <h1 className="text-white tracking-wider text-lg font-bold">
+              @{testimonial.userName}
+            </h1>
+            <p className="text-gray-400">{testimonial.position}</p>
           </div>
-          {imgUrl && (
+          {profilePictureUrl && (
             <div
-              className="rounded-full w-[50px] h-[50px] transform transition-all duration-[0.5s]"
-              style={{ background: `url(${imgUrl})`, backgroundSize: "cover" }}
+              className="rounded-full border w-14 h-14"
+              style={{
+                backgroundImage: `url(${profilePictureUrl})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             ></div>
           )}
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.div>
   );
 };
 

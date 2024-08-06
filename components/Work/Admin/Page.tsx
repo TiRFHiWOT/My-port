@@ -15,6 +15,8 @@ import {
 import WorkExperienceForm from "@/components/Work/Admin/Form";
 import WorkExperienceList from "@/components/Work/Admin/List";
 import Spinner from "@/components/Spinner/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface WorkExperience {
   id: string;
@@ -39,7 +41,6 @@ const WorkExperienceAdmin: React.FC = () => {
 
   const [showInputs, setShowInputs] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [warning, setWarning] = useState<string>("");
   const [showWorkExperience, setShowWorkExperience] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -67,10 +68,9 @@ const WorkExperienceAdmin: React.FC = () => {
       !currentWorkExperience.pointTwo ||
       !currentWorkExperience.pointThree
     ) {
-      setWarning("Please fill in all fields before submitting.");
+      toast.error("Please fill in all fields before submitting.");
       return;
     }
-    setWarning("");
     try {
       if (isUpdating) {
         await dispatch(
@@ -79,16 +79,16 @@ const WorkExperienceAdmin: React.FC = () => {
             workExperience: currentWorkExperience,
           })
         ).unwrap();
-        alert("Work Experience updated successfully!");
+        toast.success("Work Experience updated successfully!");
       } else {
         await dispatch(createWorkExperience(currentWorkExperience)).unwrap();
-        alert("Work Experience submitted successfully!");
+        toast.success("Work Experience submitted successfully!");
       }
       dispatch(resetCurrentWorkExperience());
       setShowInputs(false);
     } catch (error) {
       console.error("Error submitting work experience: ", error);
-      alert("Failed to submit work experience");
+      toast.error("Failed to submit work experience");
     }
   };
 
@@ -102,10 +102,10 @@ const WorkExperienceAdmin: React.FC = () => {
   const handleRemove = async (id: string) => {
     try {
       await dispatch(removeWorkExperience(id)).unwrap();
-      alert("Work experience removed successfully!");
+      toast.success("Work experience removed successfully!");
     } catch (error) {
       console.error("Error removing work experience: ", error);
-      alert("Failed to remove work experience");
+      toast.error("Failed to remove work experience");
     }
   };
 
@@ -135,7 +135,6 @@ const WorkExperienceAdmin: React.FC = () => {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             isUpdating={isUpdating}
-            warning={warning}
           />
         )}
         <div className="flex justify-between items-center mb-1">
@@ -175,6 +174,7 @@ const WorkExperienceAdmin: React.FC = () => {
           )}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

@@ -3,19 +3,19 @@ import { fetchTestimonials } from "@/components/Testimonials/Firebase/Firebase";
 
 interface Testimonial {
   id: string;
-  userName: string;
-  position: string;
   comment: string;
-  profilePicture: string;
+  userName: string;
+  address: string;
+  profilePictures?: string[];
 }
 
-interface TestimonialState {
+interface TestimonialsState {
   testimonials: Testimonial[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: TestimonialState = {
+const initialState: TestimonialsState = {
   testimonials: [],
   loading: false,
   error: null,
@@ -24,12 +24,12 @@ const initialState: TestimonialState = {
 export const fetchTestimonialsAsync = createAsyncThunk(
   "testimonials/fetchTestimonials",
   async () => {
-    const testimonials = await fetchTestimonials();
-    return testimonials;
+    const testimonialsData = await fetchTestimonials();
+    return testimonialsData;
   }
 );
 
-const testimonialSlice = createSlice({
+const testimonialsSlice = createSlice({
   name: "testimonials",
   initialState,
   reducers: {},
@@ -39,14 +39,14 @@ const testimonialSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchTestimonialsAsync.fulfilled, (state, action) => {
-        state.testimonials = action.payload;
         state.loading = false;
+        state.testimonials = action.payload;
       })
       .addCase(fetchTestimonialsAsync.rejected, (state, action) => {
-        state.error = action.error.message || "Failed to fetch testimonials";
         state.loading = false;
+        state.error = action.error.message || "Failed to fetch testimonials";
       });
   },
 });
 
-export default testimonialSlice.reducer;
+export default testimonialsSlice.reducer;

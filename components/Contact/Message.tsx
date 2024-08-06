@@ -22,7 +22,7 @@ const MessageField = () => {
         name="message"
         id="message"
         required
-        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-400 text-sm rounded-lg block w-full p-2.5"
+        className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-100 text-sm rounded-lg block w-full p-2.5"
         placeholder={`Let's talk...`}
       />
     </motion.div>

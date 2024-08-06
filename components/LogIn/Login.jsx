@@ -4,9 +4,10 @@ import { auth } from "@/app/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,22 @@ const Login = () => {
     async (e) => {
       e.preventDefault();
       setLoading(true);
-      setError(null);
+
+      toast.dismiss();
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        toast.error("Please enter a valid email address.");
+        setLoading(false);
+        return;
+      }
+
+      if (!password) {
+        toast.error("Please enter your password.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const userCredential = await signInWithEmailAndPassword(
           auth,
@@ -26,9 +42,14 @@ const Login = () => {
         const user = userCredential.user;
         const token = await user.getIdToken();
         Cookies.set("token", token, { expires: 1 });
-        router.push("/admin");
+
+        toast.success("Logged in successfully!");
+
+        setTimeout(() => {
+          router.push("/admin");
+        }, 1500);
       } catch (error) {
-        setError("Login failed. Please check your email and password.");
+        toast.error("Login failed. Please check your email and password.");
         console.error("Login error:", error);
       } finally {
         setLoading(false);
@@ -74,7 +95,6 @@ const Login = () => {
           >
             {loading ? "Logging in..." : "Log in"}
           </button>
-          {error && <span className="text-sm text-red-500">{error}</span>}
         </form>
         <div className="flex justify-center pt-2">
           <button
@@ -85,6 +105,18 @@ const Login = () => {
           </button>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </section>
   );
 };

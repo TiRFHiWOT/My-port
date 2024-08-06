@@ -26,7 +26,7 @@ const Layout = ({ children }: any) => {
   return (
     <div className="flex min-h-screen bg-gray-900 text-gray-200">
       <nav className="w-64 bg-gray-800 text-gray-200 flex flex-col p-6 fixed h-full shadow-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center border-b-2 border-gray-700 pb-3">
+        <h1 className="text-3xl font-bold mb-6 text-center mr-3 border-b-2 border-gray-700 pb-3">
           Explore
         </h1>
         <ul className="flex flex-col gap-4 border-b-2 border-gray-700 pb-3">

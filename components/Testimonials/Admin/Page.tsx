@@ -11,6 +11,8 @@ import {
 import TestimonialForm from "@/components/Testimonials/Admin/Form";
 import TestimonialList from "@/components/Testimonials/Admin/List";
 import Spinner from "@/components/Spinner/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Testimonial {
   id?: string;
@@ -39,7 +41,6 @@ const TestimonialsAdmin: React.FC = () => {
     string | null
   >(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [warning, setWarning] = useState<string>("");
   const [showTestimonials, setShowTestimonials] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -72,21 +73,20 @@ const TestimonialsAdmin: React.FC = () => {
       !testimonial.userName ||
       !testimonial.position
     ) {
-      setWarning("Please fill in all fields before submitting.");
+      toast.error("Please fill in all fields before submitting.");
       return;
     }
-    setWarning("");
     try {
       if (isUpdating) {
         if (currentTestimonialId) {
           await dispatch(
             modifyTestimonial({ id: currentTestimonialId, testimonial }) as any
           ).unwrap();
-          alert("Testimonial updated successfully!");
+          toast.success("Testimonial updated successfully!");
         }
       } else {
         await dispatch(createTestimonial(testimonial) as any).unwrap();
-        alert("Testimonial submitted successfully!");
+        toast.success("Testimonial submitted successfully!");
       }
       setTestimonial({
         comment: "",
@@ -99,7 +99,7 @@ const TestimonialsAdmin: React.FC = () => {
       setCurrentTestimonialId(null);
     } catch (error) {
       console.error("Error submitting testimonial: ", error);
-      alert("Failed to submit testimonial");
+      toast.error("Failed to submit testimonial");
     }
   };
 
@@ -118,10 +118,10 @@ const TestimonialsAdmin: React.FC = () => {
   const handleRemove = async (id: string) => {
     try {
       await dispatch(removeTestimonial(id) as any).unwrap();
-      alert("Testimonial removed successfully!");
+      toast.success("Testimonial removed successfully!");
     } catch (error) {
       console.error("Error removing testimonial: ", error);
-      alert("Failed to remove testimonial");
+      toast.error("Failed to remove testimonial");
     }
   };
 
@@ -152,7 +152,6 @@ const TestimonialsAdmin: React.FC = () => {
             handleImageChange={handleImageChange}
             handleSubmit={handleSubmit}
             isUpdating={isUpdating}
-            warning={warning}
           />
         )}
         <div className="flex justify-between items-center mb-1">
@@ -190,6 +189,7 @@ const TestimonialsAdmin: React.FC = () => {
           )}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

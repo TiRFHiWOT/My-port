@@ -11,6 +11,8 @@ import {
 import ProjectForm from "@/components/Projects/Admin/Form";
 import ProjectList from "@/components/Projects/Admin/List";
 import Spinner from "@/components/Spinner/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProjectsAdmin: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +30,6 @@ const ProjectsAdmin: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [warning, setWarning] = useState("");
   const [showProjects, setShowProjects] = useState(false);
 
   useEffect(() => {
@@ -53,24 +54,23 @@ const ProjectsAdmin: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!project.title || !project.description) {
-      setWarning("Please fill in all fields before submitting.");
+      toast.error("Please fill in all fields before submitting.");
       return;
     }
-    setWarning("");
     try {
       if (isUpdating && currentProjectId) {
         await dispatch(
           modifyProject({ id: currentProjectId, project })
         ).unwrap();
-        alert("Project updated successfully!");
+        toast.success("Project updated successfully!");
       } else {
         await dispatch(createProject(project)).unwrap();
-        alert("Project submitted successfully!");
+        toast.success("Project submitted successfully!");
       }
       resetForm();
     } catch (error) {
       console.error("Error submitting project: ", error);
-      alert("Failed to submit project");
+      toast.error("Failed to submit project");
     }
   };
 
@@ -97,10 +97,10 @@ const ProjectsAdmin: React.FC = () => {
   const handleRemove = async (id: string) => {
     try {
       await dispatch(removeProject(id)).unwrap();
-      alert("Project removed successfully!");
+      toast.success("Project removed successfully!");
     } catch (error) {
       console.error("Error removing project: ", error);
-      alert("Failed to remove project");
+      toast.error("Failed to remove project");
     }
   };
 
@@ -131,7 +131,6 @@ const ProjectsAdmin: React.FC = () => {
             handleImageChange={handleImageChange}
             handleSubmit={handleSubmit}
             isUpdating={isUpdating}
-            warning={warning}
           />
         )}
         <div className="flex justify-between items-center mb-1">
@@ -169,6 +168,7 @@ const ProjectsAdmin: React.FC = () => {
           )}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

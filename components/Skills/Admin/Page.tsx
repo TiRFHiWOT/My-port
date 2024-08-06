@@ -11,6 +11,8 @@ import {
 import SkillsForm from "@/components/Skills/Admin/Form";
 import SkillItem from "@/components/Skills/Admin/Output";
 import Spinner from "@/components/Spinner/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Skill = {
   id: string;
@@ -32,7 +34,6 @@ const SkillsAdmin: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [currentSkillId, setCurrentSkillId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [warning, setWarning] = useState("");
   const [showSkillList, setShowSkillList] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -61,10 +62,9 @@ const SkillsAdmin: React.FC = () => {
 
   const handleSubmit = async (imageFile: File) => {
     if (!skill.name || !imageFile) {
-      setWarning("Please fill in all fields before submitting.");
+      toast.error("Please fill in all fields before submitting.");
       return;
     }
-    setWarning("");
     try {
       const skillData = { name: skill.name, image: skill.image };
 
@@ -72,10 +72,10 @@ const SkillsAdmin: React.FC = () => {
         await dispatch(
           updateSkill({ id: currentSkillId, skill: skillData })
         ).unwrap();
-        alert("Skill updated successfully!");
+        toast.success("Skill updated successfully!");
       } else {
         await dispatch(addSkill(skillData)).unwrap();
-        alert("Skill submitted successfully!");
+        toast.success("Skill submitted successfully!");
       }
       setSkill({ name: "", image: "" });
       setShowInputs(false);
@@ -83,7 +83,7 @@ const SkillsAdmin: React.FC = () => {
       setCurrentSkillId(null);
     } catch (error) {
       console.error("Error submitting skill: ", error);
-      alert("Failed to submit skill");
+      toast.error("Failed to submit skill");
     }
   };
 
@@ -97,10 +97,10 @@ const SkillsAdmin: React.FC = () => {
   const handleRemove = async (id: string) => {
     try {
       await dispatch(deleteSkill(id)).unwrap();
-      alert("Skill removed successfully!");
+      toast.success("Skill removed successfully!");
     } catch (error) {
       console.error("Error removing skill: ", error);
-      alert("Failed to remove skill");
+      toast.error("Failed to remove skill");
     }
   };
 
@@ -131,7 +131,6 @@ const SkillsAdmin: React.FC = () => {
             handleImageChange={handleImageChange}
             handleSubmit={handleSubmit}
             isUpdating={isUpdating}
-            warning={warning}
           />
         )}
         <div className="flex justify-between items-center mb-1">
@@ -180,6 +179,7 @@ const SkillsAdmin: React.FC = () => {
           )}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };
