@@ -9,14 +9,15 @@ import {
 const initialState = {
   workExperiences: [],
   currentWorkExperience: {
-    name: "",
+    position: "",
     place: "",
     year: "",
+    skillsUsed: "",
     pointOne: "",
     pointTwo: "",
     pointThree: "",
   },
-  isLoading: false,
+  loading: false,
   isUpdating: false,
   currentWorkExperienceId: null,
   error: null,
@@ -76,14 +77,14 @@ const workExperienceAdminSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getWorkExperiences.pending, (state) => {
-        state.isLoading = true;
+        state.loading = true;
       })
       .addCase(getWorkExperiences.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.workExperiences = action.payload;
       })
       .addCase(getWorkExperiences.rejected, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.error = action.error.message;
       })
       .addCase(createWorkExperience.fulfilled, (state, action) => {
@@ -100,7 +101,12 @@ const workExperienceAdminSlice = createSlice({
           };
         }
       })
+      .addCase(removeWorkExperience.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(removeWorkExperience.fulfilled, (state, action) => {
+        state.loading = false;
         state.workExperiences = state.workExperiences.filter(
           (w) => w.id !== action.payload
         );

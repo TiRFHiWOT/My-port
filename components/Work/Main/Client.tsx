@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchExperience } from "@/store/slice/workSlice";
@@ -25,6 +26,10 @@ const ClientWorkExperience = () => {
     );
   }
 
+  if (experience.length === 0) {
+    return <div className="text-center py-4">No experience available.</div>;
+  }
+
   if (status === "failed") {
     return <p>{error}</p>;
   }
@@ -34,23 +39,25 @@ const ClientWorkExperience = () => {
       {experience.map((item) => (
         <WorkCard
           key={item.id}
-          name={item.name}
+          position={item.position}
           pointOne={item.pointOne}
           pointTwo={item.pointTwo}
           pointThree={item.pointThree}
           place={item.place}
           year={item.year}
+          skillsUsed={item.skillsUsed}
         />
       ))}
       {experience.map((item) => (
         <WorkCard
           key={item.id}
-          name={item.name}
+          position={item.position}
           pointOne={item.pointOne}
           pointTwo={item.pointTwo}
           pointThree={item.pointThree}
           place={item.place}
           year={item.year}
+          skillsUsed={item.skillsUsed}
         />
       ))}
     </div>

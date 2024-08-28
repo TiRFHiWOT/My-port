@@ -35,12 +35,14 @@ const SkillsListClient = () => {
         <div className="flex justify-center items-center h-[15rem]">
           <RotatingLines width="50" />
         </div>
+      ) : skills.length === 0 ? (
+        <div className="text-center py-4">No skills available.</div>
       ) : (
         <ul className="grid grid-cols-2 gap-2">
           {skills.map((item) => (
             <li
               key={item.id}
-              className="shadow-lg hover:shadow-xl py-2 mr-1 px-3 border border-[#334155] bg-gray-800 rounded-xl flex items-center justify-center transition hover:scale-105"
+              className="shadow-lg  text-center hover:shadow-xl py-2 mr-1 px-3 border border-[#334155] bg-gray-800 rounded-xl flex items-center justify-around transition hover:scale-105"
             >
               <Image
                 src={item.image}
@@ -49,7 +51,7 @@ const SkillsListClient = () => {
                 height={60}
                 className="rounded mr-2"
               />
-              {item.name}
+              <div>{item.name}</div>
             </li>
           ))}
         </ul>

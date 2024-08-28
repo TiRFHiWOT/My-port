@@ -155,7 +155,7 @@ const EducationAdmin: React.FC = () => {
             {loading
               ? ""
               : filteredEducations.length > 0
-              ? "Education"
+              ? ""
               : "No Education Available"}
           </h3>
           {loading ? (

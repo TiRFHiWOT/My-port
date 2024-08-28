@@ -1,5 +1,4 @@
-"use client";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import {
@@ -12,6 +11,7 @@ import SkillsForm from "@/components/Skills/Admin/Form";
 import SkillItem from "@/components/Skills/Admin/Output";
 import Spinner from "@/components/Spinner/Spinner";
 import { ToastContainer, toast } from "react-toastify";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "react-toastify/dist/ReactToastify.css";
 
 type Skill = {
@@ -30,19 +30,16 @@ const SkillsAdmin: React.FC = () => {
     name: "",
     image: "",
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [showInputs, setShowInputs] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [currentSkillId, setCurrentSkillId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showSkillList, setShowSkillList] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (showSkillList) {
-      setIsFetching(true);
-      dispatch(fetchSkills()).finally(() => {
-        setIsFetching(false);
-      });
+      dispatch(fetchSkills()).finally(() => {});
     }
   }, [dispatch, showSkillList]);
 
@@ -54,19 +51,30 @@ const SkillsAdmin: React.FC = () => {
   };
 
   const handleImageChange = (image: File) => {
-    setSkill((prevSkill) => ({
-      ...prevSkill,
-      image: URL.createObjectURL(image),
-    }));
+    setImageFile(image);
   };
 
-  const handleSubmit = async (imageFile: File) => {
-    if (!skill.name || !imageFile) {
-      toast.error("Please fill in all fields before submitting.");
+  const uploadImageToFirebase = async (file: File): Promise<string> => {
+    const storage = getStorage();
+    const storageRef = ref(storage, `skills/${file.name}`);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  };
+
+  const handleSubmit = async () => {
+    if (!skill.name) {
+      toast.error("Please fill in the skill name before submitting.");
       return;
     }
+
     try {
-      const skillData = { name: skill.name, image: skill.image };
+      let imageUrl = skill.image;
+
+      if (imageFile) {
+        imageUrl = await uploadImageToFirebase(imageFile);
+      }
+
+      const skillData = { name: skill.name, image: imageUrl };
 
       if (isUpdating && currentSkillId) {
         await dispatch(
@@ -77,10 +85,12 @@ const SkillsAdmin: React.FC = () => {
         await dispatch(addSkill(skillData)).unwrap();
         toast.success("Skill submitted successfully!");
       }
+
       setSkill({ name: "", image: "" });
       setShowInputs(false);
       setIsUpdating(false);
       setCurrentSkillId(null);
+      setImageFile(null);
     } catch (error) {
       console.error("Error submitting skill: ", error);
       toast.error("Failed to submit skill");
@@ -89,6 +99,7 @@ const SkillsAdmin: React.FC = () => {
 
   const handleEdit = (item: Skill) => {
     setSkill({ name: item.name, image: item.image });
+    setImageFile(null);
     setIsUpdating(true);
     setShowInputs(true);
     setCurrentSkillId(item.id);
@@ -159,11 +170,7 @@ const SkillsAdmin: React.FC = () => {
       {showSkillList && (
         <div className="max-w-4xl mx-auto p-6 mt-4 rounded-lg shadow-lg border-2 border-gray-700">
           <h3 className="text-xl font-semibold text-white mb-4">
-            {loading
-              ? ""
-              : filteredSkills.length
-              ? "Skills"
-              : "No Skills Available"}
+            {loading ? "" : filteredSkills.length ? "" : "No Skills Available"}
           </h3>
           {loading ? (
             <Spinner />

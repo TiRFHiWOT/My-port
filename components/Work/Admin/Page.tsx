@@ -20,9 +20,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 export interface WorkExperience {
   id: string;
-  name: string;
+  position: string;
   place: string;
   year: string;
+  skillsUsed: string;
   pointOne: string;
   pointTwo: string;
   pointThree: string;
@@ -33,7 +34,7 @@ const WorkExperienceAdmin: React.FC = () => {
   const {
     workExperiences,
     currentWorkExperience,
-    isLoading,
+    loading,
     isUpdating,
     currentWorkExperienceId,
     error,
@@ -42,14 +43,10 @@ const WorkExperienceAdmin: React.FC = () => {
   const [showInputs, setShowInputs] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showWorkExperience, setShowWorkExperience] = useState<boolean>(false);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
     if (showWorkExperience) {
-      setIsFetching(true);
-      dispatch(getWorkExperiences()).finally(() => {
-        setIsFetching(false);
-      });
+      dispatch(getWorkExperiences()).finally(() => {});
     }
   }, [dispatch, showWorkExperience]);
 
@@ -61,9 +58,10 @@ const WorkExperienceAdmin: React.FC = () => {
 
   const handleSubmit = async () => {
     if (
-      !currentWorkExperience.name ||
+      !currentWorkExperience.position ||
       !currentWorkExperience.place ||
       !currentWorkExperience.year ||
+      !currentWorkExperience.skillsUsed ||
       !currentWorkExperience.pointOne ||
       !currentWorkExperience.pointTwo ||
       !currentWorkExperience.pointThree
@@ -110,7 +108,7 @@ const WorkExperienceAdmin: React.FC = () => {
   };
 
   const filteredWorkExperience = workExperiences.filter((w) =>
-    w.name.toLowerCase().includes(searchTerm.toLowerCase())
+    w.position?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -163,7 +161,7 @@ const WorkExperienceAdmin: React.FC = () => {
       </div>
       {showWorkExperience && (
         <div className="max-w-4xl mt-5 mx-auto p-6 rounded-lg shadow-lg border-2 border-gray-700 transition-opacity duration-300 ease-in-out opacity-100">
-          {isFetching ? (
+          {loading ? (
             <Spinner />
           ) : (
             <WorkExperienceList

@@ -54,5 +54,5 @@ export const removeImage = async (imageURL) => {
 
 export const updateTestimonialImage = async (testimonialId, imageURL) => {
   const testimonialDoc = doc(db, "testimonial", testimonialId);
-  await updateDoc(testimonialDoc, { image: imageURL });
+  await updateDoc(testimonialDoc, { profilePicture: imageURL });
 };

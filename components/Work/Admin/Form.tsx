@@ -26,11 +26,11 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
   return (
     <div className="bg-gray-800 p-8 rounded-lg shadow-lg mb-4">
       <div className="mb-4">
-        <label className="block text-gray-300 mb-2">Name</label>
+        <label className="block text-gray-300 mb-2">Position</label>
         <input
           type="text"
-          value={workExperience.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={workExperience.position}
+          onChange={(e) => handleChange("position", e.target.value)}
           className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
         />
       </div>
@@ -49,6 +49,15 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
           type="text"
           value={workExperience.year}
           onChange={(e) => handleChange("year", e.target.value)}
+          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2">Skills Used</label>
+        <input
+          type="text"
+          value={workExperience.skillsUsed}
+          onChange={(e) => handleChange("skillsUsed", e.target.value)}
           className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
         />
       </div>

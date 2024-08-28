@@ -42,14 +42,10 @@ const TestimonialsAdmin: React.FC = () => {
   >(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showTestimonials, setShowTestimonials] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (showTestimonials) {
-      setIsFetching(true);
-      dispatch(getTestimonials() as any).finally(() => {
-        setIsFetching(false);
-      });
+      dispatch(getTestimonials() as any).finally(() => {});
     }
   }, [dispatch, showTestimonials]);
 
@@ -76,11 +72,27 @@ const TestimonialsAdmin: React.FC = () => {
       toast.error("Please fill in all fields before submitting.");
       return;
     }
+
     try {
       if (isUpdating) {
         if (currentTestimonialId) {
+          const existingTestimonial = testimonials.find(
+            (t) => t.id === currentTestimonialId
+          );
+
+          const updatedTestimonial = {
+            ...testimonial,
+            profilePicture:
+              testimonial.profilePicture !== ""
+                ? testimonial.profilePicture
+                : existingTestimonial?.profilePicture || "",
+          };
+
           await dispatch(
-            modifyTestimonial({ id: currentTestimonialId, testimonial }) as any
+            modifyTestimonial({
+              id: currentTestimonialId,
+              testimonial: updatedTestimonial,
+            }) as any
           ).unwrap();
           toast.success("Testimonial updated successfully!");
         }
@@ -88,6 +100,7 @@ const TestimonialsAdmin: React.FC = () => {
         await dispatch(createTestimonial(testimonial) as any).unwrap();
         toast.success("Testimonial submitted successfully!");
       }
+
       setTestimonial({
         comment: "",
         userName: "",
@@ -178,7 +191,7 @@ const TestimonialsAdmin: React.FC = () => {
       </div>
       {showTestimonials && (
         <div className="max-w-4xl mt-5 mx-auto p-6 rounded-lg shadow-lg border-2 border-gray-700 transition-opacity duration-300 ease-in-out opacity-100">
-          {isFetching ? (
+          {loading ? (
             <Spinner />
           ) : (
             <TestimonialList

@@ -27,6 +27,8 @@ const Test = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [dispatch]);
 
+  const limitedTestimonials = testimonials.slice(0, 4);
+
   return (
     <section>
       <div className="flex flex-col justify-center items-center relative">
@@ -40,6 +42,8 @@ const Test = () => {
           <div className="flex justify-center items-center">
             <RotatingLines width="50" />
           </div>
+        ) : limitedTestimonials.length === 0 ? (
+          <div className="text-center py-4">No testimonials available.</div>
         ) : isLargeScreen ? (
           <motion.div
             initial={{ borderRadius: "100%" }}
@@ -71,7 +75,7 @@ const Test = () => {
               }}
               viewport={{ once: true }}
             >
-              {testimonials.map((testimonial: any, id: number) => (
+              {limitedTestimonials.map((testimonial: any, id: number) => (
                 <TestimonialCard
                   key={testimonial.id}
                   testimonial={testimonial}

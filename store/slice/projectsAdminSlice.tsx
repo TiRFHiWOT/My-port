@@ -105,7 +105,12 @@ const projectsAdminSlice = createSlice({
           state.projects[index] = action.payload.project;
         }
       })
+      .addCase(removeProject.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(removeProject.fulfilled, (state, action) => {
+        state.loading = false;
         state.projects = state.projects.filter((p) => p.id !== action.payload);
       });
   },

@@ -11,15 +11,12 @@ const ProjectMap = ({ project, index }: any) => {
       className="relative"
     >
       <ProjectCard
+        key={project.id}
         title={project.title}
         description={project.description}
         gitUrl={project.gitUrl}
         previewUrl={project.previewUrl}
-        imgOne={project.images[0]}
-        imgTwo={project.images[1]}
-        imgThree={project.images[2]}
-        imgFour={project.images[3]}
-        imgFive={project.images[4]}
+        images={project.images || []}
       />
     </motion.div>
   );

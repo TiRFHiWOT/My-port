@@ -52,7 +52,7 @@ export const removeImage = async (url: string) => {
   await deleteObject(storageRef);
 };
 
-export const updateSkillImages = async (itemId, images) => {
+export const updateSkillImage = async (itemId, image) => {
   const skillDoc = doc(db, "skills", itemId);
-  await updateDoc(skillDoc, { images });
+  await updateDoc(skillDoc, { image });
 };

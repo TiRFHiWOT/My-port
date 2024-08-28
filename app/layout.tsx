@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "My Port",
@@ -19,6 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <title>Portfolio</title>
+        <meta name="description" content="A description of my app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon" />
+      </Head>
+
       <body className={poppins.className}>{children}</body>
     </html>
   );

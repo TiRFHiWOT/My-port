@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   uploadImage,
   removeImage,
-  updateSkillImages,
+  updateSkillImage,
 } from "../Firebase/Firebase";
 import { FiPlus, FiX } from "react-icons/fi";
 
@@ -18,36 +18,31 @@ const SkillItem: React.FC<SkillItemProps> = ({
   handleEdit,
   handleRemove,
 }) => {
-  const [imageUrls, setImageUrls] = useState(skill.image ? [skill.image] : []);
+  const [imageUrl, setImageUrl] = useState(skill.image || "");
   const [loading, setLoading] = useState(false);
 
-  const handleImageRemove = async (index: number) => {
-    const urlToRemove = imageUrls[index];
-    await removeImage(urlToRemove);
-
-    const newImageUrls = imageUrls.filter((_, i) => i !== index);
-    setImageUrls(newImageUrls);
-
-    await updateSkillImages(skill.id, newImageUrls);
+  const handleImageRemove = async () => {
+    if (imageUrl) {
+      await removeImage(imageUrl);
+      setImageUrl("");
+      await updateSkillImage(skill.id, "");
+    }
   };
 
   const handleImageAdd = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
     const files = Array.from(e.target.files || []);
-    const newImageUrls = await Promise.all(
-      files.map((file) => uploadImage(file))
-    );
-
-    const updatedImageUrls = [...imageUrls, ...newImageUrls];
-    setImageUrls(updatedImageUrls);
-
-    await updateSkillImages(skill.id, updatedImageUrls);
+    if (files.length) {
+      const newImageUrl = await uploadImage(files[0]);
+      setImageUrl(newImageUrl);
+      await updateSkillImage(skill.id, newImageUrl);
+    }
     setLoading(false);
   };
 
   const handleEditClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    handleEdit({ ...skill, image: imageUrls[0] });
+    handleEdit({ ...skill, image: imageUrl });
   };
 
   return (
@@ -59,27 +54,26 @@ const SkillItem: React.FC<SkillItemProps> = ({
           </div>
         )}
         <div className="flex flex-row space-x-5 p-2 shadow-lg rounded-md mb-4 border bg-[#181f29] border-gray-700 relative">
-          {imageUrls.map((url: string, index: number) => (
-            <div key={index} className="relative w-24 h-24 group">
+          {imageUrl && (
+            <div className="relative w-24 h-24 group">
               <Image
-                src={url}
-                alt={`${skill.name} skill image ${index + 1}`}
+                src={imageUrl}
+                alt={`${skill.name} skill image`}
                 layout="fill"
                 objectFit="cover"
                 className="rounded-lg"
               />
               <button
-                onClick={() => handleImageRemove(index)}
+                onClick={handleImageRemove}
                 className="absolute top-0 right-0 m-1 text-red-600 bg-white rounded-full opacity-0 group-hover:opacity-100 transition"
               >
                 <FiX />
               </button>
             </div>
-          ))}
+          )}
           <div className="relative w-24 h-24 flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg">
             <input
               type="file"
-              multiple
               onChange={handleImageAdd}
               className="absolute inset-0 opacity-0 cursor-pointer"
             />

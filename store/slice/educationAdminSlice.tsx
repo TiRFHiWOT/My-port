@@ -96,9 +96,14 @@ const educationSlice = createSlice({
           }
         }
       )
+      .addCase(removeEducation.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(
         removeEducation.fulfilled,
         (state, action: PayloadAction<string>) => {
+          state.loading = false;
           state.educations = state.educations.filter(
             (edu) => edu.id !== action.payload
           );

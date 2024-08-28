@@ -18,9 +18,7 @@ const EducationList: React.FC<EducationListProps> = ({
 }) => (
   <div className="mt-6">
     <h3 className="text-xl font-bold text-gray-400 mb-4">
-      {educationList.length > 0
-        ? "Submitted Education"
-        : "No Education Available"}
+      {educationList.length > 0 ? "" : "No Education Available"}
     </h3>
 
     {educationList.length > 0

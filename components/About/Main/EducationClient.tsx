@@ -37,6 +37,8 @@ const EducationListClient = () => {
         <div className="flex justify-center items-center h-[15rem]">
           <RotatingLines width="50" />
         </div>
+      ) : education.length === 0 ? (
+        <div className="text-center py-4">No education available.</div>
       ) : (
         <ul className="grid grid-cols-1 gap-2">
           {education.map((item) => (

@@ -62,7 +62,7 @@ const ClientTabs = () => {
           selectTab={() => handleTabChange("skills")}
           active={selectedTab === "skills"}
         >
-          SKILLS
+          TOP SKILLS
         </TabButton>
         <TabButton
           selectTab={() => handleTabChange("education")}

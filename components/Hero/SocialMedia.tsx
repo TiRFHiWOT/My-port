@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 const SocialMediaButton = ({ href, icon, label }: any) => (
-  <a
+  <Link
     href={href}
     target="_blank"
     rel="noopener noreferrer"
@@ -9,7 +10,7 @@ const SocialMediaButton = ({ href, icon, label }: any) => (
     aria-label={label}
   >
     <FontAwesomeIcon icon={icon} size="2x" />
-  </a>
+  </Link>
 );
 
 export default SocialMediaButton;

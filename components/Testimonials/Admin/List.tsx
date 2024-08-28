@@ -3,9 +3,7 @@ import Testimonial from "./Output";
 const TestimonialList = ({ testimonials, handleEdit, handleRemove }: any) => (
   <div className="mt-6">
     <h3 className="text-xl font-bold text-gray-400 mb-4">
-      {testimonials.length > 0
-        ? "Submitted Testimonials"
-        : "No Testimonials Available"}
+      {testimonials.length > 0 ? "" : "No Testimonials Available"}
     </h3>
 
     {testimonials.length > 0

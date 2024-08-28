@@ -51,7 +51,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           ``
         </div>
         <div className=" absolute top-5 right-9 w-8 h-8 rounded-full bg-black group-hover:bg-green-600 group-hover:shadow-xl transition duration-700"></div>
-        <p className="mt-14 mb-3 text-sm text-gray-400 font-semibold tracking-widest px-6 pt-5 pb-2">
+        <p className="mt-14 mb-3 text-sm text-gray-400 font-semibold tracking-widest mx-6 pt-5 pb-2 line-clamp-2 h-20">
           {testimonial.comment}
         </p>
         <div className="flex justify-between items-center px-6 py-2 border border-gray-700 rounded-lg">
@@ -63,7 +63,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           </div>
           {profilePictureUrl && (
             <div
-              className="rounded-full border w-14 h-14"
+              className="rounded-full w-14 h-14"
               style={{
                 backgroundImage: `url(${profilePictureUrl})`,
                 backgroundSize: "cover",

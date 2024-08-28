@@ -46,32 +46,30 @@ const TestimonialsItem = ({ testimonial, handleEdit, handleRemove }: any) => {
           </div>
         )}
         <div className="flex flex-wrap gap-4 p-2 shadow-lg rounded-md mb-4 border border-gray-700 bg-[#181f29] relative">
-          {profilePicture ? (
-            <div className="relative w-24 h-24 group">
-              <Image
-                src={profilePicture}
-                alt={`${testimonial.userName} profile picture`}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-              />
-              <button
-                onClick={handleImageRemove}
-                className="absolute top-0 right-0 m-1 text-red-600 bg-white rounded-full opacity-0 group-hover:opacity-100 transition"
-              >
-                <FiX />
-              </button>
-            </div>
-          ) : (
-            <div className="relative w-24 h-24 flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg">
-              <input
-                type="file"
-                onChange={handleImageAdd}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
-              <FiPlus className="text-gray-400" />
-            </div>
-          )}
+          <div className="relative w-24 h-24 group">
+            <Image
+              src={profilePicture}
+              alt={`${testimonial.userName} profile picture`}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+            <button
+              onClick={handleImageRemove}
+              className="absolute top-0 right-0 m-1 text-red-600 bg-white rounded-full opacity-0 group-hover:opacity-100 transition"
+            >
+              <FiX />
+            </button>
+          </div>
+
+          <div className="relative w-24 h-24 flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg">
+            <input
+              type="file"
+              onChange={handleImageAdd}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+            />
+            <FiPlus className="text-gray-400" />
+          </div>
         </div>
         <div className="rounded-md py-2 px-3 shadow-lg border bg-[#181f29] border-gray-700 mb-4">
           <h4 className="text-xl text-gray-100 font-semibold py-1 tracking-wider">

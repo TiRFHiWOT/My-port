@@ -6,10 +6,8 @@ const WorkExperienceList = ({
   handleRemove,
 }: any) => (
   <div className="mt-6">
-    <h3 className="text-xl font-bold text-gray-400 mb-4">
-      {workExperience.length > 0
-        ? "Submitted Work Experience"
-        : "No Work Experience Available"}
+    <h3 className="text-xl font-bold text-gray-100 mb-4">
+      {workExperience.length > 0 ? "" : "No Work Experience Available"}
     </h3>
 
     {workExperience.length > 0

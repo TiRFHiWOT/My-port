@@ -93,7 +93,12 @@ const testimonialsAdminSlice = createSlice({
           state.testimonials[index] = action.payload.testimonial;
         }
       })
+      .addCase(removeTestimonial.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(removeTestimonial.fulfilled, (state, action) => {
+        state.loading = false;
         state.testimonials = state.testimonials.filter(
           (t) => t.id !== action.payload
         );

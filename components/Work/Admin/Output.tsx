@@ -1,10 +1,16 @@
-import React from "react";
+import SkillImageDisplay from "../Main/imageDisplay";
 
-const WorkExperienceOutput = ({
+type WorkExperienceProps = {
+  workExperience: any;
+  handleEdit: (workExperience: any) => void;
+  handleRemove: (id: string) => void;
+};
+
+const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
   workExperience,
   handleEdit,
   handleRemove,
-}: any) => {
+}) => {
   const handleEditClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     handleEdit(workExperience);
@@ -15,18 +21,18 @@ const WorkExperienceOutput = ({
   }
 
   return (
-    <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-2xl">
-      <div>
-        <div className="rounded-md py-2 px-3 shadow-lg border border-gray-700 bg-[#181f29] bg-tr- mb-4">
-          <h4 className="text-xl text-gray-100 font-semibold py-1 tracking-wider">
-            {workExperience.name}
-          </h4>
-          <p className="text-gray-300 ml-4 py-1">{workExperience.place}</p>
-          <p className="text-gray-300 ml-4 py-1">{workExperience.year}</p>
-          <p className="text-gray-400 ml-4 py-1">{workExperience.pointOne}</p>
-          <p className="text-gray-400 ml-4 py-1">{workExperience.pointTwo}</p>
-          <p className="text-gray-400 ml-4 py-1">{workExperience.pointThree}</p>
-        </div>
+    <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-lg">
+      <SkillImageDisplay skillsUsed={workExperience.skillsUsed} />
+      <div className="rounded-md py-2 px-3 shadow-lg border bg-[#181f29] border-gray-700 mb-4">
+        <h4 className="text-xl text-gray-100 font-semibold py-1 tracking-wider">
+          {workExperience.position}
+        </h4>
+        <p className="text-gray-300 ml-4 py-1">{workExperience.place}</p>
+        <p className="text-gray-300 ml-4 py-1">{workExperience.year}</p>
+        <p className="text-gray-300 ml-4 py-1">{workExperience.skillsUsed}</p>
+        <p className="text-gray-400 ml-4 py-1">{workExperience.pointOne}</p>
+        <p className="text-gray-400 ml-4 py-1">{workExperience.pointTwo}</p>
+        <p className="text-gray-400 ml-4 py-1">{workExperience.pointThree}</p>
       </div>
       <div className="flex justify-end space-x-4 mt-2">
         <button

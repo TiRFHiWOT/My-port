@@ -43,15 +43,13 @@ const Login = () => {
         const token = await user.getIdToken();
         Cookies.set("token", token, { expires: 1 });
 
-        toast.success("Logged in successfully!");
+        router.push("/admin?loginSuccess=true");
+        sessionStorage.setItem("fromLogin", "true");
 
-        setTimeout(() => {
-          router.push("/admin");
-        }, 1500);
+        setLoading(false);
       } catch (error) {
         toast.error("Login failed. Please check your email and password.");
         console.error("Login error:", error);
-      } finally {
         setLoading(false);
       }
     },
@@ -64,7 +62,7 @@ const Login = () => {
 
   return (
     <section className="h-screen w-screen bg-gradient-to-br from-blue-900 to-indigo-600 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md bg-gradient-to-br from-white to-blue-50">
         <form
           onSubmit={handleLogin}
           className="flex flex-col items-center gap-4"
@@ -74,14 +72,14 @@ const Login = () => {
           </h1>
           <input
             type="email"
-            className="outline-none text-slate-900 p-2 w-full border border-gray-300 rounded focus:border-indigo-500 transition duration-300"
+            className="outline-none text-slate-900 p-3 w-full border border-gray-300 rounded focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition duration-300"
             placeholder="Email Address"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
-            className="outline-none text-slate-900 p-2 w-full border border-gray-300 rounded focus:border-indigo-500 transition duration-300"
+            className="outline-none text-slate-900 p-3 w-full border border-gray-300 rounded focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition duration-300"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -105,18 +103,7 @@ const Login = () => {
           </button>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
     </section>
   );
 };

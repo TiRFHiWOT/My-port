@@ -9,43 +9,46 @@ import "react-toastify/dist/ReactToastify.css";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const token = user.stsTokenManager.accessToken;
-        localStorage.setItem("user", JSON.stringify(user));
-        document.cookie = `token=${token}; path=/`;
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const token = user.stsTokenManager.accessToken;
+      localStorage.setItem("user", JSON.stringify(user));
+      document.cookie = `token=${token}; path=/`;
 
-        toast.success("Successfully signed up!");
-
-        setTimeout(() => {
-          router.push("/admin");
-        }, 1500);
-      })
-      .catch((error) => {
-        console.error("Signup error:", error);
-
-        toast.error("Sign-up failed. Please try again.");
-      });
+      router.push("/admin");
+      sessionStorage.setItem("fromRegister", "true");
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast.error("Sign-up failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <section className="h-screen w-screen bg-gradient-to-br from-blue-900 to-indigo-600 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md bg-gradient-to-br from-white to-blue-50">
         <form
           onSubmit={handleSignUp}
-          className="flex flex-col items-center gap-4"
+          className="flex flex-col items-center gap-6"
         >
           <h1 className="font-extrabold text-4xl text-gray-800">
             SIGN<span className="text-orange-600">UP</span>
           </h1>
           <input
             type="email"
-            className="outline-none text-slate-900 p-2 w-full border border-gray-300 rounded focus:border-indigo-500 transition duration-300"
+            className="outline-none text-slate-900 p-3 w-full border border-gray-300 rounded focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition duration-300"
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -53,7 +56,7 @@ const Register = () => {
           />
           <input
             type="password"
-            className="outline-none text-slate-900 p-2 w-full border border-gray-300 rounded focus:border-indigo-500 transition duration-300"
+            className="outline-none text-slate-900 p-3 w-full border border-gray-300 rounded focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition duration-300"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -61,24 +64,16 @@ const Register = () => {
           />
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white rounded shadow-lg py-2 w-full transition duration-300"
+            className={`${
+              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+            } bg-blue-900 text-white rounded shadow-lg py-2 w-full transition duration-300`}
+            disabled={loading}
           >
-            Sign up
+            {loading ? "Signing up..." : "Sign up"}
           </button>
         </form>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
     </section>
   );
 };

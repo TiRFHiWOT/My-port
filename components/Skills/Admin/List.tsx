@@ -17,8 +17,8 @@ const SkillsList: React.FC<SkillsListProps> = ({
   handleRemove,
 }) => (
   <div className="mt-6">
-    <h3 className="text-xl font-bold text-gray-400 mb-4">
-      {skillsList.length > 0 ? "Submitted skills" : "No Skills Available"}
+    <h3 className="text-xl font-bold text-gray-100 mb-4">
+      {skillsList.length > 0 ? "" : "No Skills Available"}
     </h3>
 
     {skillsList.length > 0

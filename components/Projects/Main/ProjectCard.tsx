@@ -9,11 +9,7 @@ interface ProjectCardProps {
   description: string;
   previewUrl?: string;
   gitUrl?: string;
-  imgOne: string;
-  imgTwo: string;
-  imgThree: string;
-  imgFour: string;
-  imgFive: string;
+  images?: string[];
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -21,29 +17,38 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   previewUrl,
   gitUrl,
-  imgOne,
-  imgTwo,
-  imgThree,
-  imgFour,
-  imgFive,
+  images = [],
 }) => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const images = [imgOne, imgTwo, imgThree, imgFour, imgFive];
+    const validImages = images.filter(Boolean);
+    const totalImages = validImages.length;
     let loadedCount = 0;
 
-    images.forEach((src) => {
+    if (totalImages === 0) {
+      setImagesLoaded(true);
+      return;
+    }
+
+    validImages.forEach((src) => {
       const img = new Image();
       img.src = src;
       img.onload = () => {
         loadedCount += 1;
-        if (loadedCount === images.length) {
+        if (loadedCount === totalImages) {
+          setImagesLoaded(true);
+        }
+      };
+      img.onerror = () => {
+        loadedCount += 1;
+        if (loadedCount === totalImages) {
           setImagesLoaded(true);
         }
       };
     });
-  }, [imgOne, imgTwo, imgThree, imgFour, imgFive]);
+  }, [images]);
 
   return (
     <motion.div
@@ -62,26 +67,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       ) : (
         <div className="h-52 md:h-72 relative group">
-          <div
-            className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] z-40"
-            style={{ background: `url(${imgFive})`, backgroundSize: "cover" }}
-          ></div>
-          <div
-            className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] delay-[2s] z-30"
-            style={{ background: `url(${imgFour})`, backgroundSize: "cover" }}
-          ></div>
-          <div
-            className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] delay-[4s] z-20"
-            style={{ background: `url(${imgThree})`, backgroundSize: "cover" }}
-          ></div>
-          <div
-            className="absolute top-0 left-0 w-full h-full group-hover:opacity-0 transform transition-all duration-[1s] delay-[6s] z-10"
-            style={{ background: `url(${imgTwo})`, backgroundSize: "cover" }}
-          ></div>
-          <div
-            className="absolute top-0 left-0 w-full h-full z-0"
-            style={{ background: `url(${imgOne})`, backgroundSize: "cover" }}
-          ></div>
+          {images.map((img, index) => {
+            const delay = `${index * 2}s`;
+            const zIndex = images.length - index;
+
+            return (
+              <div
+                key={index}
+                className={`absolute top-0 left-0 w-full h-full ${
+                  index === images.length - 1
+                    ? "opacity-100"
+                    : "group-hover:opacity-0"
+                } transform transition-all duration-[1000ms]`}
+                style={{
+                  background: `url(${img})`,
+                  backgroundSize: "cover",
+                  transitionDelay: delay,
+                  zIndex: zIndex,
+                }}
+              ></div>
+            );
+          })}
+
           {gitUrl && previewUrl && (
             <div className="z-50 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full w-[140px] md:w-[180px] h-[65px] md:h-[75px] bg-[#212529] group-hover:shadow-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 flex justify-center items-center">
               <Link
@@ -111,16 +118,30 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       )}
       <div className="bg-gray-900 px-4 pb-3 pt-2 flex flex-row justify-between">
         <div>
-          <h1 className="text-lg font-semibold mb-2 border-l-4 border-orange-600 pl-2">
-            {title}
-          </h1>
-          <p className="text-sm text-slate-400">{description}</p>
-        </div>
-        {!gitUrl && !previewUrl && (
-          <div className="hidden group-hover:flex text-cyan-400">
-            <h1>PRIVATE</h1>
+          <div className="flex justify-between mb-2 items-center">
+            <h1 className="text-lg font-semibold border-l-4 border-orange-600 pl-2">
+              {title}
+            </h1>
+            {!gitUrl && !previewUrl && (
+              <div className="hidden group-hover:flex text-cyan-400">
+                <h1>PRIVATE</h1>
+              </div>
+            )}
           </div>
-        )}
+          <p
+            className={`text-sm text-slate-400 ${
+              isExpanded ? "" : "line-clamp-2"
+            }`}
+          >
+            {description}
+          </p>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-blue-500 hover:underline mt-2"
+          >
+            {isExpanded ? "Show Less" : "Show More"}
+          </button>
+        </div>
       </div>
     </motion.div>
   );
