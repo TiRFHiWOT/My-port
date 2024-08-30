@@ -45,12 +45,9 @@ const Login = () => {
 
         router.push("/admin?loginSuccess=true");
         sessionStorage.setItem("fromLogin", "true");
-
-        setLoading(false);
       } catch (error) {
         toast.error("Login failed. Please check your email and password.");
         console.error("Login error:", error);
-        setLoading(false);
       }
     },
     [email, password, router]

@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const EmailField = () => {
+const EmailField = ({ value, onChange }: any) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -17,12 +17,14 @@ const EmailField = () => {
       viewport={{ once: true }}
     >
       <label htmlFor="email" className="block mb-2 text-sm font-medium">
-        Your Email
+        Email
       </label>
       <input
         type="email"
         id="email"
         name="email"
+        value={value}
+        onChange={onChange}
         required
         className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-100 text-sm rounded-lg block w-full p-2.5"
         placeholder="abebebesobela@gmail.com"

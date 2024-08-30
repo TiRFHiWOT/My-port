@@ -1,3 +1,6 @@
+import React from "react";
+import { convertFromRaw, ContentState } from "draft-js";
+import { convertToHTML } from "draft-convert";
 import SkillImageDisplay from "../Main/imageDisplay";
 
 type WorkExperienceProps = {
@@ -20,6 +23,29 @@ const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
     return null;
   }
 
+  // Convert raw description to ContentState
+  let contentState = ContentState.createFromText("");
+  if (workExperience.description) {
+    try {
+      contentState = convertFromRaw(JSON.parse(workExperience.description));
+    } catch (error) {
+      console.error("Error converting raw content:", error);
+    }
+  }
+
+  // Convert ContentState to HTML
+  const contentHTML = convertToHTML({
+    blockToHTML: (block) => {
+      if (block.type === "unordered-list-item") {
+        return <li />;
+      }
+      if (block.type === "ordered-list-item") {
+        return <li />;
+      }
+      return null;
+    },
+  })(contentState);
+
   return (
     <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-lg">
       <SkillImageDisplay skillsUsed={workExperience.skillsUsed} />
@@ -30,9 +56,10 @@ const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
         <p className="text-gray-300 ml-4 py-1">{workExperience.place}</p>
         <p className="text-gray-300 ml-4 py-1">{workExperience.year}</p>
         <p className="text-gray-300 ml-4 py-1">{workExperience.skillsUsed}</p>
-        <p className="text-gray-400 ml-4 py-1">{workExperience.pointOne}</p>
-        <p className="text-gray-400 ml-4 py-1">{workExperience.pointTwo}</p>
-        <p className="text-gray-400 ml-4 py-1">{workExperience.pointThree}</p>
+        <div
+          className="ml-4 py-1 text-gray-400"
+          dangerouslySetInnerHTML={{ __html: contentHTML }}
+        />
       </div>
       <div className="flex justify-end space-x-4 mt-2">
         <button

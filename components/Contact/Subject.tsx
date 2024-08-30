@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const SubjectField = () => {
+const SubjectField = ({ value, onChange }: any) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -23,9 +23,11 @@ const SubjectField = () => {
         type="text"
         id="subject"
         name="subject"
+        value={value}
+        onChange={onChange}
         required
         className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-100 text-sm rounded-lg block w-full p-2.5"
-        placeholder="What's in your mind."
+        placeholder="What's on your mind."
       />
     </motion.div>
   );

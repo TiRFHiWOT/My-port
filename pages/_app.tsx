@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import store from "@/store/store";
 import "@/app/globals.css";
 import { Poppins } from "next/font/google";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const poppins = Poppins({
   subsets: ["latin"],

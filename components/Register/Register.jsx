@@ -31,8 +31,6 @@ const Register = () => {
     } catch (error) {
       console.error("Signup error:", error);
       toast.error("Sign-up failed. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 

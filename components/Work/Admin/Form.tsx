@@ -1,4 +1,7 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 type WorkExperienceFormProps = {
   workExperience: any;
@@ -16,6 +19,20 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
   warning,
 }) => {
   const [uploading, setUploading] = useState(false);
+  const [editorState, setEditorState] = useState(
+    workExperience.description
+      ? EditorState.createWithContent(
+          convertFromRaw(JSON.parse(workExperience.description))
+        )
+      : EditorState.createEmpty()
+  );
+
+  const handleEditorChange = (state: EditorState) => {
+    setEditorState(state);
+    const contentState = state.getCurrentContent();
+    const rawContent = convertToRaw(contentState);
+    handleChange("description", JSON.stringify(rawContent));
+  };
 
   const handleFormSubmit = async () => {
     setUploading(true);
@@ -62,31 +79,31 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-300 mb-2">Point One</label>
-        <input
-          type="text"
-          value={workExperience.pointOne}
-          onChange={(e) => handleChange("pointOne", e.target.value)}
-          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-300 mb-2">Point Two</label>
-        <input
-          type="text"
-          value={workExperience.pointTwo}
-          onChange={(e) => handleChange("pointTwo", e.target.value)}
-          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-300 mb-2">Point Three</label>
-        <input
-          type="text"
-          value={workExperience.pointThree}
-          onChange={(e) => handleChange("pointThree", e.target.value)}
-          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
-        />
+        <label className="block text-gray-300 mb-2">Description</label>
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-2">
+          <Editor
+            editorState={editorState}
+            onEditorStateChange={handleEditorChange}
+            toolbar={{
+              options: [
+                "inline",
+                "blockType",
+                "fontSize",
+                "fontFamily",
+                "list",
+                "textAlign",
+                "colorPicker",
+                "link",
+                "embedded",
+                "image",
+                "history",
+              ],
+            }}
+            wrapperClassName="bg-gray-800 rounded-lg"
+            editorClassName="p-3 text-gray-200 bg-gray-900 min-h-[150px] rounded-lg"
+            toolbarClassName="border-b border-gray-700 bg-gray-800"
+          />
+        </div>
       </div>
       {warning && <p className="text-red-500">{warning}</p>}
       <button

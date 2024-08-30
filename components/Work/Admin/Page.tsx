@@ -24,9 +24,7 @@ export interface WorkExperience {
   place: string;
   year: string;
   skillsUsed: string;
-  pointOne: string;
-  pointTwo: string;
-  pointThree: string;
+  description: string;
 }
 
 const WorkExperienceAdmin: React.FC = () => {
@@ -62,9 +60,7 @@ const WorkExperienceAdmin: React.FC = () => {
       !currentWorkExperience.place ||
       !currentWorkExperience.year ||
       !currentWorkExperience.skillsUsed ||
-      !currentWorkExperience.pointOne ||
-      !currentWorkExperience.pointTwo ||
-      !currentWorkExperience.pointThree
+      !currentWorkExperience.description
     ) {
       toast.error("Please fill in all fields before submitting.");
       return;

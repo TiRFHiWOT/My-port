@@ -1,26 +1,62 @@
+import React from "react";
+import { convertFromRaw, ContentState } from "draft-js";
+import { convertToHTML } from "draft-convert";
 import SkillImageDisplay from "../Main/imageDisplay";
+import parse from "html-react-parser";
 
-const WorkCard = ({
+type WorkCardProps = {
+  position: string;
+  place: string;
+  year: string;
+  skillsUsed: string[];
+  description: string;
+  onClick: () => void;
+};
+
+// Helper function to truncate text to a specified number of words
+const truncateText = (text: string, wordLimit: number): string => {
+  const words = text.split(" ");
+  if (words.length <= wordLimit) {
+    return text;
+  }
+  return words.slice(0, wordLimit).join(" ") + "...";
+};
+
+const WorkCard: React.FC<WorkCardProps> = ({
   position,
   place,
   year,
   skillsUsed,
-  pointOne,
-  pointTwo,
-  pointThree,
-}: any) => {
-  const wordLimit = (comment: string) => {
-    const words = comment.split(" ");
-    if (words.length > 10) {
-      return words.slice(0, 10).join(" ") + "...";
+  description,
+  onClick,
+}) => {
+  // Convert raw description to ContentState
+  let contentState = ContentState.createFromText("");
+  if (description) {
+    try {
+      contentState = convertFromRaw(JSON.parse(description));
+    } catch (error) {
+      console.error("Error converting raw content:", error);
     }
-    return comment;
-  };
+  }
+
+  // Convert ContentState to HTML
+  const contentHTML = convertToHTML({
+    blockToHTML: (block) => {
+      if (block.type === "unordered-list-item") {
+        return <li />;
+      }
+      if (block.type === "ordered-list-item") {
+        return <li />;
+      }
+      return null;
+    },
+  })(contentState);
 
   return (
     <section>
       <div
-        className=" relative text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg px-4 pt-3 pb-4 border-b-4 border-[#334155] bg-opacity-80 lg:h-full
+        className="relative text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg px-4 pt-3 pb-4 border-b-4 border-[#334155] bg-opacity-80 lg:h-full
         hover:scale-105 hover:border-b-green-700 w-[20rem] lg:w-[25rem] border mr-10 transform transition-all duration-[0.5s] group"
       >
         <div>
@@ -32,28 +68,36 @@ const WorkCard = ({
               <p className="text-xl tracking-[0.15rem] py-1 px-4 mt-1 text-gray-400 font-semibold bg-slate-800 rounded-full w-fit">
                 {place}
               </p>
-              <p className=" text-base tracking-widest text-gray-300 py-2 px-4">
+              <p className="text-base tracking-widest text-gray-300 py-2 px-4">
                 {year}
               </p>
             </div>
-            <div className=" absolute top-[65px] right-[17px]">
+            <div className="absolute top-[65px] right-[17px]">
               <SkillImageDisplay skillsUsed={skillsUsed} compact={true} />
             </div>
           </div>
         </div>
         <div>
-          <ul className="list-disc pl-5">
-            <li className="text text-slate-300 leading-6 lg:leading-7">
-              {wordLimit(pointOne)}
-            </li>
-            <li className="text text-slate-300 leading-6 lg:leading-7">
-              {wordLimit(pointTwo)}
-            </li>
-            <li className="text text-slate-300 leading-6 lg:leading-7">
-              {wordLimit(pointThree)}
-            </li>
-          </ul>
+          <div className="ml-4 py-1 text-slate-300 leading-6 lg:leading-7">
+            {parse(contentHTML, {
+              replace: (domNode) => {
+                if (domNode.type === "tag" && domNode.name === "li") {
+                  const text = domNode.children
+                    .map((child) => child.data || "")
+                    .join("");
+                  const truncatedText = truncateText(text, 11);
+                  return <li className="list-disc ">{truncatedText}</li>;
+                }
+              },
+            })}
+          </div>
         </div>
+        <button
+          onClick={onClick}
+          className="absolute bottom-4 right-4 text-sm text-white bg-green-600 px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          More
+        </button>
       </div>
     </section>
   );

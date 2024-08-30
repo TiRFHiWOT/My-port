@@ -2,24 +2,23 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/app/firebaseConfig";
 import Image from "next/image";
-import { FiPlus, FiMinus } from "react-icons/fi";
 
 type SkillImageDisplayProps = {
   skillsUsed: string;
   compact?: boolean;
+  isOverlay?: boolean;
 };
 
 const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
   skillsUsed,
   compact = false,
+  isOverlay = false,
 }) => {
   const [skills, setSkills] = useState<any[]>([]);
   const [matchingSkillImages, setMatchingSkillImages] = useState<
     { image: string; name: string }[]
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showAll, setShowAll] = useState<boolean>(false);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const fetchSkills = async () => {
     setLoading(true);
@@ -77,11 +76,9 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
         className="rounded"
       />
       <div
-        className={`absolute inset-0 flex text-center lowercase items-center justify-center fon bg-black bg-opacity-80 text-white text-xs font-semibold opacity-0 ${
-          isHovered ? "hover:opacity-100" : "opacity-0"
-        } ${
-          compact ? "flex" : "hidden"
-        } transition-opacity duration-300 rounded`}
+        className={`absolute inset-0 lowercase flex items-center justify-center bg-black bg-opacity-100 text-white text-xs font-semibold opacity-0 hover:opacity-100 transition-opacity duration-300 rounded ${
+          compact ? "text-xs" : "text-sm"
+        }`}
       >
         {name}
       </div>
@@ -100,54 +97,26 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
     );
   }
 
-  const displayedImages = showAll
+  const displayedImages = isOverlay
     ? matchingSkillImages
     : matchingSkillImages.slice(0, 3);
-
-  const handleIconClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setShowAll(!showAll);
-  };
 
   return (
     <div
       className={`flex ${
         compact ? "flex-wrap gap-3" : "flex-row space-x-5"
-      } p-2 shadow-lg rounded-md mb-4 border bg-[#181f29] border-gray-700 relative`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      } p-2 shadow-lg rounded-md mb-4 border bg-[#181f29] border-gray-700`}
     >
-      {displayedImages.length ? (
-        <>
-          {displayedImages.map((skill, index) => renderImage(skill, index))}
-          {matchingSkillImages.length > 5 && (
-            <div
-              onClick={handleIconClick}
-              className={`${
-                compact ? "w-10 h-10" : "w-24 h-24"
-              } flex justify-center items-center cursor-pointer border border-dashed border-gray-500 rounded-lg transition-all duration-300 ease-in-out hover:bg-green-500 hover:text-white`}
-            >
-              <div
-                className="flex items-center justify-center w-full h-full bg-gray-700 rounded-full hover:bg-gray-600"
-                onMouseEnter={() => setIsHovered(false)}
-              >
-                {showAll ? (
-                  <FiMinus size={compact ? 20 : 30} className="text-white" />
-                ) : (
-                  <FiPlus size={compact ? 20 : 30} className="text-white" />
-                )}
-              </div>
-            </div>
-          )}
-        </>
+      {matchingSkillImages.length ? (
+        <>{displayedImages.map((skill, index) => renderImage(skill, index))}</>
       ) : (
         <div
           className={`relative ${
             compact ? "w-12 h-12" : "w-24 h-24"
           } flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg`}
         >
-          <span className="text-gray-400 text-xs">
-            {compact ? "No Img" : "No Image"}
+          <span className="text-gray-400 text-xs text-center">
+            {compact ? "No skills" : "No skills"}
           </span>
         </div>
       )}

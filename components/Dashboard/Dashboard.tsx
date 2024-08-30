@@ -20,7 +20,7 @@ const Dashboard = () => {
       sessionStorage.removeItem("fromLogin");
     }
     if (sessionStorage.getItem("fromRegister")) {
-      toast.info("Successfully signed up!", {
+      toast.info("Welcome to the Dashboard!", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
