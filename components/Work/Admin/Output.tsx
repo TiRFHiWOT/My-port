@@ -1,12 +1,26 @@
 import React from "react";
-import { convertFromRaw, ContentState } from "draft-js";
-import { convertToHTML } from "draft-convert";
 import SkillImageDisplay from "../Main/imageDisplay";
 
 type WorkExperienceProps = {
   workExperience: any;
   handleEdit: (workExperience: any) => void;
   handleRemove: (id: string) => void;
+};
+
+const processHTMLContent = (html: string) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  const lists = tempDiv.querySelectorAll("ol, ul");
+
+  lists.forEach((list) => {
+    const isOrdered = list.tagName === "OL";
+    const listStyle = isOrdered ? "decimal" : "disc";
+    list.style.listStyleType = listStyle;
+    list.style.paddingLeft = "2rem";
+  });
+
+  return tempDiv.innerHTML;
 };
 
 const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
@@ -23,28 +37,7 @@ const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
     return null;
   }
 
-  // Convert raw description to ContentState
-  let contentState = ContentState.createFromText("");
-  if (workExperience.description) {
-    try {
-      contentState = convertFromRaw(JSON.parse(workExperience.description));
-    } catch (error) {
-      console.error("Error converting raw content:", error);
-    }
-  }
-
-  // Convert ContentState to HTML
-  const contentHTML = convertToHTML({
-    blockToHTML: (block) => {
-      if (block.type === "unordered-list-item") {
-        return <li />;
-      }
-      if (block.type === "ordered-list-item") {
-        return <li />;
-      }
-      return null;
-    },
-  })(contentState);
+  const contentHTML = processHTMLContent(workExperience.description || "");
 
   return (
     <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-lg">

@@ -29,8 +29,9 @@ const ControlledEditor = ({
   return (
     <motion.div
       className="mb-4"
+      ref={ref}
       initial={{ opacity: 0, x: 200 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      whileInView={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: 0.4 }}
       viewport={{ once: true }}
     >

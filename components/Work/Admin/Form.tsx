@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { Editor as DraftEditor } from "react-draft-wysiwyg";
+import SkillsDropdown from "./Drop";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 type WorkExperienceFormProps = {
   workExperience: any;
-  handleChange: (field: string, value: string) => void;
+  handleChange: (field: string, value: any) => void;
   handleSubmit: () => void;
   isUpdating: boolean;
   warning: string;
@@ -19,19 +22,26 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
   warning,
 }) => {
   const [uploading, setUploading] = useState(false);
-  const [editorState, setEditorState] = useState(
-    workExperience.description
-      ? EditorState.createWithContent(
-          convertFromRaw(JSON.parse(workExperience.description))
-        )
-      : EditorState.createEmpty()
+
+  // Convert initial HTML to EditorState
+  const contentBlock = htmlToDraft(workExperience.description || "");
+  const contentState = ContentState.createFromBlockArray(
+    contentBlock.contentBlocks
+  );
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createWithContent(contentState)
   );
 
-  const handleEditorChange = (state: EditorState) => {
-    setEditorState(state);
-    const contentState = state.getCurrentContent();
-    const rawContent = convertToRaw(contentState);
-    handleChange("description", JSON.stringify(rawContent));
+  const handleEditorChange = (newState: EditorState) => {
+    setEditorState(newState);
+    const contentAsHTML = draftToHtml(
+      convertToRaw(newState.getCurrentContent())
+    );
+    handleChange("description", contentAsHTML);
+  };
+
+  const handleSkillsChange = (skills: string[]) => {
+    handleChange("skillsUsed", skills.join(", "));
   };
 
   const handleFormSubmit = async () => {
@@ -71,17 +81,15 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
       </div>
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Skills Used</label>
-        <input
-          type="text"
-          value={workExperience.skillsUsed}
-          onChange={(e) => handleChange("skillsUsed", e.target.value)}
-          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
+        <SkillsDropdown
+          selectedSkills={workExperience.skillsUsed.split(", ").filter(Boolean)}
+          onChange={handleSkillsChange}
         />
       </div>
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Description</label>
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-2">
-          <Editor
+          <DraftEditor
             editorState={editorState}
             onEditorStateChange={handleEditorChange}
             toolbar={{
@@ -101,7 +109,7 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
             }}
             wrapperClassName="bg-gray-800 rounded-lg"
             editorClassName="p-3 text-gray-200 bg-gray-900 min-h-[150px] rounded-lg"
-            toolbarClassName="border-b border-gray-700 bg-gray-800"
+            toolbarClassName="border-b border-gray-700 bg-gray-800 text-gray-900"
           />
         </div>
       </div>

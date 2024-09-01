@@ -55,13 +55,11 @@ const WorkExperienceAdmin: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (
-      !currentWorkExperience.position ||
+    if (!currentWorkExperience.position ||
       !currentWorkExperience.place ||
       !currentWorkExperience.year ||
       !currentWorkExperience.skillsUsed ||
-      !currentWorkExperience.description
-    ) {
+      !currentWorkExperience.description) {
       toast.error("Please fill in all fields before submitting.");
       return;
     }

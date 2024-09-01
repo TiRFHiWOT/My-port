@@ -17,7 +17,7 @@ const Heading = () => {
       transition={{ duration: 0.5, delay: 0 }}
       className="text-white text-4xl lg:text-6xl lg:leading-normal font-extrabold my-4"
     >
-      <span className="text-transparent bg-clip-text bg-orange-700">
+      <span className="text-transparent bg-clip-text bg-gray-300">
         {`Hello, I'm`} <br />
       </span>{" "}
       <TypeAnimation

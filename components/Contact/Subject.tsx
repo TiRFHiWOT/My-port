@@ -12,7 +12,7 @@ const SubjectField = ({ value, onChange }: any) => {
     <motion.div
       ref={ref}
       initial={{ opacity: 0, x: 200 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: 0.2 }}
       viewport={{ once: true }}
     >

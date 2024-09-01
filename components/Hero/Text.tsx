@@ -37,7 +37,7 @@ const Text = () => {
         <Paragraph />
         <div className="flex flex-col sm:flex-row justify-center lg:justify-start py-5">
           <ButtonOne href={"/contact"} text="Download CV" />
-          <div className="flex items-center justify-center mt-4 lg:mt-0 ml-3">
+          <div className="flex items-center justify-center mt-4 lg:mt-0 ml-5">
             <SocialMediaButton
               href="https://twitter.com/yourusername"
               icon={faTwitter}

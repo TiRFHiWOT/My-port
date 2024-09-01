@@ -16,7 +16,7 @@ const config: Config = {
         'back': "url('/back.png')",
       },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }
 };
 export default config;

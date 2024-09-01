@@ -15,7 +15,7 @@ const SubmitButton = ({ loading }: any) => {
       initial={{ opacity: 0, scaleX: 0 }}
       animate={inView ? { opacity: 1, scaleX: 1 } : {}}
       transition={{
-        delay: 0.7,
+        delay: 0.6,
         duration: 0.2,
         type: "spring",
         stiffness: 700,

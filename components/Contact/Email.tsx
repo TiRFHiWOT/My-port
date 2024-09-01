@@ -27,7 +27,7 @@ const EmailField = ({ value, onChange }: any) => {
         onChange={onChange}
         required
         className="bg-slate-700 border border-slate-600 placeholder-slate-500 text-slate-100 text-sm rounded-lg block w-full p-2.5"
-        placeholder="abebebesobela@gmail.com"
+        placeholder="youremail@example.com"
       />
     </motion.div>
   );

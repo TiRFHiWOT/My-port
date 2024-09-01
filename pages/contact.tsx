@@ -19,7 +19,7 @@ const Contact = () => {
     >
       <div className="flex justify-center">
         <div className="p-4 border border-gray-700 shadow-lg rounded-3xl">
-          <h1 className="text-2xl font-bold my-2 z-10 py-3 -rotate-3">
+          <h1 className="text-3xl font-bold my-2 z-10 py-3 -rotate-3">
             Let'<span className="text-orange-600">s</span> Connect.
           </h1>
           <p className="mb-4 max-w-md text-slate-400">

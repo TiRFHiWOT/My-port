@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       from: email,
       to: 'azromjr@gmail.com',
       subject: subject,
-      text: `From: ${email}\n\n${message}`,
+      html: message, // Send HTML content
       replyTo: email,
     };
 

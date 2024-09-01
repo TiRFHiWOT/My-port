@@ -1,8 +1,5 @@
 import React from "react";
-import { convertFromRaw, ContentState } from "draft-js";
-import { convertToHTML } from "draft-convert";
 import SkillImageDisplay from "../Main/imageDisplay";
-import parse from "html-react-parser";
 
 type WorkCardProps = {
   position: string;
@@ -13,13 +10,44 @@ type WorkCardProps = {
   onClick: () => void;
 };
 
-// Helper function to truncate text to a specified number of words
 const truncateText = (text: string, wordLimit: number): string => {
   const words = text.split(" ");
   if (words.length <= wordLimit) {
     return text;
   }
   return words.slice(0, wordLimit).join(" ") + "...";
+};
+
+const processHTMLContent = (html: string) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  const lists = tempDiv.querySelectorAll("ol, ul");
+
+  lists.forEach((list) => {
+    const items = list.querySelectorAll("li");
+
+    items.forEach((item) => {
+      const truncatedText = truncateText(item.textContent || "", 15);
+      item.innerHTML = truncatedText;
+    });
+
+    // Limit the number of list items to 3
+    if (items.length > 3) {
+      items.forEach((item, index) => {
+        if (index >= 3) {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    const isOrdered = list.tagName === "OL";
+    const listStyle = isOrdered ? "decimal" : "disc";
+    list.style.listStyleType = listStyle;
+    list.style.paddingLeft = "1rem";
+  });
+
+  return tempDiv.innerHTML;
 };
 
 const WorkCard: React.FC<WorkCardProps> = ({
@@ -30,28 +58,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
   description,
   onClick,
 }) => {
-  // Convert raw description to ContentState
-  let contentState = ContentState.createFromText("");
-  if (description) {
-    try {
-      contentState = convertFromRaw(JSON.parse(description));
-    } catch (error) {
-      console.error("Error converting raw content:", error);
-    }
-  }
-
-  // Convert ContentState to HTML
-  const contentHTML = convertToHTML({
-    blockToHTML: (block) => {
-      if (block.type === "unordered-list-item") {
-        return <li />;
-      }
-      if (block.type === "ordered-list-item") {
-        return <li />;
-      }
-      return null;
-    },
-  })(contentState);
+  const contentHTML = processHTMLContent(description);
 
   return (
     <section>
@@ -77,21 +84,10 @@ const WorkCard: React.FC<WorkCardProps> = ({
             </div>
           </div>
         </div>
-        <div>
-          <div className="ml-4 py-1 text-slate-300 leading-6 lg:leading-7">
-            {parse(contentHTML, {
-              replace: (domNode) => {
-                if (domNode.type === "tag" && domNode.name === "li") {
-                  const text = domNode.children
-                    .map((child) => child.data || "")
-                    .join("");
-                  const truncatedText = truncateText(text, 11);
-                  return <li className="list-disc ">{truncatedText}</li>;
-                }
-              },
-            })}
-          </div>
-        </div>
+        <div
+          className="ml-4 py-1 text-slate-300 leading-6 lg:leading-7"
+          dangerouslySetInnerHTML={{ __html: contentHTML }}
+        />
         <button
           onClick={onClick}
           className="absolute bottom-4 right-4 text-sm text-white bg-green-600 px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"

@@ -7,6 +7,22 @@ import { convertFromRaw, ContentState } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import SkillImageDisplay from "./imageDisplay";
 
+const processHTMLContent = (html: string) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  const lists = tempDiv.querySelectorAll("ol, ul");
+
+  lists.forEach((list) => {
+    const isOrdered = list.tagName === "OL";
+    const listStyle = isOrdered ? "decimal" : "disc";
+    list.style.listStyleType = listStyle;
+    list.style.paddingLeft = "1rem";
+  });
+
+  return tempDiv.innerHTML;
+};
+
 const ClientWorkExperience = () => {
   const dispatch = useDispatch();
   const experience = useSelector((state) => state.workExperience.experience);
@@ -43,27 +59,9 @@ const ClientWorkExperience = () => {
     setSelectedExperience(null);
   };
 
-  const convertDescriptionToHTML = (description: string) => {
-    let contentState = ContentState.createFromText("");
-    if (description) {
-      try {
-        contentState = convertFromRaw(JSON.parse(description));
-      } catch (error) {
-        console.error("Error converting raw content:", error);
-      }
-    }
-    return convertToHTML({
-      blockToHTML: (block) => {
-        if (block.type === "unordered-list-item") {
-          return <li />;
-        }
-        if (block.type === "ordered-list-item") {
-          return <li />;
-        }
-        return null;
-      },
-    })(contentState);
-  };
+  const contentHTML = selectedExperience
+    ? processHTMLContent(selectedExperience.description)
+    : "";
 
   return (
     <div className="relative">
@@ -100,10 +98,9 @@ const ClientWorkExperience = () => {
           onClick={handleOverlayClose}
         >
           <div
-            className="bg-white p-8 lg:p-12 rounded-lg shadow-2xl w-full max-w-4xl relative max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
+            className="bg-white p-8 lg:p-12 rounded-lg shadow-2xl w-full max-w-5xl relative max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition-colors duration-200"
               onClick={handleOverlayClose}
@@ -144,11 +141,7 @@ const ClientWorkExperience = () => {
             </div>
             <div
               className="text-gray-800 leading-7 lg:leading-8 mt-6 space-y-4"
-              dangerouslySetInnerHTML={{
-                __html: convertDescriptionToHTML(
-                  selectedExperience.description
-                ),
-              }}
+              dangerouslySetInnerHTML={{ __html: contentHTML }}
             />
           </div>
         </div>

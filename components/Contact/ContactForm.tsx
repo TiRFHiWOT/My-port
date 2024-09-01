@@ -1,7 +1,7 @@
-"use client";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { EditorState } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,7 +9,7 @@ import EmailField from "@/components/Contact/Email";
 import SubjectField from "@/components/Contact/Subject";
 import SubmitButton from "@/components/Contact/Submit";
 
-const ControlledEditor = dynamic(() => import("./editor"), {
+const ControlledEditor = dynamic(() => import("@/components/Contact/editor"), {
   ssr: false,
 });
 
@@ -22,7 +22,9 @@ const ContactForm = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const message = editorState.getCurrentContent().getPlainText();
+    // Convert the editor state to raw content and then to HTML
+    const message = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+
     const data = { email, subject, message };
 
     setLoading(true);
@@ -36,7 +38,6 @@ const ContactForm = () => {
 
       if (response.ok) {
         toast.success("Email sent successfully");
-
         setEmail("");
         setSubject("");
         setEditorState(EditorState.createEmpty());
@@ -62,8 +63,6 @@ const ContactForm = () => {
         editorState={editorState}
         onChange={setEditorState}
         placeholder="Type your content here..."
-        readOnly={false}
-        locale="en"
         toolbarOptions={{
           options: [
             "inline",
