@@ -55,7 +55,7 @@ const ClientTabs = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.5, type: "spring" }}
-      className="flex flex-col p-2 bg-slate-700 shadow-xl rounded-lg relative h-[350px]"
+      className="flex flex-col p-2 bg-slate-700 shadow-xl rounded-lg relative h-[26.5rem]"
     >
       <div className="flex flex-row justify-around bg-slate-800 pt-3 rounded-md">
         <TabButton
@@ -71,7 +71,7 @@ const ClientTabs = () => {
           EDUCATION
         </TabButton>
       </div>
-      <div className="skills-bar mt-2 py-1 rounded-md bg-slate-800 h-[18rem] overflow-y-auto overflow-x-hidden ps-1 w-[450px]">
+      <div className="skills-bar mt-2 rounded-md bg-slate-800 overflow-y-auto overflow-x-hidden w-[40rem]">
         {selectedTabData ? selectedTabData.content : ""}
       </div>
     </motion.div>

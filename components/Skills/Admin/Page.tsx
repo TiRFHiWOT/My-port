@@ -18,6 +18,7 @@ type Skill = {
   id: string;
   name: string;
   image: string;
+  category: string;
 };
 
 const SkillsAdmin: React.FC = () => {
@@ -26,9 +27,14 @@ const SkillsAdmin: React.FC = () => {
     (state: RootState) => state.skillsAdmin
   );
 
-  const [skill, setSkill] = useState<{ name: string; image: string }>({
+  const [skill, setSkill] = useState<{
+    name: string;
+    image: string;
+    category: string;
+  }>({
     name: "",
     image: "",
+    category: "",
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [showInputs, setShowInputs] = useState(false);
@@ -62,8 +68,8 @@ const SkillsAdmin: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!skill.name) {
-      toast.error("Please fill in the skill name before submitting.");
+    if (!skill.name && !skill.image && !skill.category) {
+      toast.error("Please fill in all the fields before submitting.");
       return;
     }
 
@@ -74,7 +80,11 @@ const SkillsAdmin: React.FC = () => {
         imageUrl = await uploadImageToFirebase(imageFile);
       }
 
-      const skillData = { name: skill.name, image: imageUrl };
+      const skillData = {
+        name: skill.name,
+        image: imageUrl,
+        category: skill.category,
+      };
 
       if (isUpdating && currentSkillId) {
         await dispatch(
@@ -86,7 +96,7 @@ const SkillsAdmin: React.FC = () => {
         toast.success("Skill submitted successfully!");
       }
 
-      setSkill({ name: "", image: "" });
+      setSkill({ name: "", image: "", category: "" });
       setShowInputs(false);
       setIsUpdating(false);
       setCurrentSkillId(null);
@@ -98,7 +108,7 @@ const SkillsAdmin: React.FC = () => {
   };
 
   const handleEdit = (item: Skill) => {
-    setSkill({ name: item.name, image: item.image });
+    setSkill({ name: item.name, image: item.image, category: item.category });
     setImageFile(null);
     setIsUpdating(true);
     setShowInputs(true);

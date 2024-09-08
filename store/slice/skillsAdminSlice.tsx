@@ -10,6 +10,7 @@ type Skill = {
   id: string;
   name: string;
   image: string;
+  category: string;
 };
 
 type SkillsState = {
@@ -31,7 +32,7 @@ export const fetchSkills = createAsyncThunk("skills/fetchSkills", async () => {
 
 export const addSkill = createAsyncThunk(
   "skills/addSkill",
-  async (skillData: { name: string; image: string }) => {
+  async (skillData: { name: string; image: string; category: string }) => {
     const newSkill = await addSkillToFirebase(skillData);
     return newSkill;
   }
@@ -44,7 +45,7 @@ export const updateSkill = createAsyncThunk(
     skill,
   }: {
     id: string;
-    skill: { name: string; image: string };
+    skill: { name: string; image: string; category: string };
   }) => {
     await updateSkillItemInFirebase(id, skill);
     return { id, skill };

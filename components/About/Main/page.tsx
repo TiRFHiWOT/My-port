@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import ClientTabs from "@/components/About/Main/ClientTabs";
 import Heading from "@/components/About/Main/Heading";
 import Paragraph from "@/components/About/Main/Paragraph";
+import ProfileImg from "./ProfileImg";
 
 const About = () => {
   const { ref, inView } = useInView({
@@ -12,20 +13,22 @@ const About = () => {
   });
 
   return (
-    <section id="About">
+    <section id="About" className="flex flex-col justify-center items-center">
       <motion.div
         ref={ref}
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 1.5, type: "spring" }}
-        className="glass py-12 px-10 lg:px-12 my-16 rounded-e-2xl md:px-8 relative container border-y border-r border-[#334155] overflow-hidden"
+        className="glass py-12 px-10 lg:px-12 my-16 rounded-2xl md:px-8 relative container border border-[#334155] overflow-hidden"
       >
         <div className="flex flex-col md:mx-12 lg:mx-0 lg:flex-row items-center">
-          <div className="flex flex-row my-10 lg:mx-10">
+          <div className="flex flex-row my-10">
             <Heading />
             <Paragraph />
           </div>
-          <ClientTabs />
+          <div>
+            <ProfileImg />
+          </div>
         </div>
         <motion.div
           ref={ref}
@@ -49,6 +52,9 @@ const About = () => {
           className="h-[50px] w-[50px] rounded-full bg-cyan-700 absolute bottom-[6rem] left-[25rem] -z-10 bg-opacity-50"
         ></motion.div>
       </motion.div>
+      <div>
+        <ClientTabs />
+      </div>
     </section>
   );
 };

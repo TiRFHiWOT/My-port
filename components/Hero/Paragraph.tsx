@@ -13,7 +13,7 @@ const MotionParagraph = () => {
       initial={{ y: "200px", opacity: 0 }}
       animate={inView ? { y: "0", opacity: 1 } : {}}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="text-gray-300 text-sm md:text-base"
+      className="text-gray-200 text-sm md:text-base ml-2 drop-shadow-[0_0.6px_0.6px_rgba(0,0,0,0.8)] tracking-wider"
     >
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam,
       consequuntur.

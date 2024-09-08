@@ -6,7 +6,7 @@ import ProjectTag from "./ProjectTag";
 import ProjectMap from "./ProjectMap";
 import { RotatingLines } from "react-loader-spinner";
 import { RootState } from "@/store/store";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"; // Import Heroicons
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
 const ProjectsClient = () => {
   const dispatch = useDispatch();
@@ -75,7 +75,6 @@ const ProjectsClient = () => {
           </div>
         )}
 
-        {/* Show More Button */}
         {showMore && visibleCount < filteredProjects.length && (
           <div className="flex justify-end mt-4 relative z-10">
             <button
@@ -88,7 +87,6 @@ const ProjectsClient = () => {
           </div>
         )}
 
-        {/* Hide Button */}
         {!showMore && (
           <div className="flex justify-end mt-4 relative z-10">
             <button

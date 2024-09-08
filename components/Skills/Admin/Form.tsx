@@ -3,10 +3,14 @@ import React, { useState, ChangeEvent } from "react";
 import Image from "next/image";
 
 type SkillsFormProps = {
-  skill: any;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  skill: {
+    name: string;
+    image: string;
+    category: string;
+  };
+  handleChange: (field: string, value: string | File) => void;
   handleImageChange: (image: File) => void;
-  handleSubmit: (image: File) => void;
+  handleSubmit: (image: File | null) => void;
   isUpdating: boolean;
   warning: string;
 };
@@ -58,6 +62,22 @@ const SkillsForm: React.FC<SkillsFormProps> = ({
           onChange={(e) => handleChange("name", e.target.value)}
           className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
         />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2">Category</label>
+        <select
+          value={skill.category}
+          onChange={(e) => handleChange("category", e.target.value)}
+          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
+        >
+          <option value="">Select Category</option>
+          <option value="Language">Language</option>
+          <option value="Front-End Framework">Front-End Framework</option>
+          <option value="Back-End Framework">Back-End Framework</option>
+          <option value="Database">Database</option>
+          <option value="Cloud">Cloud</option>
+          <option value="Others">Miscellaneous</option>
+        </select>
       </div>
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Image</label>

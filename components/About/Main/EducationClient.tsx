@@ -34,7 +34,7 @@ const EducationListClient = () => {
   return (
     <div className="text-gray-300">
       {loading ? (
-        <div className="flex justify-center items-center h-[15rem]">
+        <div className="flex justify-center items-center h-[22rem]">
           <RotatingLines width="50" />
         </div>
       ) : education.length === 0 ? (
@@ -44,7 +44,7 @@ const EducationListClient = () => {
           {education.map((item) => (
             <div
               key={item.id}
-              className="shadow-lg hover:shadow-xl py-2 mr-1 px-5 border border-[#334155] bg-gray-800 rounded-xl flex flex-col"
+              className="shadow-lg hover:shadow-xl py-2 px-5 border border-[#334155] bg-gray-800 rounded-xl flex flex-col"
             >
               <div className="text-xl font-semibold">{item.name}</div>
               <div className="flex flex-row justify-between">

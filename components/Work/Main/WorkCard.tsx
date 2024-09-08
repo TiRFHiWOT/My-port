@@ -32,7 +32,6 @@ const processHTMLContent = (html: string) => {
       item.innerHTML = truncatedText;
     });
 
-    // Limit the number of list items to 3
     if (items.length > 3) {
       items.forEach((item, index) => {
         if (index >= 3) {
@@ -63,8 +62,8 @@ const WorkCard: React.FC<WorkCardProps> = ({
   return (
     <section>
       <div
-        className="relative text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg px-4 pt-3 pb-4 border-b-4 border-[#334155] bg-opacity-80 lg:h-full
-        hover:scale-105 hover:border-b-green-700 w-[20rem] lg:w-[25rem] border mr-10 transform transition-all duration-[0.5s] group"
+        className="relative text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg px-4 pt-7 pb-10 border-b-4 border-[#334155] bg-opacity-80 lg:h-full
+        hover:scale-105 hover:border-b-green-700 w-[20rem] lg:w-[30rem] border mr-10 transform transition-all duration-[0.5s] group"
       >
         <div>
           <h1 className="text-2xl lg:text-3xl font-bold mb-2 uppercase group-hover:text-green-500">

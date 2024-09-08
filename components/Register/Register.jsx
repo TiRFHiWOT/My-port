@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Bars } from "react-loader-spinner";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -63,11 +64,25 @@ const Register = () => {
           <button
             type="submit"
             className={`${
-              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+              loading ? "cursor-not-allowed" : "hover:bg-blue-700"
             } bg-blue-900 text-white rounded shadow-lg py-2 w-full transition duration-300`}
             disabled={loading}
           >
-            {loading ? "Signing up..." : "Sign up"}
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <Bars
+                  height="24"
+                  width="24"
+                  color="#ffffff"
+                  ariaLabel="bars-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              </div>
+            ) : (
+              "Sign up"
+            )}
           </button>
         </form>
       </div>

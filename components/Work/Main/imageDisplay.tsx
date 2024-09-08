@@ -6,12 +6,14 @@ import Image from "next/image";
 type SkillImageDisplayProps = {
   skillsUsed: string;
   compact?: boolean;
+  mid?: boolean;
   isOverlay?: boolean;
 };
 
 const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
   skillsUsed,
   compact = false,
+  mid = false,
   isOverlay = false,
 }) => {
   const [skills, setSkills] = useState<any[]>([]);
@@ -66,7 +68,9 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
   ) => (
     <div
       key={index}
-      className={`relative ${compact ? "w-10 h-10" : "w-24 h-24"} group`}
+      className={`relative ${
+        compact ? "w-10 h-10" : mid ? "w-20 h-20" : "w-24 h-24"
+      } group`}
     >
       <Image
         src={image}

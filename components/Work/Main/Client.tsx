@@ -65,7 +65,6 @@ const ClientWorkExperience = () => {
 
   return (
     <div className="relative">
-      {/* Work Cards */}
       <div className="work-slide flex w-fit">
         {experience.map((item) => (
           <WorkCard
@@ -98,11 +97,11 @@ const ClientWorkExperience = () => {
           onClick={handleOverlayClose}
         >
           <div
-            className="bg-white p-8 lg:p-12 rounded-lg shadow-2xl w-full max-w-5xl relative max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
+            className="bg-slate-800 p-8 lg:p-12 rounded-lg shadow-2xl w-full max-w-5xl relative max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors duration-200"
               onClick={handleOverlayClose}
               aria-label="Close"
             >
@@ -121,26 +120,27 @@ const ClientWorkExperience = () => {
               </svg>
             </button>
 
-            <h2 className="text-3xl lg:text-4xl font-extrabold mb-4 uppercase text-gray-800 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-extrabold mb-4 uppercase text-green-600 tracking-tight">
               {selectedExperience.position}
             </h2>
-            <div className="py-6 flex flex-col justify-between lg:flex-row gap-6 lg:gap-8 items-start lg:items-center border-y border-gray-300">
+            <div className="py-6 flex flex-col justify-between lg:flex-row gap-6 lg:gap-8 items-start lg:items-center border-y border-gray-700">
               <div className="lg:flex lg:gap-6 flex flex-col">
-                <p className="text-2xl font-semibold text-gray-900 bg-gray-200 px-4 py-2 rounded-full w-fit">
+                <p className="text-2xl font-semibold text-gray-400 bg-gray-900 px-5 py-2 rounded-full w-fit">
                   {selectedExperience.place}
                 </p>
-                <p className="text-xl text-gray-600 px-4 py-2 bg-gray-100 rounded-full">
+                <p className="text-xl text-gray-400 px-4 py-2 border border-gray-700 rounded-full w-fit inline-block">
                   {selectedExperience.year}
                 </p>
               </div>
               <SkillImageDisplay
                 skillsUsed={selectedExperience.skillsUsed}
                 compact={false}
+                mid={true}
                 isOverlay={true}
               />
             </div>
             <div
-              className="text-gray-800 leading-7 lg:leading-8 mt-6 space-y-4"
+              className="text-gray-800 leading-7 lg:leading-8 mt-6 space-y-4 custom-list"
               dangerouslySetInnerHTML={{ __html: contentHTML }}
             />
           </div>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Bars } from "react-loader-spinner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -84,11 +85,25 @@ const Login = () => {
           <button
             type="submit"
             className={`bg-blue-900 hover:bg-blue-700 text-white rounded shadow-lg py-2 w-full transition duration-300 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
+              loading ? "cursor-not-allowed" : ""
             }`}
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Log in"}
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <Bars
+                  height="24"
+                  width="24"
+                  color="#ffffff"
+                  ariaLabel="bars-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              </div>
+            ) : (
+              "Log in"
+            )}
           </button>
         </form>
         <div className="flex justify-center pt-2">

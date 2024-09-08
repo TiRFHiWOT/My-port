@@ -53,10 +53,10 @@ const ClientNavbar = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 w-full z-50 transform transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 w-full z-50 transform transition-all duration-300 px-10 ${
         scrolling
-          ? "bg-slate-800 bg-opacity-80 backdrop-blur border-b border-[#334155]"
-          : "bg-transparent border-b border-[#334155]"
+          ? "bg-slate-800 bg-opacity-80 backdrop-blur"
+          : "bg-transparent"
       }`}
     >
       <div className="container flex items-center justify-between px-6 py-2 mx-auto w-full">
@@ -97,7 +97,7 @@ const ClientNavbar = () => {
         </div>
 
         <div className="hidden md:flex w-full items-center justify-end">
-          <ul className="flex flex-row justify-between items-center space-x-4 mr-2">
+          <ul className="flex flex-row justify-between items-center space-x-3 mr-4">
             {navlinks.map((link, index) => (
               <li key={index}>
                 <NavLink href={link.path} title={link.title} />
@@ -106,7 +106,7 @@ const ClientNavbar = () => {
           </ul>
           <Link
             href={"#Contact"}
-            className="border-2 border-cyan-400 py-1 px-8 font-bold text-white rounded-lg hover:text-white hover:bg-gradient-to-br from-cyan-500 to-blue-500 hover:border-none hover:px-[34px] hover:py-[6px]"
+            className="border-2 backdrop-blur border-cyan-400 py-1 px-8 font-bold text-white rounded-lg hover:text-white hover:bg-gradient-to-br from-cyan-500 to-blue-500 hover:border-none hover:px-[34px] hover:py-[6px]"
           >
             {`Let's Talk`}
           </Link>

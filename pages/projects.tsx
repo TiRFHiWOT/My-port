@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import ProjectClient from "../components/Projects/Main/Client";
 import type { Metadata } from "next";
 import { RotatingLines } from "react-loader-spinner";
+import savePageVisit from "@/utiles/pageTracker";
 
 export const metadata: Metadata = {
   title: "Projects page",
@@ -13,6 +14,9 @@ const AnimatedHeading = lazy(
 );
 
 const Projects = () => {
+  useEffect(() => {
+    savePageVisit("projects");
+  }, []);
   return (
     <section id="Projects">
       <div className="md:px-24 px-8 py-6 lg:py-16 my-8 md:my-16 relative">

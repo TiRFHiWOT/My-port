@@ -2,6 +2,8 @@
 import { motion } from "framer-motion";
 import WorkClient from "@/components/Work/Main/Client";
 import type { Metadata } from "next";
+import savePageVisit from "@/utiles/pageTracker";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Work experience page",
@@ -9,6 +11,9 @@ export const metadata: Metadata = {
 };
 
 const Work = () => {
+  useEffect(() => {
+    savePageVisit("work");
+  }, []);
   return (
     <section id="Work">
       <div className="my-10 py-5 lg:py-12 relative">

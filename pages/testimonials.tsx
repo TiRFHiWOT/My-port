@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import Test from "@/components/Testimonials/Main/Test";
 import type { Metadata } from "next";
+import savePageVisit from "@/utiles/pageTracker";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Testimonials page",
@@ -8,6 +10,9 @@ export const metadata: Metadata = {
 };
 
 const Testimonials = () => {
+  useEffect(() => {
+    savePageVisit("testimonials");
+  }, []);
   return (
     <section className="relative py-6 overflow-hidden">
       <div className="absolute inset-0 z-0">

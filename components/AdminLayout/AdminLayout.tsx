@@ -8,6 +8,7 @@ import {
   FiBriefcase,
   FiUser,
   FiMessageSquare,
+  FiPhoneCall,
 } from "react-icons/fi";
 import LogoutButton from "@/components/Button/Logout";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -24,6 +25,7 @@ const Layout = ({ children }: any) => {
     { name: "Projects", icon: <FiBriefcase /> },
     { name: "Experience", icon: <FiUser /> },
     { name: "Testimonials", icon: <FiMessageSquare /> },
+    { name: "Contact", icon: <FiPhoneCall /> },
   ];
 
   const handleMobileMenuToggle = () => {

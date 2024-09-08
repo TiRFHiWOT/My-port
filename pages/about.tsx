@@ -1,5 +1,7 @@
 import AboutPage from "@/components/About/Main/page";
+import savePageVisit from "@/utiles/pageTracker";
 import type { Metadata } from "next";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "About page",
@@ -7,6 +9,9 @@ export const metadata: Metadata = {
 };
 
 const About = () => {
+  useEffect(() => {
+    savePageVisit("about");
+  }, []);
   return (
     <section id="About">
       <AboutPage />

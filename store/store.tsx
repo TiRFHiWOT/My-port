@@ -11,10 +11,13 @@ import testimonialsAdminReducer from "./slice/testimonialAdminSlice";
 import projectsReducer from "./slice/projectsSlice";
 import projectsAdminReducer from "./slice/projectsAdminSlice";
 import skillsAdminReducer from "./slice/skillsAdminSlice";
+import contactAdminReducer from "./slice/contactAdminSlice";
+import aboutReducer from "@/store/slice/aboutAdminSlice";
 
 export const store = configureStore({
   reducer: {
     dashboard: dashboardReducer,
+    about: aboutReducer,
     education: educationReducer,
     educationAdmin: educationAdminReducer,
     skills: skillsReducer,
@@ -26,6 +29,7 @@ export const store = configureStore({
     testimonialsAdmin: testimonialsAdminReducer,
     projects: projectsReducer,
     projectsAdmin: projectsAdminReducer,
+    contactAdmin: contactAdminReducer,
   },
 });
 

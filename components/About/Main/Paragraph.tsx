@@ -16,14 +16,14 @@ const Paragraph = () => {
       viewport={{ once: true }}
       className="mx-4"
     >
-      <p className="text-xs md:text-sm text-white mb-5 leading-5 lg:leading-6">
+      <p className="text-xs md:text-sm text-white mb-5 leading-5 lg:leading-6 tracking-wider drop-shadow-[0_0.5px_0.5px_rgba(0,0,0,0.8)]">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa tempora
         id inventore impedit illum dicta quis nisi incidunt dolore quam, labore
         similique praesentium quidem libero eligendi in nemo. Nostrum, accusamus
         fugiat minus quod, vitae iure quisquam illum corporis esse temporibus
         nihil sequi neque aut tenetur at. Necessitatibus quas quaerat atque.
       </p>
-      <p className="text-xs md:text-sm text-white mb-5 leading-5 lg:leading-6">
+      <p className="text-xs md:text-sm text-white mb-5 leading-5 lg:leading-6 tracking-wider drop-shadow-[0_0.5px_0.5px_rgba(0,0,0,0.8)]">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa tempora
         id inventore impedit illum dicta quis nisi incidunt dolore quam, labore
         similique praesentium quidem libero eligendi in nemo. Nostrum, accusamus

@@ -23,7 +23,6 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
 }) => {
   const [uploading, setUploading] = useState(false);
 
-  // Convert initial HTML to EditorState
   const contentBlock = htmlToDraft(workExperience.description || "");
   const contentState = ContentState.createFromBlockArray(
     contentBlock.contentBlocks

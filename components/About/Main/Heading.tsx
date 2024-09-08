@@ -16,25 +16,25 @@ const Heading = () => {
       transition={{ duration: 0.5, delay: 0.5, type: "spring" }}
       className="flex flex-col justify-between items-center border-r-4 border-orange-600 px-2"
     >
-      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         A
       </h1>
-      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         B
       </h1>
-      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         O
       </h1>
-      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         U
       </h1>
-      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         T
       </h1>
-      <h1 className="text-4xl font-semibold text-orange-500 tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-orange-500 tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         M
       </h1>
-      <h1 className="text-4xl font-semibold text-orange-500 tracking-widest flex flex-row">
+      <h1 className="text-4xl font-semibold text-orange-500 tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         E
       </h1>
     </motion.div>
