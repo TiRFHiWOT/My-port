@@ -20,6 +20,7 @@ const Layout = ({ children }: any) => {
 
   const navItems = [
     { name: "Dashboard", icon: <FiHome /> },
+    { name: "About", icon: <FiUser /> },
     { name: "Skills", icon: <FiSettings /> },
     { name: "Education", icon: <FiBook /> },
     { name: "Projects", icon: <FiBriefcase /> },

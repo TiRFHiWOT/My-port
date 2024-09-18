@@ -11,6 +11,10 @@ const ProjectsItem = ({ proj, handleEdit, handleRemove }: any) => {
   const [imageUrls, setImageUrls] = useState(proj.images || []);
   const [loading, setLoading] = useState(false);
 
+  const defaultImage = "/neon.jpg";
+
+  const Images = imageUrls.length > 0 ? imageUrls : [defaultImage];
+
   const handleImageRemove = async (index: number) => {
     const urlToRemove = imageUrls[index];
     await removeImage(urlToRemove);
@@ -48,8 +52,8 @@ const ProjectsItem = ({ proj, handleEdit, handleRemove }: any) => {
             <span className="text-green-600">Uploading...</span>
           </div>
         )}
-        <div className="flex flex-wrap gap-4 p-2 shadow-lg rounded-md mb-4 border bg-[#181f29] border-gray-700 relative">
-          {imageUrls.map((url, index) => (
+        <div className="flex flex-wrap gap-2 p-2 shadow-lg rounded-md mb-4 border bg-[#181f29] border-gray-700 relative">
+          {Images.map((url, index) => (
             <div key={index} className="relative w-24 h-24 group">
               <Image
                 src={url}
@@ -58,12 +62,14 @@ const ProjectsItem = ({ proj, handleEdit, handleRemove }: any) => {
                 objectFit="cover"
                 className="rounded-lg"
               />
-              <button
-                onClick={() => handleImageRemove(index)}
-                className="absolute top-0 right-0 m-1 text-red-600 bg-white rounded-full opacity-0 group-hover:opacity-100 transition"
-              >
-                <FiX />
-              </button>
+              {url !== defaultImage && (
+                <button
+                  onClick={() => handleImageRemove(index)}
+                  className="absolute top-0 right-0 m-1 text-red-600 bg-white rounded-full opacity-0 group-hover:opacity-100 transition"
+                >
+                  <FiX />
+                </button>
+              )}
             </div>
           ))}
           <div className="relative w-24 h-24 flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg">

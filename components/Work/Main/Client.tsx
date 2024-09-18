@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchExperience } from "@/store/slice/workSlice";
 import WorkCard from "./WorkCard";
 import { RotatingLines } from "react-loader-spinner";
-import { convertFromRaw, ContentState } from "draft-js";
-import { convertToHTML } from "draft-convert";
 import SkillImageDisplay from "./imageDisplay";
+import { FaClock } from "react-icons/fa";
 
 const processHTMLContent = (html: string) => {
   const tempDiv = document.createElement("div");
@@ -120,27 +119,31 @@ const ClientWorkExperience = () => {
               </svg>
             </button>
 
-            <h2 className="text-3xl lg:text-4xl font-extrabold mb-4 uppercase text-green-600 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-extrabold mb-4 uppercase text-white tracking-tight">
               {selectedExperience.position}
             </h2>
-            <div className="py-6 flex flex-col justify-between lg:flex-row gap-6 lg:gap-8 items-start lg:items-center border-y border-gray-700">
-              <div className="lg:flex lg:gap-6 flex flex-col">
-                <p className="text-2xl font-semibold text-gray-400 bg-gray-900 px-5 py-2 rounded-full w-fit">
+            <div className="py-6 flex flex-col justify-between lg:flex-row gap-6 lg:gap-8 items-start border-y border-gray-700">
+              <div className="lg:flex flex flex-col w-4/12 border border-gray-700 rounded-lg justify-center items-center overflow-hidden">
+                <p className="text-2xl lg:text-3xl font-bold text-gray-400 bg-gray-900 px-4 py-2 w-full transition-all duration-700">
+                  <span className="text-cyan-600">@</span>
                   {selectedExperience.place}
                 </p>
-                <p className="text-xl text-gray-400 px-4 py-2 border border-gray-700 rounded-full w-fit inline-block">
+                <p className="text-xl text-gray-400 px-4 py-2  transition-all duration-700 w-full flex flex-row gap-2 items-center">
+                  <FaClock size="14" />
                   {selectedExperience.year}
                 </p>
               </div>
-              <SkillImageDisplay
-                skillsUsed={selectedExperience.skillsUsed}
-                compact={false}
-                mid={true}
-                isOverlay={true}
-              />
+              <div className="w-8/12">
+                <SkillImageDisplay
+                  skillsUsed={selectedExperience.skillsUsed}
+                  compact={false}
+                  mid={true}
+                  isOverlay={true}
+                />
+              </div>
             </div>
             <div
-              className="text-gray-800 leading-7 lg:leading-8 mt-6 space-y-4 custom-list"
+              className="text-gray-200 leading-7 lg:leading-8 mt-6 space-y-4"
               dangerouslySetInnerHTML={{ __html: contentHTML }}
             />
           </div>

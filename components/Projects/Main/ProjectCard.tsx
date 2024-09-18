@@ -122,25 +122,31 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             <h1 className="text-lg font-semibold border-l-4 border-orange-600 pl-2">
               {title}
             </h1>
-            {!gitUrl && !previewUrl && (
-              <div className="hidden group-hover:flex text-cyan-400">
-                <h1>PRIVATE</h1>
-              </div>
-            )}
           </div>
           <p
             className={`text-sm text-slate-400 ${
-              isExpanded ? "" : "line-clamp-2"
+              isExpanded ? "" : "line-clamp-1"
             }`}
           >
             {description}
           </p>
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-blue-500 hover:underline mt-2"
-          >
-            {isExpanded ? "Show Less" : "Show More"}
-          </button>
+          <div className=" flex justify-between items-center mt-2">
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-blue-500 hover:underline"
+            >
+              {isExpanded ? "Show Less" : "Show More"}
+            </button>
+            {!gitUrl && !previewUrl && (
+              <div
+                className={`group-hover:flex text-cyan-400 ${
+                  isExpanded ? "flex" : "hidden"
+                }`}
+              >
+                <h1>PRIVATE</h1>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>

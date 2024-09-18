@@ -84,9 +84,7 @@ const Login = () => {
           />
           <button
             type="submit"
-            className={`bg-blue-900 hover:bg-blue-700 text-white rounded shadow-lg py-2 w-full transition duration-300 ${
-              loading ? "cursor-not-allowed" : ""
-            }`}
+            className={`bg-blue-900 hover:bg-blue-700 text-white rounded shadow-lg py-2 w-full transition duration-300 `}
             disabled={loading}
           >
             {loading ? (

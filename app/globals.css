@@ -308,3 +308,22 @@ body {
   transition: 0s;
   transform: translate(0, 5%);
 }
+
+.clip-path-one {
+  clip-path: polygon(100% 100%, 100% 60%, 75% 45%, 37% 100%);
+}
+
+.clip-path-three {
+  clip-path: polygon(0 90%, 0 100%, 100% 100%, 25% 75%);
+}
+
+.clip-path-two {
+  clip-path: polygon(0 0, 0 90%, 25% 70%, 48% 78%, 75% 40%, 100% 60%, 100% 0);
+}
+
+.clip-path-about {
+  clip-path: polygon(10% 100%, 88% 100%, 73% 50%);
+}
+.clip-path-about-two {
+  clip-path: polygon(90% 0%, 100% 0%, 100% 100%, 90% 100%, 75% 50%);
+}

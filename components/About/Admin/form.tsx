@@ -1,57 +1,54 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+"use client";
+import React, { useState, useEffect, ChangeEvent, useCallback } from "react";
+import Image from "next/image";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor as DraftEditor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import Image from "next/image";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Link from "next/link";
 
 type AboutFormProps = {
   aboutData: {
-    description: string;
     image: string;
+    description: string;
   };
   handleChange: (field: string, value: any) => void;
   handleImageChange: (image: File) => void;
-  handleSubmit: () => Promise<void>;
+  handleSubmit: (image: File | null, cvFile: File | null) => void;
   isUpdating: boolean;
   warning: string;
+};
+
+const createEditorStateFromHTML = (html: string) => {
+  const contentBlock = htmlToDraft(html || "");
+  const contentState = ContentState.createFromBlockArray(
+    contentBlock.contentBlocks
+  );
+  return EditorState.createWithContent(contentState);
 };
 
 const AboutForm: React.FC<AboutFormProps> = ({
   aboutData,
   handleChange,
   handleImageChange,
+  handleCvChange,
   handleSubmit,
   isUpdating,
   warning,
 }) => {
-  const [uploading, setUploading] = useState(false);
-  const [initialAboutInfo, setInitialAboutInfo] = useState(aboutData);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [cvFile, setCvFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<{
     url: string;
     width: number;
     height: number;
   } | null>(null);
-
-  const [editorState, setEditorState] = useState(() => {
-    const contentBlock = htmlToDraft(aboutData.description || "");
-    const contentState = ContentState.createFromBlockArray(
-      contentBlock ? contentBlock.contentBlocks : []
-    );
-    return EditorState.createWithContent(contentState);
-  });
-
-  useEffect(() => {
-    const contentBlock = htmlToDraft(aboutData.description || "");
-    if (contentBlock) {
-      const contentState = ContentState.createFromBlockArray(
-        contentBlock.contentBlocks
-      );
-      setEditorState(EditorState.createWithContent(contentState));
-    }
-  }, [aboutData.description]);
+  const [uploading, setUploading] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [editorState, setEditorState] = useState<EditorState>(() =>
+    createEditorStateFromHTML(aboutData.description)
+  );
 
   useEffect(() => {
     if (aboutData.image) {
@@ -61,19 +58,15 @@ const AboutForm: React.FC<AboutFormProps> = ({
         height: 150,
       });
     }
-  }, [aboutData.image]);
 
-  useEffect(() => {
-    setInitialAboutInfo(aboutData);
-  }, [aboutData]);
-
-  const handleEditorChange = (newState: EditorState) => {
-    setEditorState(newState);
-    const contentAsHTML = draftToHtml(
-      convertToRaw(newState.getCurrentContent())
-    );
-    handleChange("description", contentAsHTML);
-  };
+    const newEditorState = createEditorStateFromHTML(aboutData.description);
+    if (
+      editorState.getCurrentContent().getPlainText() !==
+      newEditorState.getCurrentContent().getPlainText()
+    ) {
+      setEditorState(newEditorState);
+    }
+  }, [aboutData.description, aboutData.image]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -86,41 +79,58 @@ const AboutForm: React.FC<AboutFormProps> = ({
         setImagePreview({ url, width: img.width, height: img.height });
       };
       img.src = url;
+      setHasChanges(true);
+    }
+  };
+  const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setCvFile(file); 
+    if (file) {
+      handleCvChange(file); 
+      setHasChanges(true);
     }
   };
 
-  const hasChanges = () => {
-    const currentDescription = draftToHtml(
-      convertToRaw(editorState.getCurrentContent())
-    );
-    const currentImage = imageFile ? imageFile.name : aboutData.image;
-
-    const initialDescription = initialAboutInfo.description;
-    const initialImage = initialAboutInfo.image;
-
-    return (
-      currentDescription !== initialDescription || currentImage !== initialImage
-    );
-  };
+  const handleEditorChange = useCallback(
+    (newState: EditorState) => {
+      setEditorState(newState);
+      const contentAsHTML = draftToHtml(
+        convertToRaw(newState.getCurrentContent())
+      );
+      handleChange("description", contentAsHTML);
+      setHasChanges(true);
+    },
+    [handleChange]
+  );
 
   const handleFormSubmit = async () => {
-    if (!hasChanges()) return;
     setUploading(true);
-    try {
-      await handleSubmit();
-      setInitialAboutInfo({
-        description: draftToHtml(convertToRaw(editorState.getCurrentContent())),
-        image: imageFile ? URL.createObjectURL(imageFile) : aboutData.image,
-      });
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    } finally {
-      setUploading(false);
-    }
+    await handleSubmit(imageFile, cvFile);
+    setUploading(false);
+    setHasChanges(false);
   };
 
   return (
     <div className="bg-gray-800 p-8 rounded-lg shadow-lg mb-4">
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2">Upload CV</label>
+        <input
+          type="file"
+          onChange={handleCvFileChange}
+          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
+          accept=".pdf,.doc,.docx"
+        />
+        {aboutData.cv && (
+          <Link
+            href={aboutData.cv}
+            className="text-blue-400 mt-2 inline-block"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View uploaded CV
+          </Link>
+        )}
+      </div>
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Description</label>
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-2">
@@ -148,6 +158,7 @@ const AboutForm: React.FC<AboutFormProps> = ({
           />
         </div>
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-300 mb-2">Profile Image</label>
         <input
@@ -169,16 +180,18 @@ const AboutForm: React.FC<AboutFormProps> = ({
           />
         </div>
       )}
-      {warning && <p className="text-red-500">{warning}</p>}
+
+      {warning && <p className="text-red-500 mb-4">{warning}</p>}
+
       <button
         onClick={handleFormSubmit}
-        className={`py-2 px-4 border-2 rounded-lg transition ${
-          hasChanges()
-            ? "bg-green-600 text-white hover:bg-green-700 border-gray-700"
-            : "bg-gray-600 text-gray-400 cursor-not-allowed border-gray-800"
+        className={`py-2 px-4 border border-gray-700 rounded-lg transition ${
+          hasChanges
+            ? "bg-green-600 text-white hover:bg-green-700"
+            : "bg-gray-500 text-gray-300 cursor-not-allowed"
         }`}
-        disabled={uploading || !hasChanges()}
-        title={!hasChanges() ? "No changes have been made" : ""}
+        disabled={uploading || !hasChanges}
+        title={!hasChanges ? "No changes have been made" : ""}
       >
         {uploading
           ? "Uploading..."

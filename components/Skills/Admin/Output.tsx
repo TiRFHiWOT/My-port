@@ -81,7 +81,7 @@ const SkillItem: React.FC<SkillItemProps> = ({
           </div>
         </div>
         <div className="rounded-md py-2 px-3 shadow-lg border bg-[#181f29] border-gray-700 mb-4">
-          <h4 className="text-xl text-gray-100 font-semibold py-1 tracking-wider">
+          <h4 className="text-xl text-gray-100 font-semibold py-1 tracking-wider uppercase">
             {skill.name}
           </h4>
           <p className="text-sm text-gray-400 mt-2">{skill.category}</p>{" "}

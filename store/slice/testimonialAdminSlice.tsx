@@ -6,6 +6,7 @@ import {
   deleteTestimonial,
   uploadImage,
 } from "@/components/Testimonials/Firebase/Firebase";
+import { RootState } from "../store";
 
 interface Testimonial {
   comment: string;
@@ -48,12 +49,27 @@ export const createTestimonial = createAsyncThunk(
 
 export const modifyTestimonial = createAsyncThunk(
   "testimonialsAdmin/modifyTestimonial",
-  async ({ id, testimonial }: { id: string; testimonial: Testimonial }) => {
-    const profilePicture = testimonial.profilePicture
-      ? await uploadImage(testimonial.profilePicture)
-      : "";
-    await updateTestimonial(id, { ...testimonial, profilePicture });
-    return { id, testimonial: { ...testimonial, profilePicture } };
+  async (
+    { id, testimonial }: { id: string; testimonial: Testimonial },
+    { getState }
+  ) => {
+    const state = getState() as RootState;
+    const existingTestimonial = state.testimonialsAdmin.testimonials.find(
+      (t) => t.id === id
+    );
+
+    let profilePicture = existingTestimonial?.profilePicture || "";
+
+    if (
+      testimonial.profilePicture &&
+      testimonial.profilePicture !== profilePicture
+    ) {
+    }
+
+    const updatedTestimonial = { ...testimonial, profilePicture };
+
+    await updateTestimonial(id, updatedTestimonial);
+    return { id, testimonial: updatedTestimonial };
   }
 );
 

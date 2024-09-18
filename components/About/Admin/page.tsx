@@ -17,11 +17,14 @@ const AboutAdmin: React.FC = () => {
   const [aboutData, setAboutData] = useState<{
     description: string;
     image: string;
+    cv: string;
   }>({
     description: "",
     image: "",
+    cv: "",
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [cvFile, setCvFile] = useState<File | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showInputs, setShowInputs] = useState(false);
 
@@ -38,6 +41,7 @@ const AboutAdmin: React.FC = () => {
       setAboutData({
         description: about.description,
         image: about.image,
+        cv: about.cv,
       });
     }
   }, [about]);
@@ -53,6 +57,10 @@ const AboutAdmin: React.FC = () => {
     setImageFile(image);
   };
 
+  const handleCvChange = (cvFile: File) => {
+    setCvFile(cvFile);
+  };
+
   const uploadImageToFirebase = async (file: File): Promise<string> => {
     const storage = getStorage();
     const storageRef = ref(storage, `about/${file.name}`);
@@ -60,32 +68,37 @@ const AboutAdmin: React.FC = () => {
     return await getDownloadURL(storageRef);
   };
 
-  const handleSubmit = async () => {
-    if (!aboutData.description.trim() || (!aboutData.image && !imageFile)) {
-      toast.error("Please fill in all fields before submitting.");
-      return;
-    }
+  const handleSubmit = async (image: File | null, cvFile: File | null) => {
+    setIsUpdating(true);
+    const storage = getStorage();
+    let imageUrl = aboutData.image;
+    let cvUrl = aboutData.cv;
 
     try {
-      let imageUrl = aboutData.image;
-
-      if (imageFile) {
-        imageUrl = await uploadImageToFirebase(imageFile);
+      if (image) {
+        const imageRef = ref(storage, `about/${image.name}`);
+        const snapshot = await uploadBytes(imageRef, image);
+        imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      const aboutDataToSave = {
-        description: aboutData.description,
+      if (cvFile) {
+        const cvRef = ref(storage, `about/${cvFile.name}`);
+        const snapshot = await uploadBytes(cvRef, cvFile);
+        cvUrl = await getDownloadURL(snapshot.ref);
+      }
+
+      const updatedAboutData = {
+        ...aboutData,
         image: imageUrl,
+        cv: cvUrl, // Save CV URL
       };
 
-      await dispatch(saveAbout(aboutDataToSave)).unwrap();
-      toast.success("About data saved successfully!");
-
+      await dispatch(saveAbout(updatedAboutData));
+      toast.success("About information updated successfully");
+    } catch (err) {
+      toast.error("Failed to update about information");
+    } finally {
       setIsUpdating(false);
-      setImageFile(null);
-    } catch (error) {
-      console.error("Error saving About data: ", error);
-      toast.error("Failed to save About data");
     }
   };
 
@@ -112,6 +125,7 @@ const AboutAdmin: React.FC = () => {
             aboutData={aboutData}
             handleChange={handleChange}
             handleImageChange={handleImageChange}
+            handleCvChange={handleCvChange}
             handleSubmit={handleSubmit}
             isUpdating={isUpdating}
           />

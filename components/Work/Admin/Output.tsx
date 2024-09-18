@@ -40,8 +40,12 @@ const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
   const contentHTML = processHTMLContent(workExperience.description || "");
 
   return (
-    <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-lg">
-      <SkillImageDisplay skillsUsed={workExperience.skillsUsed} />
+    <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-lg flex-row">
+      <SkillImageDisplay
+        skillsUsed={workExperience.skillsUsed}
+        mid={true}
+        isOverlay={true}
+      />
       <div className="rounded-md py-2 px-3 shadow-lg border bg-[#181f29] border-gray-700 mb-4">
         <h4 className="text-xl text-gray-100 font-semibold py-1 tracking-wider">
           {workExperience.position}

@@ -5,6 +5,7 @@ interface AboutItem {
   id: string;
   description: string;
   image: string;
+  cv: string;
 }
 
 interface AboutState {

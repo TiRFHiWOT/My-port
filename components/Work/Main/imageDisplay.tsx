@@ -80,9 +80,10 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
         className="rounded"
       />
       <div
-        className={`absolute inset-0 lowercase flex items-center justify-center bg-black bg-opacity-100 text-white text-xs font-semibold opacity-0 hover:opacity-100 transition-opacity duration-300 rounded ${
-          compact ? "text-xs" : "text-sm"
-        }`}
+        className={`absolute inset-0 lowercase flex items-center justify-center bg-black bg-opacity-100 text-white text-xs 
+          font-semibold opacity-0 hover:opacity-100 transition-opacity duration-300 rounded text-center ${
+            compact ? "text-xs" : "text-sm"
+          }`}
       >
         {name}
       </div>
@@ -105,11 +106,13 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
     ? matchingSkillImages
     : matchingSkillImages.slice(0, 3);
 
+  {
+  }
+
   return (
     <div
-      className={`flex ${
-        compact ? "flex-wrap gap-3" : "flex-row space-x-5"
-      } p-2 shadow-lg rounded-md mb-4 border bg-[#181f29] border-gray-700`}
+      className={`flex flex-wrap gap-3 ${!compact && !mid ? "w-full" : "w-fit"}
+       p-2 shadow-lg rounded-md border bg-[#181f29] border-gray-700`}
     >
       {matchingSkillImages.length ? (
         <>{displayedImages.map((skill, index) => renderImage(skill, index))}</>
@@ -119,9 +122,7 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
             compact ? "w-12 h-12" : "w-24 h-24"
           } flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg`}
         >
-          <span className="text-gray-400 text-xs text-center">
-            {compact ? "No skills" : "No skills"}
-          </span>
+          <span className="text-gray-400 text-xs text-center">No skills</span>
         </div>
       )}
     </div>

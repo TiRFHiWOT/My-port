@@ -17,7 +17,6 @@ import {
 const projectsCollection = collection(db, "projects");
 
 export const fetchProjects = async () => {
-  const projectsCollection = collection(db, "projects");
   const projectSnapshot = await getDocs(projectsCollection);
   return projectSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 };
@@ -43,12 +42,12 @@ export const uploadImage = async (image: File) => {
   return await getDownloadURL(storageRef);
 };
 
-export const removeImage = async (url) => {
+export const removeImage = async (url: string) => {
   const storageRef = ref(storage, url);
   await deleteObject(storageRef);
 };
 
-export const updateProjectImages = async (projectId, images) => {
+export const updateProjectImages = async (projectId: string, images: any) => {
   const projectDoc = doc(db, "projects", projectId);
   await updateDoc(projectDoc, { images });
 };

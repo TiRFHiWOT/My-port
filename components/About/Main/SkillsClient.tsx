@@ -5,6 +5,7 @@ import { fetchSkills } from "@/store/slice/skillsSlice";
 import { RotatingLines } from "react-loader-spinner";
 import Image from "next/image";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 interface Skill {
   id: string;
@@ -32,7 +33,6 @@ const SkillsListClient = () => {
     dispatch(fetchSkills() as any);
   }, [dispatch]);
 
-  // Group skills by category
   const groupSkillsByCategory = (skills: Skill[]) => {
     return skills.reduce((acc: Record<string, Skill[]>, skill: Skill) => {
       if (!acc[skill.category]) {
@@ -49,16 +49,22 @@ const SkillsListClient = () => {
     <div className="text-gray-300">
       {loading ? (
         <div className="flex justify-center items-center h-[22rem]">
-          <RotatingLines width="50" />
+          <RotatingLines width="60" strokeColor="#60a5fa" />
         </div>
       ) : skills.length === 0 ? (
         <div className="text-center py-2">No skills available.</div>
       ) : (
         <div className="space-y-4">
           {Object.entries(groupedSkills).map(([category, skills]) => (
-            <div key={category} className="border-b border-gray-700">
+            <motion.div
+              key={category}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+              className="border-b border-gray-700"
+            >
               <button
-                className="w-full text-left py-4 px-4 bg-gray-800 text-gray-200 rounded-t-md hover:bg-gray-700 focus:outline-none  flex items-center justify-between"
+                className="w-full text-left py-4 px-4 bg-gray-800 text-gray-200 rounded-t-md hover:bg-gray-700 focus:outline-none flex items-center justify-between"
                 onClick={() =>
                   setActiveCategory(
                     activeCategory === category ? null : category
@@ -73,16 +79,29 @@ const SkillsListClient = () => {
                   <FiChevronDown className="text-gray-400" />
                 )}
               </button>
-              <div
-                className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
-                  activeCategory === category ? "max-h-[500px]" : "max-h-0"
-                }`}
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{
+                  height: activeCategory === category ? "auto" : 0,
+                  opacity: activeCategory === category ? 1 : 0,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className={`overflow-hidden`}
               >
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 p-4 bg-gray-700">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-gray-700">
                   {skills.map((item) => (
-                    <li
+                    <motion.li
                       key={item.id}
                       className="shadow-lg text-center hover:shadow-xl p-3 border border-[#334155] bg-gray-800 rounded-xl flex flex-col items-center justify-around transition-transform hover:scale-105"
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        type: "spring",
+                        stiffness: 120,
+                      }}
                     >
                       <Image
                         src={item.image}
@@ -91,12 +110,12 @@ const SkillsListClient = () => {
                         height={60}
                         className="rounded mb-2"
                       />
-                      <div>{item.name}</div>
-                    </li>
+                      <div className="text-white capitalize">{item.name}</div>
+                    </motion.li>
                   ))}
                 </ul>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       )}

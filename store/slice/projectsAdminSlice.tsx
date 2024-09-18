@@ -30,9 +30,13 @@ const initialState: ProjectsState = {
 
 export const getProjects = createAsyncThunk(
   "projectsAdmin/getProjects",
-  async () => {
-    const response = await fetchProjects();
-    return response.reverse();
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchProjects();
+      return response.reverse();
+    } catch (error) {
+      return rejectWithValue("Failed to fetch projects");
+    }
   }
 );
 
@@ -46,7 +50,7 @@ export const createProject = createAsyncThunk(
       const response = await addProject({ ...project, images: uploadedImages });
       return response;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Failed to create project");
     }
   }
 );
@@ -55,25 +59,48 @@ export const modifyProject = createAsyncThunk(
   "projectsAdmin/modifyProject",
   async (
     { id, project }: { id: string; project: Project },
-    { rejectWithValue }
+    { getState, rejectWithValue }
   ) => {
+    const state = getState() as RootState;
+    const existingProject = state.projectsAdmin.projects.find(
+      (p) => p.id === id
+    );
+
+    let images = existingProject?.images || [];
+
+    if (project.images.length > 0) {
+      const uploadedImages = await Promise.all(
+        project.images.map(async (image) => {
+          if (!images.includes(image)) {
+            return await uploadImage(image);
+          }
+          return image;
+        })
+      );
+
+      images = [...new Set([...images, ...uploadedImages])];
+    }
+
+    const updatedProject = { ...project, images };
+
     try {
-      const uploadedImages = project.images.length
-        ? await Promise.all(project.images.map((image) => uploadImage(image)))
-        : [];
-      await updateProject(id, { ...project, images: uploadedImages });
-      return { id, project: { ...project, images: uploadedImages } };
+      await updateProject(id, updatedProject);
+      return { id, project: updatedProject };
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Failed to update project");
     }
   }
 );
 
 export const removeProject = createAsyncThunk(
   "projectsAdmin/removeProject",
-  async (id: string) => {
-    await deleteProject(id);
-    return id;
+  async (id: string, { rejectWithValue }) => {
+    try {
+      await deleteProject(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue("Failed to remove project");
+    }
   }
 );
 
@@ -85,6 +112,7 @@ const projectsAdminSlice = createSlice({
     builder
       .addCase(getProjects.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getProjects.fulfilled, (state, action) => {
         state.loading = false;
@@ -92,7 +120,7 @@ const projectsAdminSlice = createSlice({
       })
       .addCase(getProjects.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch projects";
+        state.error = (action.payload as string) || "Failed to fetch projects";
       })
       .addCase(createProject.fulfilled, (state, action) => {
         state.projects.unshift(action.payload);
@@ -112,6 +140,10 @@ const projectsAdminSlice = createSlice({
       .addCase(removeProject.fulfilled, (state, action) => {
         state.loading = false;
         state.projects = state.projects.filter((p) => p.id !== action.payload);
+      })
+      .addCase(removeProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = (action.payload as string) || "Failed to remove project";
       });
   },
 });

@@ -7,10 +7,10 @@ const Lines = () => {
         {Array.from({ length: 7 }).map((_, index) => (
           <div
             key={`h-line-${index}`}
-            className="absolute w-[200vw] h-[1px] bg-gray-600"
+            className="absolute w-[200vw] h-[1px] bg-gray-700"
             style={{
               top: `${(index + 1) * 16}%`,
-              opacity: 0.2,
+              opacity: 0.4,
             }}
           >
             <div
@@ -22,10 +22,10 @@ const Lines = () => {
         {Array.from({ length: 7 }).map((_, index) => (
           <div
             key={`v-line-${index}`}
-            className="absolute h-[200vw] w-[1px] bg-gray-600"
+            className="absolute h-[200vw] w-[1px] bg-gray-700"
             style={{
               left: `${(index + 1) * 16}%`,
-              opacity: 0.2,
+              opacity: 0.4,
             }}
           >
             <div

@@ -3,6 +3,13 @@ import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 
 const ProjectMap = ({ project, index }: any) => {
+  const defaultImage = "/neon.jpg";
+
+  const projectImages =
+    project.images && project.images.length > 0
+      ? project.images
+      : [defaultImage];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,7 +23,7 @@ const ProjectMap = ({ project, index }: any) => {
         description={project.description}
         gitUrl={project.gitUrl}
         previewUrl={project.previewUrl}
-        images={project.images || []}
+        images={projectImages}
       />
     </motion.div>
   );

@@ -2,8 +2,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import Image from "next/image";
-import codeImage from "@/public/code.png";
 import Lines from "./Lines";
 import Circles from "./Circles";
 
@@ -39,9 +37,25 @@ const HomeArt = () => {
       } opacity-80 ${isMobile ? "flex-col" : "hidden lg:flex"}`}
     >
       <Lines />
-      <Circles inView={inView} />
-      <ul
-        className=" relative w-96 h-96 grid gap-y-0.5 border-2 -rotate-45 border-gray-500 rounded-full z-10 bg-gray-900 justify-center overflow-hidden"
+      <div className="hidden">
+        <Circles inView={inView} />
+      </div>
+      <motion.ul
+        initial={{ rotate: 0 }}
+        animate={
+          inView
+            ? {
+                rotate: [0, 360],
+              }
+            : {}
+        }
+        transition={{
+          duration: 56,
+          repeat: Infinity,
+          delay: 1,
+          ease: "linear",
+        }}
+        className=" relative mr-8 w-96 h-96 grid gap-y-0.5 border-2 border-orange-600 rounded-full z-10 bg-gray-900 justify-center overflow-hidden"
         style={{ boxShadow: "0 0 5px 5px #0f1318" }}
       >
         <motion.li
@@ -171,7 +185,7 @@ const HomeArt = () => {
             ))}
           </ul>
         </motion.li>
-      </ul>
+      </motion.ul>
     </motion.div>
   );
 };

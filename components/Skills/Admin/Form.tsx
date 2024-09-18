@@ -75,8 +75,9 @@ const SkillsForm: React.FC<SkillsFormProps> = ({
           <option value="Front-End Framework">Front-End Framework</option>
           <option value="Back-End Framework">Back-End Framework</option>
           <option value="Database">Database</option>
-          <option value="Cloud">Cloud</option>
-          <option value="Others">Miscellaneous</option>
+          <option value="Cloud">Cloud Service</option>
+          <option value="Testing Framework">Testing Framework</option>
+          <option value="Miscellaneous">Miscellaneous</option>
         </select>
       </div>
       <div className="mb-4">
