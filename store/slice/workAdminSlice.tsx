@@ -11,6 +11,7 @@ const initialState = {
   currentWorkExperience: {
     position: "",
     place: "",
+    address: "",
     year: "",
     skillsUsed: "",
     description: "",

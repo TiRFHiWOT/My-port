@@ -28,11 +28,13 @@ const Heading = () => {
           sequence={[
             "Tselot.",
             1000,
-            "'Web Developer.'",
+            "Full-Stack Developer.",
             1000,
-            "'Mobile Developer.'",
+            "Mobile App Developer.",
             1000,
-            "'UI/UX Designer.'",
+            "Game Developer.",
+            1000,
+            "Data Scientist",
             1000,
           ]}
           wrapper="span"

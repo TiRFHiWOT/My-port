@@ -14,7 +14,8 @@ const Heading = () => {
       initial={{ opacity: 0, y: 200 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.5, type: "spring" }}
-      className="flex flex-col justify-between items-center border-r-4 border-orange-600 px-2"
+      className="flex flex-row md:flex-col justify-between items-center border-b-4 md:border-b-transparent md:border-b-8 md:border-r-4
+       border-orange-600 py-2 md:py-0 md:px-2 ms-4 me-5 md:mx-0 mb-4 z-30"
     >
       <h1 className="text-4xl font-semibold text-white tracking-widest flex flex-row drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
         A

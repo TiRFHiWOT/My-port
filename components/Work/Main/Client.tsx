@@ -64,7 +64,7 @@ const ClientWorkExperience = () => {
 
   return (
     <div className="relative">
-      <div className="work-slide flex w-fit">
+      <div className="work-slide flex w-fit items-center">
         {experience.map((item) => (
           <WorkCard
             key={item.id}
@@ -96,7 +96,7 @@ const ClientWorkExperience = () => {
           onClick={handleOverlayClose}
         >
           <div
-            className="bg-slate-800 p-8 lg:p-12 rounded-lg shadow-2xl w-full max-w-5xl relative max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
+            className="bg-slate-800 p-8 lg:p-12 rounded-lg shadow-2xl w-full max-w-5xl lg:max-w-5xl relative max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -119,21 +119,23 @@ const ClientWorkExperience = () => {
               </svg>
             </button>
 
-            <h2 className="text-3xl lg:text-4xl font-extrabold mb-4 uppercase text-white tracking-tight">
+            <h2 className="text-3xl text-center md:text-start lg:text-4xl font-extrabold mb-4 uppercase text-white tracking-tight">
               {selectedExperience.position}
             </h2>
-            <div className="py-6 flex flex-col justify-between lg:flex-row gap-6 lg:gap-8 items-start border-y border-gray-700">
-              <div className="lg:flex flex flex-col w-4/12 border border-gray-700 rounded-lg justify-center items-center overflow-hidden">
-                <p className="text-2xl lg:text-3xl font-bold text-gray-400 bg-gray-900 px-4 py-2 w-full transition-all duration-700">
-                  <span className="text-cyan-600">@</span>
+            <div className="py-6 flex flex-col justify-center lg:justify-between lg:flex-row gap-6 lg:gap-8 items-start border-y border-gray-700">
+              <div className="lg:flex flex flex-col lg:w-4/12 border mx-auto md:mx-0 border-gray-700 rounded-lg justify-center items-center overflow-hidden">
+                <p className="text-2xl flex justify-center items-center lg:text-3xl font-bold text-gray-200 bg-gray-900 px-4 py-2 w-full transition-all duration-700">
                   {selectedExperience.place}
                 </p>
-                <p className="text-xl text-gray-400 px-4 py-2  transition-all duration-700 w-full flex flex-row gap-2 items-center">
+                <p className="text-xl text-gray-200 bg-gray-500 px-4 py-2 w-full flex flex-row items-center justify-center">
+                  {selectedExperience.address}
+                </p>
+                <p className="text-xl text-gray-400 px-4 py-2 w-full flex flex-row gap-2 items-center justify-center backdrop-blur">
                   <FaClock size="14" />
                   {selectedExperience.year}
                 </p>
               </div>
-              <div className="w-8/12">
+              <div className="lg:w-8/12">
                 <SkillImageDisplay
                   skillsUsed={selectedExperience.skillsUsed}
                   compact={false}

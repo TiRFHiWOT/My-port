@@ -24,7 +24,7 @@ const ProfileImg = () => {
       whileHover={{
         scale: 1.1,
         rotateY: "-10deg",
-        boxShadow: "0 0 20px 10px rgba(0, 0, 0, 0.5)",
+        boxShadow: "0 0 40px 20px rgba(0, 0, 0, 0.5)",
       }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="relative w-72 h-72 rounded-full z-10 bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden shadow-2xl"
@@ -38,13 +38,13 @@ const ProfileImg = () => {
           scale: 1.1,
           rotateY: 10,
           rotateX: 5,
-          boxShadow: "0 0px 60px 20px rgba(0, 0, 0, 0.5)",
+          boxShadow: "0 0 20px 10px rgba(0, 0, 0, 0.5)",
         }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         {/* Cool Border Wrapper */}
         <motion.div
-          className="absolute inset-0 w-full h-full rounded-full animate-spin-slow border-gray-900"
+          className="absolute inset-0 w-full h-full rounded-full animate-spin-slow border-blue-950 border-opacity-50"
           initial={{ borderWidth: "0px" }}
           animate={{ borderWidth: "10px" }}
           transition={{ duration: 1, ease: "easeInOut" }}

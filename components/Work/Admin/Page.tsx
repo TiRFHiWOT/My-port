@@ -22,6 +22,7 @@ export interface WorkExperience {
   id: string;
   position: string;
   place: string;
+  address: string;
   year: string;
   skillsUsed: string;
   description: string;
@@ -55,11 +56,14 @@ const WorkExperienceAdmin: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!currentWorkExperience.position ||
+    if (
+      !currentWorkExperience.position ||
       !currentWorkExperience.place ||
+      !currentWorkExperience.address ||
       !currentWorkExperience.year ||
       !currentWorkExperience.skillsUsed ||
-      !currentWorkExperience.description) {
+      !currentWorkExperience.description
+    ) {
       toast.error("Please fill in all fields before submitting.");
       return;
     }

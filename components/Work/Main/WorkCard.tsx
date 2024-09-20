@@ -63,14 +63,14 @@ const WorkCard: React.FC<WorkCardProps> = ({
   return (
     <section>
       <div
-        className="relative text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg p-7 border-b-4 border-[#334155] bg-opacity-80 lg:h-full
-        hover:scale-105 hover:border-b-green-700 w-[20rem] lg:w-[30rem] border mr-10 transform transition-all duration-[0.5s] group"
+        className="relative text-xs md:text-sm bg-slate-900 rounded-lg shadow-lg p-7 border-b-4 border-[#334155] bg-opacity-80
+        hover:scale-105 hover:border-b-green-700 w-[30rem] border mr-10 transform transition-all duration-[0.5s] group"
       >
         <div>
           <h1 className="text-2xl lg:text-2xl font-extrabold mb-2 uppercase group-hover:text-green-500">
             {position}
           </h1>
-          <div className="py-2 flex flex-row justify-between items-center">
+          <div className="py-2 flex flex-row justify-between items-center gap-2">
             <div className="border border-gray-700 rounded-lg w-fit flex flex-col justify-center items-center">
               <p className="text-xl tracking-[0.15rem] py-1 px-4 text-gray-400 font-semibold bg-slate-800 w-full flex flex-row">
                 <span className="text-cyan-500 font-bold">@</span>

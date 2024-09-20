@@ -61,11 +61,20 @@ const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-300 mb-2">Place</label>
+        <label className="block text-gray-300 mb-2">Work Place</label>
         <input
           type="text"
           value={workExperience.place}
           onChange={(e) => handleChange("place", e.target.value)}
+          className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-300 mb-2">Address</label>
+        <input
+          type="text"
+          value={workExperience.address}
+          onChange={(e) => handleChange("address", e.target.value)}
           className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:border-gray-600"
         />
       </div>

@@ -53,13 +53,13 @@ const ClientNavbar = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 w-full z-50 transform transition-all duration-300 px-10 ${
+      className={`fixed top-0 left-0 right-0 w-full z-50 transform transition-all duration-300 ${
         scrolling
-          ? "bg-slate-800 bg-opacity-80 backdrop-blur"
+          ? "bg-slate-800 bg-opacity-80 backdrop-blur shadow-xl"
           : "bg-transparent"
       }`}
     >
-      <div className="container flex items-center justify-between px-6 py-2 mx-auto w-full">
+      <div className="container flex items-center justify-between px-10 md:px-20 py-2 mx-auto w-full">
         <Link
           href={"#Navbar"}
           className="text-3xl font-semibold rounded-full border-8 border-cyan-400 px-6 shadow-lg shadow-cyan-300 bg-slate-900 -rotate-3 flex items-center justify-center"
@@ -82,14 +82,14 @@ const ClientNavbar = () => {
           {!navbarOpen ? (
             <button
               onClick={() => setNavbarOpen(true)}
-              className="flex items-center px-3 py-2 border-2 rounded border-[#334155] text-gray-400 hover:text-white hover:border-gray-400"
+              className="flex items-center px-3 py-2 border-2 rounded border-gray-200 text-gray-200 hover:text-cyan-600 hover:border-cyan-600"
             >
               <Bars3Icon className="h-5 w-5" />
             </button>
           ) : (
             <button
               onClick={() => setNavbarOpen(false)}
-              className="flex items-center px-3 py-2 border-2 rounded border-[#334155] text-gray-400 hover:text-white hover:border-gray-400"
+              className="flex items-center px-3 py-2 border-2 rounded border-gray-200 text-gray-200 hover:text-cyan-600 hover:border-cyan-600"
             >
               <XMarkIcon className="h-5 w-5" />
             </button>

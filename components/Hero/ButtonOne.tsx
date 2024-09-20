@@ -13,13 +13,22 @@ const ButtonOne = ({ href, text }: any) => {
   );
 
   useEffect(() => {
-    dispatch(fetchAbout());
+    dispatch(fetchAbout() as any);
   }, [dispatch]);
 
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const handleDownload = () => {
+    if (about && about.cv) {
+      window.location.href = `/api/download?url=${encodeURIComponent(
+        about.cv
+      )}`;
+    }
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -27,13 +36,15 @@ const ButtonOne = ({ href, text }: any) => {
       animate={inView ? { y: "0", opacity: 1 } : {}}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      {about && about.cv ? (
-        <a href={about.cv} download className="button-86" role="button">
-          Download CV
-        </a>
-      ) : (
-        ""
-      )}
+      {/* Always render the button with animation */}
+      <button
+        onClick={handleDownload}
+        className="button-86"
+        role="button"
+        disabled={!about || !about.cv} // Disable the button if data is not available
+      >
+        {about && about.cv ? "Download CV" : "Download CV"}
+      </button>
     </motion.div>
   );
 };

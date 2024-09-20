@@ -55,7 +55,7 @@ const HomeArt = () => {
           delay: 1,
           ease: "linear",
         }}
-        className=" relative mr-8 w-96 h-96 grid gap-y-0.5 border-2 border-orange-600 rounded-full z-10 bg-gray-900 justify-center overflow-hidden"
+        className=" relative md:mr-8 w-96 h-96 grid gap-y-0.5 border-2 border-orange-600 rounded-full z-10 bg-gray-900 justify-center overflow-hidden"
         style={{ boxShadow: "0 0 5px 5px #0f1318" }}
       >
         <motion.li

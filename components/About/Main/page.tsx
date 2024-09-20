@@ -44,7 +44,7 @@ const About = () => {
           >
             <div className="absolute inset-0 w-full h-full bg-gray-950 bg-opacity-50" />
             <div className="flex flex-col md:mx-12 lg:mx-0 lg:flex-row items-center z-10">
-              <div className="flex flex-row my-10">
+              <div className="flex flex-col md:flex-row md:my-10">
                 <Heading />
                 <Paragraph />
               </div>
@@ -58,21 +58,21 @@ const About = () => {
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.5, delay: 1, type: "spring" }}
-                className="h-[100px] w-[100px] rounded-full bg-cyan-700 absolute top-[-2.5rem] right-[-2.5rem] -z-10 bg-opacity-50"
+                className="h-[100px] w-[100px] rounded-full bg-blue-600 absolute top-[-2.5rem] right-[-2.5rem] -z-10 bg-opacity-50"
               ></motion.div>
               <motion.div
                 ref={ref}
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.5, delay: 1.25, type: "spring" }}
-                className="h-[50px] w-[50px] rounded-full bg-cyan-700 absolute top-[2rem] right-[33rem] -z-10 bg-opacity-50"
+                className="h-[50px] w-[50px] rounded-full bg-blue-600 absolute top-[2rem] right-[33rem] -z-10 bg-opacity-50"
               ></motion.div>
               <motion.div
                 ref={ref}
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.5, delay: 1.5, type: "spring" }}
-                className="h-[50px] w-[50px] rounded-full bg-cyan-700 absolute bottom-[6rem] left-[25rem] -z-10 bg-opacity-50"
+                className="h-[50px] w-[50px] rounded-full bg-blue-600 absolute bottom-[6rem] left-[25rem] -z-10 bg-opacity-50"
               ></motion.div>
             </div>
           </motion.div>

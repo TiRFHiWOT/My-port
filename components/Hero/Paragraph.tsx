@@ -15,8 +15,8 @@ const MotionParagraph = () => {
       transition={{ duration: 0.5, delay: 0.1 }}
       className="text-gray-200 text-sm md:text-base ml-2 drop-shadow-[0_0.6px_0.6px_rgba(0,0,0,0.8)] tracking-wider"
     >
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam,
-      consequuntur.
+      Showcasing web development, coding solutions, and cutting-edge projects
+      from an experienced programmer.
     </motion.p>
   );
 };

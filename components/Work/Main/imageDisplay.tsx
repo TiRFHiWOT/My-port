@@ -69,7 +69,7 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
     <div
       key={index}
       className={`relative ${
-        compact ? "w-10 h-10" : mid ? "w-20 h-20" : "w-24 h-24"
+        compact ? "w-10 h-10" : mid ? "w-14 h-14" : "w-20 h-20"
       } group`}
     >
       <Image
@@ -80,7 +80,7 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
         className="rounded"
       />
       <div
-        className={`absolute inset-0 lowercase flex items-center justify-center bg-black bg-opacity-100 text-white text-xs 
+        className={`absolute inset-0 lowercase flex items-center justify-center bg-red-600 text-white text-xs 
           font-semibold opacity-0 hover:opacity-100 transition-opacity duration-300 rounded text-center ${
             compact ? "text-xs" : "text-sm"
           }`}
@@ -92,7 +92,7 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center p-4">
+      <div className="flex justify-center items-center p-4 w-full">
         <div
           className={`w-${compact ? "8" : "16"} h-${
             compact ? "8" : "16"
@@ -111,7 +111,9 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
 
   return (
     <div
-      className={`flex flex-wrap gap-3 ${!compact && !mid ? "w-full" : "w-fit"}
+      className={`flex flex-wrap gap-2 ${
+        compact ? "w-fit" : mid ? "w-fit" : "w-full mb-4"
+      }
        p-2 shadow-lg rounded-md border bg-[#181f29] border-gray-700`}
     >
       {matchingSkillImages.length ? (
@@ -119,7 +121,7 @@ const SkillImageDisplay: React.FC<SkillImageDisplayProps> = ({
       ) : (
         <div
           className={`relative ${
-            compact ? "w-12 h-12" : "w-24 h-24"
+            compact ? "w-10 h-10" : mid ? "w-14 h-14" : "w-20 h-20"
           } flex justify-center items-center border-2 border-gray-400 border-dashed rounded-lg`}
         >
           <span className="text-gray-400 text-xs text-center">No skills</span>

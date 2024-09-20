@@ -48,7 +48,7 @@ const SkillsListClient = () => {
   return (
     <div className="text-gray-300">
       {loading ? (
-        <div className="flex justify-center items-center h-[22rem]">
+        <div className="absolute inset-0 flex justify-center items-center">
           <RotatingLines width="60" strokeColor="#60a5fa" />
         </div>
       ) : skills.length === 0 ? (
@@ -88,7 +88,7 @@ const SkillsListClient = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className={`overflow-hidden`}
               >
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-gray-700">
+                <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-gray-700">
                   {skills.map((item) => (
                     <motion.li
                       key={item.id}

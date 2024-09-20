@@ -53,12 +53,12 @@ const Contact = () => {
       <div className="flex justify-center items-center"></div>
       <div className="grid md:grid-cols-2 gap-4 justify-center">
         <div className="flex justify-center">
-          <div className="p-4 border border-gray-700 shadow-lg rounded-3xl">
-            <h1 className="text-3xl font-bold my-2 z-10 py-3 -rotate-3">
+          <div className="py-4 px-6 border border-gray-700 shadow-lg rounded-3xl">
+            <h1 className="text-3xl font-bold my-3 z-10 py-3 -rotate-3">
               Let'<span className="text-orange-600">s</span> Connect.
             </h1>
 
-            <p className="mb-4 max-w-md text-slate-400">
+            <p className="mb-4 max-w-md text-slate-400 drop-shadow-[0_0.6px_0.6px_rgba(0,0,0,0.8)]">
               {contact.description}
             </p>
             <div className="flex flex-row gap-2 ">

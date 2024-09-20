@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 interface TestimonialCardProps {
@@ -16,6 +16,18 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   testimonial,
   index,
 }) => {
+  const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  });
   const profilePictureUrl = testimonial.profilePicture;
 
   return (
@@ -25,7 +37,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       whileInView={{
         width: "27rem",
         height: "16.5rem",
-        transition: { duration: 2, delay: 3 },
+        transition: { duration: 2, delay: isLargeScreen ? 3 : 0 },
       }}
       whileHover={{
         x: index % 2 === 0 ? "-20px" : "20px",
@@ -42,7 +54,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           opacity: 1,
         }}
         transition={{
-          delay: 4,
+          delay: isLargeScreen ? 4 : 0,
         }}
         viewport={{ once: true }}
         className="p-3 flex flex-col"
@@ -51,13 +63,14 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           ``
         </div>
         <div className=" absolute top-5 right-9 w-8 h-8 rounded-full bg-black group-hover:bg-green-600 group-hover:shadow-xl transition duration-700"></div>
-        <p className="mt-14 mb-3 text-sm text-gray-400 font-semibold tracking-widest mx-6 pt-5 pb-2 line-clamp-2 h-20">
+        <p className="mt-14 mb-3 text-sm text-gray-400 font-semibold tracking-widest mx-6 pt-5 pb-2 line-clamp-3 h-20">
+          {` `}
           {testimonial.comment}
         </p>
         <div className="flex justify-between items-center px-6 py-2 border border-gray-700 rounded-lg">
           <div className="flex-col justify-between items-center">
             <h1 className="text-white tracking-wider text-lg font-bold">
-              @{testimonial.userName}
+              - {testimonial.userName}
             </h1>
             <p className="text-gray-400">{testimonial.position}</p>
           </div>

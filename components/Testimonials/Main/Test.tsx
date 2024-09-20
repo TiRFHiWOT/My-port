@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTestimonialsAsync } from "@/store/slice/testimonialSlice";
 import TestimonialCard from "./TestimonialCard";
 import { RotatingLines } from "react-loader-spinner";
+import Image from "next/image";
 
 const Test = () => {
   const dispatch = useDispatch();

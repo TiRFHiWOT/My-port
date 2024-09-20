@@ -43,7 +43,7 @@ const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
     <div className="mb-4 p-6 bg-gray-800 rounded-lg shadow-lg flex-row">
       <SkillImageDisplay
         skillsUsed={workExperience.skillsUsed}
-        mid={true}
+        mid={false}
         isOverlay={true}
       />
       <div className="rounded-md py-2 px-3 shadow-lg border bg-[#181f29] border-gray-700 mb-4">
@@ -51,6 +51,7 @@ const WorkExperienceOutput: React.FC<WorkExperienceProps> = ({
           {workExperience.position}
         </h4>
         <p className="text-gray-300 ml-4 py-1">{workExperience.place}</p>
+        <p className="text-gray-300 ml-4 py-1">{workExperience.address}</p>
         <p className="text-gray-300 ml-4 py-1">{workExperience.year}</p>
         <p className="text-gray-300 ml-4 py-1">{workExperience.skillsUsed}</p>
         <div
